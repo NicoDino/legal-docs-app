@@ -1,1 +1,1 @@
-# legal-docs-api
+# legal-docs-app
