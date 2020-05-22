@@ -2,9 +2,9 @@
 
 ### Instructions
 
-- npm i
-- npm run build
-- npm run dev
+- `npm i`
+- `npm run build`
+- `npm run dev`
 - la consola debería mostrar algo parecido a:
     ```
     [nodemon] 2.0.4
