@@ -6,7 +6,10 @@ import { AuthenticationService } from '../services/authentication.service';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user';
 
-@Component({ templateUrl: 'home.component.html' })
+@Component({
+    templateUrl: 'home.component.html',
+    styleUrls: ['home.component.css']
+})
 export class HomeComponent implements OnInit, OnDestroy {
     currentUser: User;
     currentUserSubscription: Subscription;
