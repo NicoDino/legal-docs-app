@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <h1>Categorías</h1>
+  </div>
+  <div class="row justify-content-end">
+    <button type="button" class="btn btn-primary" (click)="crearCategoria()">
+      Nueva categoría
+    </button>
+  </div>
+
+  <div class="row">
+    <ul>
+      <span *ngFor="let categoria of categorias">
+        <span *ngIf="!categoria.padre">
+          <app-arbol-item [categoria]="categoria"></app-arbol-item>
+        </span>
+      </span>
+    </ul>
+  </div>
+
+
+</div>

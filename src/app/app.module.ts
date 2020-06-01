@@ -9,6 +9,9 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { ErrorInterceptor } from './helpers/error.interceptor';
 import { routing } from './app.routing';
+import { CategoriasComponent } from './categorias/categorias.component';
+import { ArbolItemComponent } from './categorias/arbol-item/arbol-item.component';
+import { CrearCategoriaComponent } from './categorias/crear-categoria/crear-categoria.component';
 
 @NgModule({
     imports: [
@@ -22,7 +25,10 @@ import { routing } from './app.routing';
         AppComponent,
         AlertComponent,
         HomeComponent,
-        LoginComponent
+        LoginComponent,
+        CategoriasComponent,
+        ArbolItemComponent,
+        CrearCategoriaComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
