@@ -1,9 +1,8 @@
-import { NgModule }      from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule, FormsModule }    from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-
-import { AppComponent }  from './app.component';
+import { AppComponent } from './app.component';
 import { AlertComponent } from './components/alert.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
@@ -12,6 +11,7 @@ import { routing } from './app.routing';
 import { CategoriasComponent } from './categorias/categorias.component';
 import { ArbolItemComponent } from './categorias/arbol-item/arbol-item.component';
 import { CrearCategoriaComponent } from './categorias/crear-categoria/crear-categoria.component';
+import { MenuComponent } from './components/menu/menu.component';
 
 @NgModule({
     imports: [
@@ -24,6 +24,7 @@ import { CrearCategoriaComponent } from './categorias/crear-categoria/crear-cate
     declarations: [
         AppComponent,
         AlertComponent,
+        MenuComponent,
         HomeComponent,
         LoginComponent,
         CategoriasComponent,
