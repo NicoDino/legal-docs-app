@@ -32,7 +32,6 @@ export class CrearCategoriaComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(this.categoriaForm.value);
     this.categoriaService.create(this.categoriaForm.value).subscribe(
       (res) => {
         this.router.navigateByUrl('categorias');
