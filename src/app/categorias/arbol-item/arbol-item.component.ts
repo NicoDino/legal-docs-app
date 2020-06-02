@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild, ElementRef, OnDestroy, Output, Eve
 import { Categoria } from 'src/app/models/categoria';
 import { Router } from '@angular/router';
 import { CategoriasService } from 'src/app/services/categorias.service';
+import { EventsService } from '../services/events.service';
 
 @Component({
   selector: 'app-arbol-item',
@@ -10,10 +11,9 @@ import { CategoriasService } from 'src/app/services/categorias.service';
 })
 export class ArbolItemComponent implements OnInit, OnDestroy {
   @Input() categoria: Categoria;
-  @Output() refresh = new EventEmitter<any>();
   collapsed = false;
   identificador: string;
-  constructor(private router: Router, private categoriaService: CategoriasService) {}
+  constructor(private router: Router, private categoriaService: CategoriasService, private eventos: EventsService) {}
 
   ngOnDestroy(): void {
     // TODO - unsubscribe to avoid memory leaks
@@ -30,7 +30,8 @@ export class ArbolItemComponent implements OnInit, OnDestroy {
   borrarCategoria(idCategoria: string) {
     this.categoriaService.delete(idCategoria).subscribe(
       (res) => {
-        this.refresh.emit(null);
+        this.eventos.emitCategoriaBorrada();
+
       },
       (err) => {
         // TODO - mostrar toast con error
