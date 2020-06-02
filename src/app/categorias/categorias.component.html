@@ -1,0 +1,18 @@
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <h2>Categorías</h2>
+  </div>
+  <div class="row justify-content-start mb-5">
+    <button type="button" class="btn btn-lg btn-outline-primary" (click)="crearCategoria()">
+      Nueva categoría
+    </button>
+  </div>
+
+  <div *ngFor="let categoria of $categorias  | async">
+      <ul class="list-group mb-3" *ngIf="!categoria.padre">
+        <li class="list-group-item">
+          <app-arbol-item [categoria]="categoria"></app-arbol-item>
+        </li>
+      </ul>
+  </div>
+</div>
