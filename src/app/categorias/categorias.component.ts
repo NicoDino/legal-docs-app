@@ -13,7 +13,7 @@ import { EventsService } from './services/events.service';
 export class CategoriasComponent implements OnInit {
 
   // categorias: Categoria[];
-  $categorias: Observable<Categoria[]> = new Observable<Categoria[]>([]);
+  $categorias: Observable<Categoria[]> = new Observable<Categoria[]>();
   constructor( private categoriaService: CategoriasService, private router: Router, private eventos: EventsService) { }
 
   ngOnInit(): void {
@@ -23,12 +23,6 @@ export class CategoriasComponent implements OnInit {
   }
 
   private getCategorias() {
-    // TODO - agregar un LOADING
-    // this.categoriaService.getAll().subscribe((res: Categoria[]) => {
-    //  this.$categorias.next(res);
-    // }, err => {
-    //   console.error(err);
-    // });
     this.$categorias = this.categoriaService.getAll();
   }
 

@@ -35,10 +35,6 @@ export class CrearCategoriaComponent implements OnInit, OnDestroy {
     this.categoriaService.create(this.categoriaForm.value).subscribe(
       (res) => {
         this.router.navigateByUrl('categorias');
-      },
-      (error) => {
-        console.error(error);
-        // TODO agregar toast con mensaje de error!
       }
     );
   }

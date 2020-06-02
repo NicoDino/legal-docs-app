@@ -15,9 +15,12 @@ export class ErrorInterceptor implements HttpInterceptor {
                 this.authenticationService.logout();
                 location.reload(true);
             }
-            
+
             const error = err.error.message || err.statusText;
+            // TODO: agregar acá una llamada al error toast que muestre un error bonito al usuario
+            // TODO: acá tambien podemos agregar el spinner, dejo guardado algo que encontré para armarlo
+            // https://medium.com/@arunkumarv/angular-spinner-with-http-interceptor-d829a5e84921
             return throwError(error);
-        }))
+        }));
     }
 }

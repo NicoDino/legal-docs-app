@@ -32,9 +32,6 @@ export class ArbolItemComponent implements OnInit, OnDestroy {
       (res) => {
         this.eventos.emitCategoriaBorrada();
 
-      },
-      (err) => {
-        // TODO - mostrar toast con error
       }
     );
   }
