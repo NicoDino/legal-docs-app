@@ -14,16 +14,23 @@ export class CategoriasComponent implements OnInit {
   constructor( private categoriaService: CategoriasService, private router: Router) { }
 
   ngOnInit(): void {
-    this.categoriaService.getAll().subscribe(
-      (res: Categoria[]) => {
-        this.categorias = res;
-    },
-    err => {
+    this.getCategorias();
+  }
+
+  private getCategorias() {
+    // TODO - agregar un LOADING
+    this.categoriaService.getAll().subscribe((res: Categoria[]) => {
+      this.categorias = res;
+    }, err => {
       console.error(err);
     });
   }
 
   crearCategoria(){
     this.router.navigateByUrl('crear-categoria/');
+  }
+
+  triggerRefresh(){
+    this.getCategorias();
   }
 }

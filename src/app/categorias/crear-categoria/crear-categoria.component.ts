@@ -43,4 +43,8 @@ export class CrearCategoriaComponent implements OnInit, OnDestroy {
       }
     );
   }
+
+  onCancel(){
+    this.router.navigateByUrl('categorias');
+  }
 }

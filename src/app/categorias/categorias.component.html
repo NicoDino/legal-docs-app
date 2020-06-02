@@ -1,22 +1,18 @@
-<div class="container">
+<div class="container-fluid">
   <div class="row justify-content-center">
-    <h1>Categorías</h1>
+    <h2>Categorías</h2>
   </div>
-  <div class="row justify-content-end">
-    <button type="button" class="btn btn-primary" (click)="crearCategoria()">
+  <div class="row justify-content-start mb-5">
+    <button type="button" class="btn btn-lg btn-outline-primary" (click)="crearCategoria()">
       Nueva categoría
     </button>
   </div>
 
-  <div class="row">
-    <ul>
-      <span *ngFor="let categoria of categorias">
-        <span *ngIf="!categoria.padre">
-          <app-arbol-item [categoria]="categoria"></app-arbol-item>
-        </span>
-      </span>
-    </ul>
+  <div *ngFor="let categoria of categorias">
+      <ul class="list-group mb-3" *ngIf="!categoria.padre">
+        <li class="list-group-item">
+          <app-arbol-item [categoria]="categoria" (refresh)="triggerRefresh()"></app-arbol-item>
+        </li>
+      </ul>
   </div>
-
-
 </div>
