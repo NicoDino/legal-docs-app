@@ -5,12 +5,12 @@
   </div>
   <div class=" col-4 justify-content-center">
     <div class="btn-group float-right">
-      <button *ngIf="categoria.descendientes?.length > 0" class="btn btn-xs btn-link" data-toggle="collapse"
-        [attr.data-target]="'#' + categoria.nombre" type="button">
+      <a *ngIf="categoria.descendientes?.length > 0" class="btn btn-xs btn-link" data-toggle="collapse"
+        [attr.data-target]="'#cat-' + categoria._id" type="button">
         <i class="material-icons float-left">
           unfold_more
         </i>
-      </button>
+      </a>
       <button type="button" class="btn btn-xs btn-link" (click)="crearCategoria(categoria._id)">
         <i class="material-icons float-right small">
           add
@@ -23,9 +23,8 @@
       </button>
     </div>
   </div>
-
 </div>
-<div class="collapse show " id="{{ categoria.nombre }}" #accordion *ngIf="categoria.descendientes?.length > 0">
+<div class="collapse show " id="cat-{{categoria._id}}" #accordion *ngIf="categoria.descendientes?.length > 0">
   <ul class="list-group ">
     <li class="list-group-item" *ngFor="let categoria of categoria.descendientes">
       <app-arbol-item [categoria]="categoria"></app-arbol-item>
