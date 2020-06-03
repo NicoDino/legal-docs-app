@@ -1,33 +1,34 @@
-<div class="row justify-content-start mb-3">
-  <div  class="col-1 justify-content-center">
-    <button *ngIf="categoria.descendientes?.length > 0" data-toggle="collapse" [attr.data-target]="'#' + categoria.nombre" type="button">
-      <i class="material-icons float-left">
-        unfold_more
-      </i>
-    </button>
+<div class="row justify-content-start pb-3">
+  <div class="col-8 justify-content-center ">
+    <span class="align-bottom">{{ categoria.nombre }} <small
+        *ngIf="categoria.descendientes.length>0">({{categoria.descendientes.length}})</small></span>
   </div>
-  <div class="col-7 justify-content-center">
-    {{ categoria.nombre }}
-  
+  <div class=" col-4 justify-content-center">
+    <div class="btn-group float-right">
+      <button *ngIf="categoria.descendientes?.length > 0" class="btn btn-xs btn-link" data-toggle="collapse"
+        [attr.data-target]="'#' + categoria.nombre" type="button">
+        <i class="material-icons float-left">
+          unfold_more
+        </i>
+      </button>
+      <button type="button" class="btn btn-xs btn-link" (click)="crearCategoria(categoria._id)">
+        <i class="material-icons float-right small">
+          add
+        </i>
+      </button>
+      <button *ngIf="categoria.descendientes?.length < 1" type="button" class="btn btn-xs btn-link">
+        <i class="material-icons small float-left" (click)="borrarCategoria(categoria._id)">
+          delete
+        </i>
+      </button>
+    </div>
   </div>
-  <div class="col-4 ">
-    <button type="button" class="btn btn-sm btn-outline-info mr-3" (click)="crearCategoria(categoria._id)">
-      <i class="material-icons float-left">
-        add
-      </i>
-    </button>
-    <button *ngIf="categoria.descendientes?.length < 1" type="button" class="btn btn-sm btn-outline-info" (click)="borrarCategoria(categoria._id)">
-      <i class="material-icons float-left">
-        delete
-      </i>
-    </button>
-  </div>
+
 </div>
-  
-  <div class="collapse show mb-2 mr-5 ml-3 pr-5" id="{{ categoria.nombre }}" #accordion *ngIf="categoria.descendientes?.length > 0">
-    <ul class="list-group ">
-      <li class="list-group-item" *ngFor="let categoria of categoria.descendientes">
-        <app-arbol-item [categoria]="categoria"></app-arbol-item>
-      </li>
-    </ul>
-  </div>
+<div class="collapse show " id="{{ categoria.nombre }}" #accordion *ngIf="categoria.descendientes?.length > 0">
+  <ul class="list-group ">
+    <li class="list-group-item" *ngFor="let categoria of categoria.descendientes">
+      <app-arbol-item [categoria]="categoria"></app-arbol-item>
+    </li>
+  </ul>
+</div>

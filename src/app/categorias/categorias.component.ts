@@ -14,19 +14,18 @@ export class CategoriasComponent implements OnInit {
 
   // categorias: Categoria[];
   $categorias: Observable<Categoria[]> = new Observable<Categoria[]>();
-  constructor( private categoriaService: CategoriasService, private router: Router, private eventos: EventsService) { }
+  constructor(private categoriaService: CategoriasService, private router: Router, private eventos: EventsService) { }
 
   ngOnInit(): void {
     this.getCategorias();
-
-    this.eventos.categoriaBorrada$.subscribe(evento => {this.getCategorias(); });
+    this.eventos.categoriaBorrada$.subscribe(evento => { this.getCategorias(); });
   }
 
   private getCategorias() {
     this.$categorias = this.categoriaService.getAll();
   }
 
-  crearCategoria(){
+  crearCategoria() {
     this.router.navigateByUrl('crear-categoria/');
   }
 
