@@ -13,7 +13,7 @@ export class ArbolItemComponent implements OnInit, OnDestroy {
   @Input() categoria: Categoria;
   collapsed = false;
   identificador: string;
-  constructor(private router: Router, private categoriaService: CategoriasService, private eventos: EventsService) {}
+  constructor(private router: Router, private categoriaService: CategoriasService, private eventos: EventsService) { }
 
   ngOnDestroy(): void {
     // TODO - unsubscribe to avoid memory leaks
@@ -28,11 +28,13 @@ export class ArbolItemComponent implements OnInit, OnDestroy {
   }
 
   borrarCategoria(idCategoria: string) {
-    this.categoriaService.delete(idCategoria).subscribe(
-      (res) => {
-        this.eventos.emitCategoriaBorrada();
+    if (confirm("¿Está seguro de querer eliminar la categoría?")) {
+      this.categoriaService.delete(idCategoria).subscribe(
+        (res) => {
+          this.eventos.emitCategoriaBorrada();
 
-      }
-    );
+        }
+      );
+    }
   }
 }
