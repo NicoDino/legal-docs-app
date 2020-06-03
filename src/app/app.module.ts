@@ -12,6 +12,7 @@ import { CategoriasComponent } from './categorias/categorias.component';
 import { ArbolItemComponent } from './categorias/arbol-item/arbol-item.component';
 import { CrearCategoriaComponent } from './categorias/crear-categoria/crear-categoria.component';
 import { MenuComponent } from './components/menu/menu.component';
+import { AuthInterceptor } from './helpers/auth.interceptor';
 
 @NgModule({
     imports: [
@@ -32,6 +33,7 @@ import { MenuComponent } from './components/menu/menu.component';
         CrearCategoriaComponent
     ],
     providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     ],
     bootstrap: [AppComponent]
