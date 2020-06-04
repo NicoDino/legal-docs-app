@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { CategoriasService } from 'src/app/services/categorias.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-crear-categoria',
@@ -12,7 +13,7 @@ import { BehaviorSubject } from 'rxjs';
 export class CrearCategoriaComponent implements OnInit, OnDestroy {
   categoriaForm: FormGroup;
   disableGuardar$ = new BehaviorSubject<boolean>(false);
-
+  unsubscribe$ = new Subject<void>();
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -21,11 +22,12 @@ export class CrearCategoriaComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnDestroy(): void {
-    // TODO  DESUSCRIBIRSE ACA
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
+   this.route.paramMap.pipe(takeUntil(this.unsubscribe$)).subscribe((params) => {
       this.categoriaForm = this.formBuilder.group({
         nombre: new FormControl(''),
         padre: new FormControl(params.get('idPadre')),
