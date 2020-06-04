@@ -3,6 +3,8 @@ import { Categoria } from 'src/app/models/categoria';
 import { Router } from '@angular/router';
 import { CategoriasService } from 'src/app/services/categorias.service';
 import { EventsService } from '../services/events.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-arbol-item',
@@ -13,10 +15,13 @@ export class ArbolItemComponent implements OnInit, OnDestroy {
   @Input() categoria: Categoria;
   collapsed = false;
   identificador: string;
+  unsubscribe$ = new Subject<void>();
+
   constructor(private router: Router, private categoriaService: CategoriasService, private eventos: EventsService) { }
 
   ngOnDestroy(): void {
-    // TODO - unsubscribe to avoid memory leaks
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   ngOnInit(): void {
@@ -28,8 +33,8 @@ export class ArbolItemComponent implements OnInit, OnDestroy {
   }
 
   borrarCategoria(idCategoria: string) {
-    if (confirm("¿Está seguro de querer eliminar la categoría?")) {
-      this.categoriaService.delete(idCategoria).subscribe(
+    if (confirm('¿Está seguro de querer eliminar la categoría?')) {
+      this.categoriaService.delete(idCategoria).pipe(takeUntil(this.unsubscribe$)).subscribe(
         (res) => {
           this.eventos.emitCategoriaBorrada();
 
