@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { CategoriasService } from 'src/app/services/categorias.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-crear-categoria',
@@ -10,6 +11,7 @@ import { CategoriasService } from 'src/app/services/categorias.service';
 })
 export class CrearCategoriaComponent implements OnInit, OnDestroy {
   categoriaForm: FormGroup;
+  disableGuardar$ = new BehaviorSubject<boolean>(false);
 
   constructor(
     private router: Router,
@@ -32,14 +34,18 @@ export class CrearCategoriaComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    this.disableGuardar$.next(true);
     this.categoriaService.create(this.categoriaForm.value).subscribe(
       (res) => {
         this.router.navigateByUrl('categorias');
+      },
+      (err) => {
+        this.disableGuardar$.next(false);
       }
     );
   }
 
-  onCancel(){
+  onCancel() {
     this.router.navigateByUrl('categorias');
   }
 }
