@@ -4,6 +4,8 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { CategoriasComponent } from './categorias/categorias.component';
 import { CrearCategoriaComponent } from './categorias/crear-categoria/crear-categoria.component';
+import { FaqsComponent } from './faqs/faqs.component';
+import { CrearFaqComponent } from './faqs/crear-faq/crear-faq.component';
 
 
 const appRoutes: Routes = [
@@ -11,6 +13,8 @@ const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'categorias', component: CategoriasComponent },
     { path: 'crear-categoria/:idPadre', component: CrearCategoriaComponent },
+    { path: 'faqs', component: FaqsComponent },
+    { path: 'crear-faq', component: CrearFaqComponent },
 
     // otherwise redirect to home
     { path: '**', redirectTo: '' }
