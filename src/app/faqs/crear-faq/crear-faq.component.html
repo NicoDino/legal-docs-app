@@ -1,0 +1,38 @@
+<div class="row heading">
+    <div class="col-sm-6">
+        <h2>Preguntas frecuentes<br><small class="subtitle">Crear nueva</small></h2>
+    </div>
+    <div class="col-6">
+
+        <button type="button" class="btn btn-sm btn-link float-right" (click)="onCancel()"><i
+                class="material-icons float-left">
+                arrow_back
+            </i></button>
+    </div>
+</div>
+<div class="container">
+    <form [formGroup]="faqForm" (ngSubmit)="onSubmit()">
+        <div class="row justify-content-center mt-5">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="pregunta">Pregunta</label>
+                    <input formControlName="pregunta" type="text" class="form-control" id="pregunta"
+                        aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="contenido">Contenido</label>
+                    <editor apiKey="xw7i6xqrjfmfj32n3l20w1lb0mek7bbf4kffwtu7is30t377" plugins="wordcount" id="contenido"
+                        formControlName="contenido"></editor>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <button type="submit" class="btn btn-sm btn-success"
+                    [disabled]="disableGuardar$ | async">Guardar</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -13,6 +13,9 @@ import { ArbolItemComponent } from './categorias/arbol-item/arbol-item.component
 import { CrearCategoriaComponent } from './categorias/crear-categoria/crear-categoria.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { AuthInterceptor } from './helpers/auth.interceptor';
+import { FaqsComponent } from './faqs/faqs.component';
+import { CrearFaqComponent } from './faqs/crear-faq/crear-faq.component';
+import { EditorModule } from "@tinymce/tinymce-angular";
 
 @NgModule({
     imports: [
@@ -20,7 +23,8 @@ import { AuthInterceptor } from './helpers/auth.interceptor';
         ReactiveFormsModule,
         HttpClientModule,
         routing,
-        FormsModule
+        FormsModule,
+        EditorModule
     ],
     declarations: [
         AppComponent,
@@ -29,8 +33,10 @@ import { AuthInterceptor } from './helpers/auth.interceptor';
         HomeComponent,
         LoginComponent,
         CategoriasComponent,
+        FaqsComponent,
         ArbolItemComponent,
-        CrearCategoriaComponent
+        CrearCategoriaComponent,
+        CrearFaqComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
