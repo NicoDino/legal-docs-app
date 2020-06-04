@@ -17,6 +17,7 @@ export class CategoriasComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCategorias();
+    // Refresca categorías luego de borrar alguna de ellas
     this.eventos.categoriaBorrada$.subscribe(() => {
       this.getCategorias();
     });
