@@ -6,18 +6,19 @@ import { CategoriasComponent } from './categorias/categorias.component';
 import { CrearCategoriaComponent } from './categorias/crear-categoria/crear-categoria.component';
 import { FaqsComponent } from './faqs/faqs.component';
 import { CrearFaqComponent } from './faqs/crear-faq/crear-faq.component';
-
+import { ConfiguracionUsuarioComponent } from './usuarios/configuracion-usuario/configuracion-usuario.component';
 
 const appRoutes: Routes = [
-    { path: '', component: HomeComponent, canActivate: [AuthGuard] },
-    { path: 'login', component: LoginComponent },
-    { path: 'categorias', component: CategoriasComponent },
-    { path: 'crear-categoria/:idPadre', component: CrearCategoriaComponent },
-    { path: 'faqs', component: FaqsComponent },
-    { path: 'crear-faq', component: CrearFaqComponent },
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent },
+  { path: 'categorias', component: CategoriasComponent, canActivate: [AuthGuard] },
+  { path: 'crear-categoria/:idPadre', component: CrearCategoriaComponent, canActivate: [AuthGuard] },
+  { path: 'faqs', component: FaqsComponent, canActivate: [AuthGuard] },
+  { path: 'crear-faq', component: CrearFaqComponent, canActivate: [AuthGuard] },
+  { path: 'app-configuracion-usuario', component: ConfiguracionUsuarioComponent, canActivate: [AuthGuard] },
 
-    // otherwise redirect to home
-    { path: '**', redirectTo: '' }
+  // otherwise redirect to home
+  { path: '**', redirectTo: '' },
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);
