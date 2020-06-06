@@ -7,7 +7,7 @@ import { AlertComponent } from './components/alert.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
-import { routing } from './app.routing';
+import { AppRoutingModule } from './app-routing.module';
 import { CategoriasComponent } from './categorias/categorias.component';
 import { ArbolItemComponent } from './categorias/arbol-item/arbol-item.component';
 import { CrearCategoriaComponent } from './categorias/crear-categoria/crear-categoria.component';
@@ -20,7 +20,7 @@ import { ConfiguracionUsuarioComponent } from './usuarios/configuracion-usuario/
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 @NgModule({
-  imports: [BrowserModule, ReactiveFormsModule, HttpClientModule, routing, FormsModule, EditorModule],
+  imports: [BrowserModule, ReactiveFormsModule, HttpClientModule, FormsModule, EditorModule, AppRoutingModule],
   declarations: [
     AppComponent,
     AlertComponent,

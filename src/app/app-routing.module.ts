@@ -7,6 +7,7 @@ import { CrearCategoriaComponent } from './categorias/crear-categoria/crear-cate
 import { FaqsComponent } from './faqs/faqs.component';
 import { CrearFaqComponent } from './faqs/crear-faq/crear-faq.component';
 import { ConfiguracionUsuarioComponent } from './usuarios/configuracion-usuario/configuracion-usuario.component';
+import { NgModule } from '@angular/core';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -20,5 +21,8 @@ const appRoutes: Routes = [
   // otherwise redirect to home
   { path: '**', redirectTo: '' },
 ];
-
-export const routing = RouterModule.forRoot(appRoutes);
+@NgModule({
+    imports: [RouterModule.forRoot(appRoutes)],
+    exports: [RouterModule],
+  })
+  export class AppRoutingModule {}
