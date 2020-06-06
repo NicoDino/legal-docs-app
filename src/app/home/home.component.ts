@@ -19,9 +19,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         private authenticationService: AuthenticationService,
         private userService: UserService
     ) {
-        this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
-            this.currentUser = user;
-        });
+            this.currentUser = this.authenticationService.currentUserValue;
     }
 
     ngOnInit() {
@@ -35,7 +33,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     deleteUser(id: number) {
         this.userService.delete(id).pipe(first()).subscribe(() => {
-            this.loadAllUsers()
+            this.loadAllUsers();
         });
     }
 
