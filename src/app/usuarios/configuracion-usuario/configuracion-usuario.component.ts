@@ -55,13 +55,14 @@ export class ConfiguracionUsuarioComponent implements OnInit {
   }
 
   toggleEdicion() {
-    const nextValue = !this.activarEdicion$.getValue();
-    this.activarEdicion$.next(nextValue);
-    if (nextValue) {
+    const enableEdition = !this.activarEdicion$.getValue();
+    this.activarEdicion$.next(enableEdition);
+    if (enableEdition) {
       this.usuarioForm.controls.nombre.enable();
       this.usuarioForm.controls.apellido.enable();
       this.usuarioForm.controls.email.enable();
     } else {
+      this.setValues(this.usuarioOriginal);
       this.usuarioForm.controls.nombre.disable();
       this.usuarioForm.controls.apellido.disable();
       this.usuarioForm.controls.email.disable();

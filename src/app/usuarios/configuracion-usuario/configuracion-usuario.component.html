@@ -1,6 +1,5 @@
 <div class="container">
-  <form *ngIf="!(cambiarPass$ | async)" [formGroup]="usuarioForm" (ngSubmit)="onSubmitDatos()" class="row">
-   <div class="col-10">
+  <form *ngIf="!(cambiarPass$ | async)" [formGroup]="usuarioForm" (ngSubmit)="onSubmitDatos()" class="form">
     <div class="form-group">
       <label for="email">Nombre</label>
       <input type="text" formControlName="nombre" name="nombre" required />
@@ -14,19 +13,19 @@
       <input type="email" formControlName="email" name="email" required />
     </div>
 
-    <div class="form-group" *ngIf="activarEdicion$ | async">
+    <span *ngIf="activarEdicion$ | async">
       <button type="submit" class="btn btn-primary">Guardar</button>
-      <button type="button" class="btn btn-primary">Cancelar</button>
-    </div>
-  </div>
-  <div class="col-2">
-    <button type="button" class="btn btn-primary" (click)="toggleEdicion()">Modificar</button>
-    <button type="button" class="btn btn-primary" (click)="toggleCambiarPass()">Cambiar Contraseña</button>
+      <button type="button" class="btn btn-danger" (click)="toggleEdicion()">Cancelar</button>
+    </span>
 
-   </div>
+    <span *ngIf="!(activarEdicion$ | async)">
+      <button type="button" class="btn btn-primary" (click)="toggleEdicion()">Modificar</button>
+      <button type="button" class="btn btn-warning" (click)="toggleCambiarPass()">Cambiar Contraseña</button>
+    </span>
+
   </form>
 
-  <form *ngIf="cambiarPass$ | async" [formGroup]="cambiarPassForm" (ngSubmit)="onSubmitPass()" >
+  <form *ngIf="cambiarPass$ | async" [formGroup]="cambiarPassForm" (ngSubmit)="onSubmitPass()" class="form">
     <div class="form-group">
       <label for="email">Contraseña actual</label>
       <input type="password" formControlName="passActual" name="passActual" required />
@@ -42,7 +41,7 @@
 
     <div class="form-group">
       <button type="submit" class="btn btn-primary">Guardar</button>
-      <button type="button" class="btn btn-primary" (click)="toggleCambiarPass()">Cancelar</button>
+      <button type="button" class="btn btn-danger" (click)="toggleCambiarPass()">Cancelar</button>
     </div>
   </form>
 </div>
