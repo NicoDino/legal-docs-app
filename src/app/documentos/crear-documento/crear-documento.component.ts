@@ -1,22 +1,22 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { FaqsService } from 'src/app/services/faqs.service';
 import { Subject, BehaviorSubject } from 'rxjs';
+import { DocumentosService } from 'src/app/services/documentos.service';
 
 @Component({
-    selector: 'app-crear-faq',
-    templateUrl: './crear-faq.component.html'
+    selector: 'app-crear-documento',
+    templateUrl: './crear-documento.component.html'
 })
-export class CrearFaqComponent implements OnInit, OnDestroy {
-    faqForm: FormGroup;
+export class CrearDocumentoComponent implements OnInit, OnDestroy {
+    documentoForm: FormGroup;
     disableGuardar$ = new BehaviorSubject<boolean>(false);
     unsubscribe$ = new Subject<void>();
 
     constructor(
         private router: Router,
         private formBuilder: FormBuilder,
-        private faqService: FaqsService
+        private documentosService: DocumentosService
     ) { }
 
     ngOnDestroy(): void {
@@ -25,17 +25,19 @@ export class CrearFaqComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.faqForm = this.formBuilder.group({
-            pregunta: new FormControl(''),
-            contenido: new FormControl('')
+        this.documentoForm = this.formBuilder.group({
+            nombre: new FormControl(''),
+            precio: new FormControl(''),
+            tipo: new FormControl(''),
+            html: new FormControl('')
         });
     }
 
     onSubmit() {
         this.disableGuardar$.next(true);
-        this.faqService.create(this.faqForm.value).subscribe(
+        this.documentosService.create(this.documentoForm.value).subscribe(
             (res) => {
-                this.router.navigateByUrl('faqs');
+                this.router.navigateByUrl('documentos');
             }, (err) => {
                 this.disableGuardar$.next(false);
             }
@@ -43,6 +45,6 @@ export class CrearFaqComponent implements OnInit, OnDestroy {
     }
 
     onCancel() {
-        this.router.navigateByUrl('faqs');
+        this.router.navigateByUrl('documentos');
     }
 }
