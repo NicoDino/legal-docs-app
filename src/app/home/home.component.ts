@@ -7,39 +7,15 @@ import { UserService } from '../services/user.service';
 import { User } from '../models/user';
 
 @Component({
-    templateUrl: 'home.component.html',
-    styleUrls: ['home.component.css']
+  templateUrl: 'home.component.html',
+  styleUrls: ['home.component.css'],
 })
-export class HomeComponent implements OnInit, OnDestroy {
-    currentUser: User;
-    // currentUserSubscription: Subscription;
-    users: User[] = [];
+export class HomeComponent implements OnInit {
+  currentUser: User;
 
-    constructor(
-        private authenticationService: AuthenticationService,
-        private userService: UserService
-    ) {
-            this.currentUser = this.authenticationService.currentUserValue;
-    }
+  constructor(private authenticationService: AuthenticationService) {}
 
-    ngOnInit() {
-        this.loadAllUsers();
-    }
-
-    ngOnDestroy() {
-        // unsubscribe to ensure no memory leaks
-        // this.currentUserSubscription.unsubscribe();
-    }
-
-    deleteUser(id: number) {
-        this.userService.delete(id).pipe(first()).subscribe(() => {
-            this.loadAllUsers();
-        });
-    }
-
-    private loadAllUsers() {
-        this.userService.getAll().pipe(first()).subscribe(users => {
-            this.users = users;
-        });
-    }
+  ngOnInit() {
+    this.currentUser = this.authenticationService.currentUserValue;
+  }
 }
