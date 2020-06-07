@@ -8,13 +8,10 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-  currentUserSubject = new BehaviorSubject<User>(null);
-  currentUser$ = this.currentUserSubject.asObservable();
-  // tslint:disable-next-line: variable-name
   constructor(private http: HttpClient, private router: Router, private jwtHelper: JwtHelperService) {}
 
   public get currentUserValue(): User {
-    return this.currentUserSubject.value;
+    return JSON.parse(localStorage.getItem('currentUser'));
   }
 
   public get isLoggedIn(): boolean {
@@ -25,7 +22,7 @@ export class AuthenticationService {
     this.http.post(`${environment.apiUrl}/authenticate`, { email, password }).subscribe((response: any) => {
       // store user details and jwt token in local storage to keep user logged in between page refreshes
       localStorage.setItem('token', response.token);
-      this.currentUserSubject.next(response.user);
+      localStorage.setItem('currentUser', JSON.stringify(response.user));
       this.router.navigate(['/']);
     });
   }
@@ -33,11 +30,16 @@ export class AuthenticationService {
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('token');
-    this.currentUserSubject.next(null);
+    localStorage.removeItem('currentUser');
     this.router.navigate(['/login']);
   }
 
   getToken() {
     return localStorage.getItem('token');
+  }
+
+  updateUser(user){
+    localStorage.setItem('currentUser', JSON.stringify(user));
+
   }
 }

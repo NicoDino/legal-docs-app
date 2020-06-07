@@ -12,7 +12,7 @@ import { User } from '../models/user';
 })
 export class HomeComponent implements OnInit, OnDestroy {
     currentUser: User;
-    currentUserSubscription: Subscription;
+    // currentUserSubscription: Subscription;
     users: User[] = [];
 
     constructor(
@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         // unsubscribe to ensure no memory leaks
-        this.currentUserSubscription.unsubscribe();
+        // this.currentUserSubscription.unsubscribe();
     }
 
     deleteUser(id: number) {
