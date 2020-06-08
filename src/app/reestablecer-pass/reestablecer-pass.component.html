@@ -1,8 +1,8 @@
 <div class="form" *ngIf="!resetView">
-  <form (ngSubmit)="onSubmit()" ngNativeValidate class="login-form" autocomplete="off">
+  <form [formGroup]="emailForm" (ngSubmit)="onSubmit()" autocomplete="off">
     <div class="form-group">
       <label for="email">Email</label>
-      <input type="email" name="email" required />
+      <input type="email"  formControlName="email" required />
     </div>
 
     <div class="form-group">
@@ -18,10 +18,14 @@
 </div>
 
 <div class="form" *ngIf="resetView">
-  <form (ngSubmit)="onSubmit()" ngNativeValidate class="login-form" autocomplete="off">
+  <form [formGroup]="codigoForm" (ngSubmit)="onCodeSubmit()" autocomplete="off">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email"  formControlName="email" required />
+    </div>
     <div class="form-group">
       <label>Código</label>
-      <input id="codigo" type="text" name="codigo" required />
+      <input id="codigo" type="text" formControlName="codigo" required />
     </div>
     <div class="form-group">
       <label>Nueva contraseña</label>

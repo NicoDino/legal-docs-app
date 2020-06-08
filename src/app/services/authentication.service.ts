@@ -35,6 +35,7 @@ export class AuthenticationService {
     // remove user from local storage to log user out
     localStorage.removeItem('token');
     localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
     this.router.navigate(['/login']);
   }
 
@@ -42,8 +43,8 @@ export class AuthenticationService {
     return localStorage.getItem('token');
   }
 
-  updateUser(user){
+  updateUser(user) {
     localStorage.setItem('currentUser', JSON.stringify(user));
-
+    this.currentUserSubject.next(user);
   }
 }

@@ -22,7 +22,6 @@ export class ConfiguracionUsuarioComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthenticationService,
     private userService: UserService,
-    private alertService: AlertService
   ) {}
 
   ngOnInit(): void {

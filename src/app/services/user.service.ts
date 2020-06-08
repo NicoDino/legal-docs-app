@@ -35,4 +35,13 @@ export class UserService {
   changePass(id: string, update) {
     return this.http.post(`${this.apiUrl}/users/${id}/change_password`, update);
   }
+
+  requestToken(email: string) {
+    return this.http.post(`${this.apiUrl}/users/request_token`, { email });
+  }
+
+  resetPass(params){
+    return this.http.post(`${this.apiUrl}/users/password_reset`, params );
+
+  }
 }
