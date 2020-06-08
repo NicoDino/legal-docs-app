@@ -9,12 +9,13 @@ import { AuthenticationService } from './services/authentication.service';
     styleUrls: ['app.component.css']
 })
 export class AppComponent {
-    showNavBar: boolean;
+currentUser: User;
 
     constructor(
         private authenticationService: AuthenticationService
     ) {
-        this.showNavBar = this.authenticationService.isLoggedIn;
+        this.authenticationService.currentUser$.subscribe(x => this.currentUser = x);
+
     }
 
 }

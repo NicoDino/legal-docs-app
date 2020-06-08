@@ -18,6 +18,7 @@ import { CrearFaqComponent } from './faqs/crear-faq/crear-faq.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { ConfiguracionUsuarioComponent } from './usuarios/configuracion-usuario/configuracion-usuario.component';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { ReestablecerPassComponent } from './reestablecer-pass/reestablecer-pass.component';
 
 @NgModule({
   imports: [BrowserModule, ReactiveFormsModule, HttpClientModule, FormsModule, EditorModule, AppRoutingModule],
@@ -33,6 +34,7 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
     CrearCategoriaComponent,
     CrearFaqComponent,
     ConfiguracionUsuarioComponent,
+    ReestablecerPassComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

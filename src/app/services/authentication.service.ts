@@ -8,6 +8,9 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
+  currentUserSubject = new BehaviorSubject<User>(null);
+  currentUser$ = this.currentUserSubject.asObservable();
+
   constructor(private http: HttpClient, private router: Router, private jwtHelper: JwtHelperService) {}
 
   public get currentUserValue(): User {
@@ -21,6 +24,7 @@ export class AuthenticationService {
   login(email: string, password: string) {
     this.http.post(`${environment.apiUrl}/authenticate`, { email, password }).subscribe((response: any) => {
       // store user details and jwt token in local storage to keep user logged in between page refreshes
+      this.currentUserSubject.next(response.user);
       localStorage.setItem('token', response.token);
       localStorage.setItem('currentUser', JSON.stringify(response.user));
       this.router.navigate(['/']);
