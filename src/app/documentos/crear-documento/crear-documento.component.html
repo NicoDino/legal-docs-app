@@ -1,0 +1,56 @@
+<div class="container-fluid">
+    <div class="row heading">
+        <div class="col-sm-6">
+            <h2>Documentos<br><small class="subtitle">Crear nuevo</small></h2>
+        </div>
+        <div class="col-6">
+
+            <button type="button" class="btn btn-sm btn-link float-right" (click)="onCancel()"><i
+                    class="material-icons float-left">
+                    arrow_back
+                </i></button>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <form [formGroup]="documentoForm" (ngSubmit)="onSubmit()">
+        <div class="row justify-content-center mt-5">
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input formControlName="nombre" type="text" class="form-control" id="nombre"
+                        aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Tipo</label>
+                    <select formControlName="tipo" class="form-control" id="tipo">
+                        <option>profesional</option>
+                        <option>particular</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="precio">Precio</label>
+                    <input formControlName="precio" type="number" class="form-control" id="precio"
+                        aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="html">Contenido</label>
+                    <editor apiKey="xw7i6xqrjfmfj32n3l20w1lb0mek7bbf4kffwtu7is30t377" plugins="wordcount" id="html"
+                        formControlName="html"></editor>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <button type="submit" class="btn btn-sm btn-success"
+                    [disabled]="disableGuardar$ | async">Guardar</button>
+            </div>
+        </div>
+    </form>
+</div>

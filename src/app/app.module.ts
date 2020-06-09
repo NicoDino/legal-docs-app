@@ -19,6 +19,10 @@ import { EditorModule } from '@tinymce/tinymce-angular';
 import { ConfiguracionUsuarioComponent } from './usuarios/configuracion-usuario/configuracion-usuario.component';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { ReestablecerPassComponent } from './reestablecer-pass/reestablecer-pass.component';
+import { DocumentosComponent } from './documentos/documentos.component';
+import { CrearDocumentoComponent } from './documentos/crear-documento/crear-documento.component';
+import { CrearCampoComponent } from './documentos/campos/crear-campo/crear-campo.component';
+import { CampoItemComponent } from './documentos/campos/campo-item/campo-item.component';
 
 @NgModule({
   imports: [BrowserModule, ReactiveFormsModule, HttpClientModule, FormsModule, EditorModule, AppRoutingModule],
@@ -35,6 +39,10 @@ import { ReestablecerPassComponent } from './reestablecer-pass/reestablecer-pass
     CrearFaqComponent,
     ConfiguracionUsuarioComponent,
     ReestablecerPassComponent,
+    DocumentosComponent,
+    CrearDocumentoComponent,
+    CrearCampoComponent,
+    CampoItemComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
