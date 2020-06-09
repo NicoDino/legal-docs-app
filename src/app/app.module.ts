@@ -16,6 +16,10 @@ import { AuthInterceptor } from './helpers/auth.interceptor';
 import { FaqsComponent } from './faqs/faqs.component';
 import { CrearFaqComponent } from './faqs/crear-faq/crear-faq.component';
 import { EditorModule } from "@tinymce/tinymce-angular";
+import { DocumentosComponent } from './documentos/documentos.component';
+import { CrearDocumentoComponent } from './documentos/crear-documento/crear-documento.component';
+import { CrearCampoComponent } from './documentos/campos/crear-campo/crear-campo.component';
+import { CampoItemComponent } from './documentos/campos/campo-item/campo-item.component';
 
 @NgModule({
     imports: [
@@ -36,7 +40,11 @@ import { EditorModule } from "@tinymce/tinymce-angular";
         FaqsComponent,
         ArbolItemComponent,
         CrearCategoriaComponent,
-        CrearFaqComponent
+        CrearFaqComponent,
+        DocumentosComponent,
+        CrearDocumentoComponent,
+        CrearCampoComponent,
+        CampoItemComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
