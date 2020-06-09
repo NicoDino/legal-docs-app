@@ -8,6 +8,7 @@ import { FaqsComponent } from './faqs/faqs.component';
 import { CrearFaqComponent } from './faqs/crear-faq/crear-faq.component';
 import { DocumentosComponent } from './documentos/documentos.component';
 import { CrearDocumentoComponent } from './documentos/crear-documento/crear-documento.component';
+import { CrearCampoComponent } from './documentos/campos/crear-campo/crear-campo.component';
 
 
 const appRoutes: Routes = [
@@ -19,6 +20,7 @@ const appRoutes: Routes = [
     { path: 'crear-faq', component: CrearFaqComponent },
     { path: 'documentos', component: DocumentosComponent },
     { path: 'crear-documento', component: CrearDocumentoComponent },
+    { path: 'crear-campo/:idDocumento', component: CrearCampoComponent },
 
     // otherwise redirect to home
     { path: '**', redirectTo: '' }

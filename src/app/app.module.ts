@@ -18,6 +18,8 @@ import { CrearFaqComponent } from './faqs/crear-faq/crear-faq.component';
 import { EditorModule } from "@tinymce/tinymce-angular";
 import { DocumentosComponent } from './documentos/documentos.component';
 import { CrearDocumentoComponent } from './documentos/crear-documento/crear-documento.component';
+import { CrearCampoComponent } from './documentos/campos/crear-campo/crear-campo.component';
+import { CampoItemComponent } from './documentos/campos/campo-item/campo-item.component';
 
 @NgModule({
     imports: [
@@ -40,7 +42,9 @@ import { CrearDocumentoComponent } from './documentos/crear-documento/crear-docu
         CrearCategoriaComponent,
         CrearFaqComponent,
         DocumentosComponent,
-        CrearDocumentoComponent
+        CrearDocumentoComponent,
+        CrearCampoComponent,
+        CampoItemComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

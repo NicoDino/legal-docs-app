@@ -5,6 +5,8 @@ import { first } from 'rxjs/operators';
 import { AuthenticationService } from '../services/authentication.service';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user';
+import { Documento } from '../models/documento';
+import { DocumentosService } from '../services/documentos.service';
 
 @Component({
     templateUrl: 'home.component.html',
@@ -14,10 +16,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     currentUser: User;
     currentUserSubscription: Subscription;
     users: User[] = [];
+    documentos: Documento[];
 
     constructor(
         private authenticationService: AuthenticationService,
-        private userService: UserService
+        private userService: UserService,
+        private documentoService: DocumentosService
     ) {
         this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
             this.currentUser = user;
@@ -26,6 +30,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.loadAllUsers();
+        this.loadAllDocumentos();
     }
 
     ngOnDestroy() {
@@ -42,6 +47,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     private loadAllUsers() {
         this.userService.getAll().pipe(first()).subscribe(users => {
             this.users = users;
+        });
+    }
+
+    private loadAllDocumentos() {
+        this.documentoService.getAll().pipe(first()).subscribe(documentos => {
+            this.documentos = documentos;
         });
     }
 }

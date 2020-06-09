@@ -13,18 +13,37 @@
         <ul class="list-group">
             <li class="list-group-item">
                 <div class="row justify-content-start pb-3">
-                    <div class="col-11 justify-content-center ">
-                        <span class="align-bottom">{{ documento.nombre }}</span>
+                    <div class="col-8 justify-content-center ">
+                        <span class="align-bottom">{{ documento.nombre }} <small
+                                *ngIf="documento.campos.length>0">({{documento.campos.length}})</small></span>
                     </div>
-                    <div class="col-1 justify-content-center">
+                    <div class=" col-4 justify-content-center">
                         <div class="btn-group float-right">
-                            <button type="button" class="btn btn-xs btn-link">
+                            <a *ngIf="documento.campos?.length > 0" class="btn btn-xs btn-link" data-toggle="collapse"
+                                [attr.data-target]="'#doc-' + documento._id" type="button">
+                                <i class="material-icons float-left">
+                                    unfold_more
+                                </i>
+                            </a>
+                            <button type="button" class="btn btn-xs btn-link" (click)="crearCampo(documento._id)">
+                                <i class="material-icons float-right small">
+                                    add
+                                </i>
+                            </button>
+                            <button *ngIf="documento.campos?.length < 1" type="button" class="btn btn-xs btn-link">
                                 <i class="material-icons small float-left" (click)="borrarDocumento(documento._id)">
                                     delete
                                 </i>
                             </button>
                         </div>
                     </div>
+                </div>
+                <div class="collapse show " id="doc-{{documento._id}}" #accordion *ngIf="documento.campos?.length > 0">
+                    <ul class="list-group ">
+                        <li class="list-group-item" *ngFor="let campo of documento.campos">
+                            <app-campo-item [campoId]="campo"></app-campo-item>
+                        </li>
+                    </ul>
                 </div>
             </li>
         </ul>

@@ -28,6 +28,10 @@ export class DocumentosComponent implements OnInit {
         this.router.navigateByUrl('crear-documento');
     }
 
+    crearCampo(idDocumento) {
+        this.router.navigateByUrl(`crear-campo/${idDocumento}`);
+    }
+
     borrarDocumento(idDOcumento: string) {
         if (confirm("¿Está seguro de querer eliminar el documento?")) {
             this.documentosService.delete(idDOcumento).subscribe(
