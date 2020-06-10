@@ -6,29 +6,42 @@ import { User } from '../models/user';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-    private apiUrl
-    
-    constructor(private http: HttpClient) {
-        this.apiUrl = environment.apiUrl;
-     }
+  private apiUrl;
 
-    getAll() {
-        return this.http.get<User[]>(`${this.apiUrl}/users`);
-    }
+  constructor(private http: HttpClient) {
+    this.apiUrl = environment.apiUrl;
+  }
 
-    getById(id: number) {
-        return this.http.get(`${this.apiUrl}/users/${id}`);
-    }
+  getAll() {
+    return this.http.get<User[]>(`${this.apiUrl}/users`);
+  }
 
-    register(user: User) {
-        return this.http.post(`${this.apiUrl}/users/register`, user);
-    }
+  getById(id: string) {
+    return this.http.get(`${this.apiUrl}/users/${id}`);
+  }
 
-    update(user: User) {
-        return this.http.put(`${this.apiUrl}/users/${user.id}`, user);
-    }
+  register(user: User) {
+    return this.http.post(`${this.apiUrl}/users/register`, user);
+  }
 
-    delete(id: number) {
-        return this.http.delete(`${this.apiUrl}/users/${id}`);
-    }
+  update(user: User) {
+    return this.http.put(`${this.apiUrl}/users/${user.id}`, user);
+  }
+
+  delete(id: string) {
+    return this.http.delete(`${this.apiUrl}/users/${id}`);
+  }
+
+  changePass(id: string, update) {
+    return this.http.post(`${this.apiUrl}/users/${id}/change_password`, update);
+  }
+
+  requestToken(email: string) {
+    return this.http.post(`${this.apiUrl}/users/request_token`, { email });
+  }
+
+  resetPass(params){
+    return this.http.post(`${this.apiUrl}/users/password_reset`, params );
+
+  }
 }

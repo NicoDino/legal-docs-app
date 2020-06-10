@@ -1,16 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { first } from 'rxjs/operators';
-
 import { AuthenticationService } from '../services/authentication.service';
-import { UserService } from '../services/user.service';
 import { User } from '../models/user';
 import { Documento } from '../models/documento';
 import { DocumentosService } from '../services/documentos.service';
+import { Subscription } from 'rxjs';
+import { first } from 'rxjs/operators';
+import { UserService } from '../services/user.service';
 
 @Component({
-    templateUrl: 'home.component.html',
-    styleUrls: ['home.component.css']
+  templateUrl: 'home.component.html',
+  styleUrls: ['home.component.css'],
 })
 export class HomeComponent implements OnInit, OnDestroy {
     currentUser: User;
@@ -23,7 +22,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         private userService: UserService,
         private documentoService: DocumentosService
     ) {
-        this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
+        this.currentUserSubscription = this.authenticationService.currentUser$.subscribe(user => {
             this.currentUser = user;
         });
     }
@@ -38,11 +37,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.currentUserSubscription.unsubscribe();
     }
 
-    deleteUser(id: number) {
-        this.userService.delete(id).pipe(first()).subscribe(() => {
-            this.loadAllUsers()
-        });
-    }
 
     private loadAllUsers() {
         this.userService.getAll().pipe(first()).subscribe(users => {

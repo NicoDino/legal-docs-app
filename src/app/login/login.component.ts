@@ -14,8 +14,8 @@ export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     loading = false;
     submitted = false;
-    public email = "";
-    public password = "";
+    public email = '';
+    public password = '';
 
     constructor(
         private router: Router,
@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
         private alertService: AlertService
     ) {
         // redirect to home if already logged in
-        if (this.authenticationService.currentUserValue) {
+        if (this.authenticationService.isLoggedIn) {
             this.router.navigate(['/']);
         }
     }

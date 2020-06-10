@@ -1,0 +1,45 @@
+<div class="form" *ngIf="!resetView">
+  <form [formGroup]="emailForm" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email"  formControlName="email" required />
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Enviar</button>
+    </div>
+    <div class="form-group">
+      <button (click)="toggleView()" type="button" class="btn btn-primary">Ya tengo mi código</button>
+    </div>
+    <div class="form-group">
+      <a href="login">Volver</a>
+    </div>
+  </form>
+</div>
+
+<div class="form" *ngIf="resetView">
+  <form [formGroup]="codigoForm" (ngSubmit)="onCodeSubmit()" autocomplete="off">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email"  formControlName="email" required />
+    </div>
+    <div class="form-group">
+      <label>Código</label>
+      <input id="codigo" type="text" formControlName="codigo" required />
+    </div>
+    <div class="form-group">
+      <label>Nueva contraseña</label>
+      <input type="password" formControlName="nuevaPass" required />
+    </div>
+    <div class="form-group">
+      <label>Confirme nueva contraseña</label>
+      <input type="password" formControlName="confirmaNuevaPass" required />
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Enviar</button>
+    </div>
+    <div class="form-group">
+      <a href="login">Volver</a>
+    </div>
+  </form>
+</div>
