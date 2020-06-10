@@ -7,7 +7,7 @@
       <h2>Usuario<br /><small class="subtitle">Modificar contraseña</small></h2>
     </div>
     <div class="col-6">
-      <button type="button" class="btn btn-warning float-right" (click)="toggleCambiarPass()">
+      <button *ngIf="!(cambiarPass$ | async)" type="button" class="btn btn-warning float-right" (click)="toggleCambiarPass()">
         Cambiar Contraseña
       </button>
     </div>
