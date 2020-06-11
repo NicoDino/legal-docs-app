@@ -23,9 +23,10 @@ import { DocumentosComponent } from './documentos/documentos.component';
 import { CrearDocumentoComponent } from './documentos/crear-documento/crear-documento.component';
 import { CrearCampoComponent } from './documentos/campos/crear-campo/crear-campo.component';
 import { CampoItemComponent } from './documentos/campos/campo-item/campo-item.component';
+import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
 
 @NgModule({
-  imports: [BrowserModule, ReactiveFormsModule, HttpClientModule, FormsModule, EditorModule, AppRoutingModule],
+  imports: [BrowserModule, ReactiveFormsModule, HttpClientModule, FormsModule, EditorModule, AppRoutingModule, MDBBootstrapModulesPro],
   declarations: [
     AppComponent,
     AlertComponent,
@@ -52,4 +53,4 @@ import { CampoItemComponent } from './documentos/campos/campo-item/campo-item.co
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
