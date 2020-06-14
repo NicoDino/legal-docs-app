@@ -41,7 +41,7 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
     }
 
     onSubmit() {
-        this.campoForm.controls['documento'].setValue(this.documento._id);
+        this.campoForm.controls.documento.setValue(this.documento._id);
         this.disableGuardar$.next(true);
         this.camposService.create(this.campoForm.value).subscribe(
             (res) => {
