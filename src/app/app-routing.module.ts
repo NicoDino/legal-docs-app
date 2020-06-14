@@ -21,9 +21,10 @@ const appRoutes: Routes = [
   { path: 'faqs', component: FaqsComponent, canActivate: [AuthGuard] },
   { path: 'crear-faq', component: CrearFaqComponent, canActivate: [AuthGuard] },
   { path: 'app-configuracion-usuario', component: ConfiguracionUsuarioComponent, canActivate: [AuthGuard] },
-  { path: 'documentos', component: DocumentosComponent , canActivate: [AuthGuard] },
+  { path: 'documentos', component: DocumentosComponent, canActivate: [AuthGuard] },
+  { path: 'crear-campo/:idDocumento', component: CrearCampoComponent, canActivate: [AuthGuard] },
+  { path: 'crear-documento/:step/:idDocumento', component: CrearDocumentoComponent, canActivate: [AuthGuard] },
   { path: 'crear-documento', component: CrearDocumentoComponent, canActivate: [AuthGuard] },
-  { path: 'crear-campo/:idDocumento', component: CrearCampoComponent , canActivate: [AuthGuard] },
   /*  RUTAS PUBLICAS  */
   { path: 'login', component: LoginComponent },
   { path: 'app-reestablecer-pass', component: ReestablecerPassComponent },
@@ -32,7 +33,7 @@ const appRoutes: Routes = [
   { path: '**', redirectTo: '' },
 ];
 @NgModule({
-    imports: [RouterModule.forRoot(appRoutes)],
-    exports: [RouterModule],
-  })
-  export class AppRoutingModule {}
+  imports: [RouterModule.forRoot(appRoutes)],
+  exports: [RouterModule],
+})
+export class AppRoutingModule { }

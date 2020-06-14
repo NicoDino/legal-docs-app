@@ -31,15 +31,22 @@
                     class="red-text"><b>$</b> {{documento.precio}}</td>
                 <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
                     class="red-text">
-                    <button type="button" class="btn btn-xs btn-link float-right" (click)="crearCampo(documento._id)">
-                        <i class="material-icons small" title="Agregar campo">
-                            add
-                        </i>
-                    </button>
                     <button *ngIf="documento.campos?.length < 1" type="button" class="btn btn-xs btn-link float-right"
                         title="Eliminar documento">
                         <i class="material-icons small " (click)="borrarDocumento(documento._id)">
                             delete
+                        </i>
+                    </button>
+                    <button type="button" class="btn btn-xs btn-link float-right"
+                        (click)="camposDocumento(documento._id)">
+                        <i class="material-icons small" title="Agregar campo">
+                            add
+                        </i>
+                    </button>
+                    <button type="button" class="btn btn-xs btn-link float-right"
+                        (click)="editarContenido(documento._id)">
+                        <i class="material-icons small" title="EditarContenido">
+                            edit
                         </i>
                     </button></td>
             </tr>

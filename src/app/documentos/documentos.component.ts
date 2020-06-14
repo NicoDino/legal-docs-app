@@ -48,8 +48,12 @@ export class DocumentosComponent implements OnInit {
         this.router.navigateByUrl('crear-documento');
     }
 
-    crearCampo(idDocumento) {
-        this.router.navigateByUrl(`crear-campo/${idDocumento}`);
+    camposDocumento(idDocumento) {
+        this.router.navigateByUrl(`crear-documento/1/${idDocumento}`);
+    }
+
+    editarContenido(idDocumento) {
+        this.router.navigateByUrl(`crear-documento/2/${idDocumento}`);
     }
 
     borrarDocumento(idDocumento: string) {

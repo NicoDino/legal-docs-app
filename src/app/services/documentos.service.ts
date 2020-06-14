@@ -17,8 +17,16 @@ export class DocumentosService {
         return this.http.get<Documento[]>(`${this.apiUrl}/documentos`);
     }
 
+    getById(id: string) {
+        return this.http.get<Documento[]>(`${this.apiUrl}/documentos/${id}`);
+    }
+
     create(documento: Documento) {
         return this.http.post(`${this.apiUrl}/documentos`, documento);
+    }
+
+    update(documento: Documento) {
+        return this.http.put(`${this.apiUrl}/documentos/${documento._id}`, documento);
     }
 
     delete(id: string) {
