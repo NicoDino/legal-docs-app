@@ -1,0 +1,23 @@
+<div class="container-fluid">
+    <div class="row heading">
+        <div class="col-sm-6">
+            <h2>Borradores<br><small class="subtitle">Listado</small></h2>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Cliente</th>
+                <th scope="col">Documento</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let borrador of $borradores | async">
+                <td>{{borrador.emailCliente}}</td>
+                <td>{{borrador.documento}}</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -12,6 +12,7 @@ import { ReestablecerPassComponent } from './reestablecer-pass/reestablecer-pass
 import { DocumentosComponent } from './documentos/documentos.component';
 import { CrearCampoComponent } from './documentos/campos/crear-campo/crear-campo.component';
 import { CrearDocumentoComponent } from './documentos/crear-documento/crear-documento.component';
+import { BorradoresComponent } from './borradores/borradores.component';
 
 const appRoutes: Routes = [
   /* RUTAS PRIVADAS */
@@ -22,12 +23,18 @@ const appRoutes: Routes = [
   { path: 'crear-faq', component: CrearFaqComponent, canActivate: [AuthGuard] },
   { path: 'app-configuracion-usuario', component: ConfiguracionUsuarioComponent, canActivate: [AuthGuard] },
   { path: 'documentos', component: DocumentosComponent, canActivate: [AuthGuard] },
+// Las dos lineas de abajo quedan comentadas desde la resolución de un conflicto al mergear, verificar. el conflicto se daba con las 3 de abajo. verificar
+ // { path: 'crear-documento', component: CrearDocumentoComponent, canActivate: [AuthGuard] },
+ // { path: 'crear-campo/:idDocumento', component: CrearCampoComponent, canActivate: [AuthGuard] },
+
   { path: 'crear-campo/:idDocumento', component: CrearCampoComponent, canActivate: [AuthGuard] },
   { path: 'crear-documento/:step/:idDocumento', component: CrearDocumentoComponent, canActivate: [AuthGuard] },
   { path: 'crear-documento', component: CrearDocumentoComponent, canActivate: [AuthGuard] },
+
   /*  RUTAS PUBLICAS  */
   { path: 'login', component: LoginComponent },
   { path: 'app-reestablecer-pass', component: ReestablecerPassComponent },
+  { path: 'borradores', component: BorradoresComponent, canActivate: [AuthGuard] },
 
   // otherwise redirect to home
   { path: '**', redirectTo: '' },
