@@ -1,47 +1,119 @@
+<div class="container-fluid">
+  <div class="row heading justify-content-space-between">
+    <div class="col-sm-6" *ngIf="!(cambiarPass$ | async)">
+      <h2>Usuario<br /><small class="subtitle">Actualizar datos</small></h2>
+    </div>
+    <div class="col-sm-6" *ngIf="cambiarPass$ | async">
+      <h2>Usuario<br /><small class="subtitle">Modificar contraseña</small></h2>
+    </div>
+    <div class="col-6">
+      <button *ngIf="!(cambiarPass$ | async)" type="button" class="btn btn-warning float-right" (click)="toggleCambiarPass()">
+        Cambiar Contraseña
+      </button>
+    </div>
+  </div>
+</div>
+
 <div class="container">
   <form *ngIf="!(cambiarPass$ | async)" [formGroup]="usuarioForm" (ngSubmit)="onSubmitDatos()" class="form">
-    <div class="form-group">
-      <label for="email">Nombre</label>
-      <input type="text" formControlName="nombre" name="nombre" required />
+    <div class="row justify-content-center mt-5">
+      <div class="form-group col-12">
+        <label for="nombre">Nombre</label>
+        <input
+          class="form-control"
+          type="text"
+          formControlName="nombre"
+          name="nombre"
+          required
+          aria-label="Sizing example input"
+          aria-describedby="inputGroup-sizing-default"
+        />
+      </div>
+      <div class="form-group col-12">
+        <label for="apellido">Apellido</label>
+        <input
+          class="form-control"
+          type="text"
+          formControlName="apellido"
+          name="apellido"
+          required
+          aria-label="Sizing example input"
+          aria-describedby="inputGroup-sizing-default"
+        />
+      </div>
+      <div class="form-group col-12">
+        <label for="email">Email</label>
+        <input
+          class="form-control"
+          type="email"
+          formControlName="email"
+          name="email"
+          required
+          aria-label="Sizing example input"
+          aria-describedby="inputGroup-sizing-default"
+        />
+      </div>
     </div>
-    <div class="form-group">
-      <label for="apellido">Apellido</label>
-      <input type="text"  formControlName="apellido" name="apellido" required />
+    <div class="row">
+      <div class="col-6" *ngIf="activarEdicion$ | async">
+        <button type="submit" class="btn btn-primary mr-2">Guardar</button>
+        <button type="button" class="btn btn-danger" (click)="toggleEdicion()">Cancelar</button>
+      </div>
+
+      <div class="col-6" *ngIf="!(activarEdicion$ | async)">
+        <button type="button" class="btn btn-primary mr-2" (click)="toggleEdicion()">Modificar</button>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" formControlName="email" name="email" required />
-    </div>
-
-    <span *ngIf="activarEdicion$ | async">
-      <button type="submit" class="btn btn-primary">Guardar</button>
-      <button type="button" class="btn btn-danger" (click)="toggleEdicion()">Cancelar</button>
-    </span>
-
-    <span *ngIf="!(activarEdicion$ | async)">
-      <button type="button" class="btn btn-primary" (click)="toggleEdicion()">Modificar</button>
-      <button type="button" class="btn btn-warning" (click)="toggleCambiarPass()">Cambiar Contraseña</button>
-    </span>
-
   </form>
 
   <form *ngIf="cambiarPass$ | async" [formGroup]="cambiarPassForm" (ngSubmit)="onSubmitPass()" class="form">
-    <div class="form-group">
-      <label for="email">Contraseña actual</label>
-      <input type="password" formControlName="passActual" name="passActual" required />
+    <div class="row justify-content-center mt-5">
+      <div class="form-group col-12">
+        <div class="form-group">
+          <label for="email">Contraseña actual</label>
+          <input
+            type="password"
+            formControlName="passActual"
+            name="passActual"
+            required
+            class="form-control"
+            aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-default"
+          />
+        </div>
+      </div>
+      <div class="form-group col-12">
+        <div class="form-group">
+          <label>Nueva contraseña</label>
+          <input
+            type="password"
+            formControlName="nuevaPass"
+            required
+            class="form-control"
+            aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-default"
+          />
+        </div>
+      </div>
+      <div class="form-group col-12">
+        <div class="form-group">
+          <label>Confirme nueva contraseña</label>
+          <input
+            type="password"
+            formControlName="confirmaNuevaPass"
+            required
+            class="form-control"
+            aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-default"
+          />
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <label >Nueva contraseña</label>
-      <input type="password" formControlName="nuevaPass" required />
-    </div>
-    <div class="form-group">
-      <label >Confirme nueva contraseña</label>
-      <input type="password" formControlName="confirmaNuevaPass" required />
-    </div>
-
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary">Guardar</button>
-      <button type="button" class="btn btn-danger" (click)="toggleCambiarPass()">Cancelar</button>
+    <div class="row">
+      <div class="col-6">
+        <button type="submit" class="btn btn-primary mr-2">Guardar</button>
+        <button type="button" class="btn btn-danger" (click)="toggleCambiarPass()">Cancelar</button>
+      </div>
     </div>
   </form>
 </div>

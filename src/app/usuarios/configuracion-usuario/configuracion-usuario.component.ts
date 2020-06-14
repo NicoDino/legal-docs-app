@@ -5,11 +5,11 @@ import { UserService } from 'src/app/services/user.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { User } from 'src/app/models/user';
 import { AlertService } from 'src/app/services/alert.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-configuracion-usuario',
   templateUrl: './configuracion-usuario.component.html',
-  styleUrls: ['./configuracion-usuario.component.css'],
 })
 export class ConfiguracionUsuarioComponent implements OnInit {
   usuarioForm: FormGroup;
@@ -22,6 +22,7 @@ export class ConfiguracionUsuarioComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthenticationService,
     private userService: UserService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -93,5 +94,8 @@ export class ConfiguracionUsuarioComponent implements OnInit {
       alert('Contraseña actualizada');
       this.toggleCambiarPass();
     });
+  }
+  onCancel(){
+    this.router.navigate(['/']);
   }
 }
