@@ -23,6 +23,7 @@ import { DocumentosComponent } from './documentos/documentos.component';
 import { CrearDocumentoComponent } from './documentos/crear-documento/crear-documento.component';
 import { CrearCampoComponent } from './documentos/campos/crear-campo/crear-campo.component';
 import { CampoItemComponent } from './documentos/campos/campo-item/campo-item.component';
+import { BorradoresComponent } from './borradores/borradores.component';
 
 @NgModule({
   imports: [BrowserModule, ReactiveFormsModule, HttpClientModule, FormsModule, EditorModule, AppRoutingModule],
@@ -43,6 +44,7 @@ import { CampoItemComponent } from './documentos/campos/campo-item/campo-item.co
     CrearDocumentoComponent,
     CrearCampoComponent,
     CampoItemComponent,
+    BorradoresComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
@@ -52,4 +54,4 @@ import { CampoItemComponent } from './documentos/campos/campo-item/campo-item.co
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
