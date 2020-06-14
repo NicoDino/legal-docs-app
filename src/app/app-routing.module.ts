@@ -23,8 +23,14 @@ const appRoutes: Routes = [
   { path: 'crear-faq', component: CrearFaqComponent, canActivate: [AuthGuard] },
   { path: 'app-configuracion-usuario', component: ConfiguracionUsuarioComponent, canActivate: [AuthGuard] },
   { path: 'documentos', component: DocumentosComponent, canActivate: [AuthGuard] },
-  { path: 'crear-documento', component: CrearDocumentoComponent, canActivate: [AuthGuard] },
+// Las dos lineas de abajo quedan comentadas desde la resolución de un conflicto al mergear, verificar. el conflicto se daba con las 3 de abajo. verificar
+ // { path: 'crear-documento', component: CrearDocumentoComponent, canActivate: [AuthGuard] },
+ // { path: 'crear-campo/:idDocumento', component: CrearCampoComponent, canActivate: [AuthGuard] },
+
   { path: 'crear-campo/:idDocumento', component: CrearCampoComponent, canActivate: [AuthGuard] },
+  { path: 'crear-documento/:step/:idDocumento', component: CrearDocumentoComponent, canActivate: [AuthGuard] },
+  { path: 'crear-documento', component: CrearDocumentoComponent, canActivate: [AuthGuard] },
+
   /*  RUTAS PUBLICAS  */
   { path: 'login', component: LoginComponent },
   { path: 'app-reestablecer-pass', component: ReestablecerPassComponent },

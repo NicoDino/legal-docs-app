@@ -11,7 +11,7 @@ import { Campo } from 'src/app/models/campo';
 })
 export class CampoItemComponent implements OnInit, OnDestroy {
     @Input() campoId: string;
-    campo: any;
+    campo: any = {};
     collapsed = false;
     identificador: string;
     unsubscribe$ = new Subject<void>();

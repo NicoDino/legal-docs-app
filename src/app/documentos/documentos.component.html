@@ -9,43 +9,55 @@
             </button>
         </div>
     </div>
-    <div *ngFor="let documento of $documentos | async">
-        <ul class="list-group">
-            <li class="list-group-item">
-                <div class="row justify-content-start pb-3">
-                    <div class="col-8 justify-content-center ">
-                        <span class="align-bottom">{{ documento.nombre }} <small
-                                *ngIf="documento.campos.length>0">({{documento.campos.length}})</small></span>
-                    </div>
-                    <div class=" col-4 justify-content-center">
-                        <div class="btn-group float-right">
-                            <a *ngIf="documento.campos?.length > 0" class="btn btn-xs btn-link" data-toggle="collapse"
-                                [attr.data-target]="'#doc-' + documento._id" type="button">
-                                <i class="material-icons float-left">
-                                    unfold_more
-                                </i>
-                            </a>
-                            <button type="button" class="btn btn-xs btn-link" (click)="crearCampo(documento._id)">
-                                <i class="material-icons float-right small">
-                                    add
-                                </i>
-                            </button>
-                            <button *ngIf="documento.campos?.length < 1" type="button" class="btn btn-xs btn-link">
-                                <i class="material-icons small float-left" (click)="borrarDocumento(documento._id)">
-                                    delete
-                                </i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="collapse show " id="doc-{{documento._id}}" #accordion *ngIf="documento.campos?.length > 0">
-                    <ul class="list-group ">
-                        <li class="list-group-item" *ngFor="let campo of documento.campos">
-                            <app-campo-item [campoId]="campo"></app-campo-item>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-        </ul>
-    </div>
+
+    <table mdbTable #tableEl="mdbTable" stickyHeader="true" hover="true" striped="true" class="z-depth-1">
+        <thead class="sticky-top">
+            <tr>
+                <th *ngFor="let head of headElements; let i = index" [mdbTableSort]="elements"
+                    [sortBy]="headElements[i]" scope="col">{{head | titlecase}} <mdb-icon fas icon="sort"></mdb-icon>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody #row>
+            <tr mdbTableCol *ngFor="let documento of elements; let i = index">
+                <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
+                    scope="row">{{documento.nombre}}</th>
+                <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
+                    class="red-text">{{documento.tipo}}</td>
+                <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
+                    class="red-text">{{documento.campos.length}}</td>
+                <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
+                    class="red-text"><b>$</b> {{documento.precio}}</td>
+                <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
+                    class="red-text">
+                    <button *ngIf="documento.campos?.length < 1" type="button" class="btn btn-xs btn-link float-right"
+                        title="Eliminar documento">
+                        <i class="material-icons small " (click)="borrarDocumento(documento._id)">
+                            delete
+                        </i>
+                    </button>
+                    <button type="button" class="btn btn-xs btn-link float-right"
+                        (click)="camposDocumento(documento._id)">
+                        <i class="material-icons small" title="Agregar campo">
+                            add
+                        </i>
+                    </button>
+                    <button type="button" class="btn btn-xs btn-link float-right"
+                        (click)="editarContenido(documento._id)">
+                        <i class="material-icons small" title="EditarContenido">
+                            edit
+                        </i>
+                    </button></td>
+            </tr>
+        </tbody>
+        <tfoot class="grey lighten-5 w-100">
+            <tr>
+                <td colspan="4">
+                    <mdb-table-pagination [tableEl]="tableEl" paginationAlign="" [searchDataSource]="elements">
+                    </mdb-table-pagination>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
 </div>
