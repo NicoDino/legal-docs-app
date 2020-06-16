@@ -4,32 +4,32 @@ import { environment } from 'src/environments/environment';
 import { Documento } from '../models/documento';
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 export class DocumentosService {
-    private apiUrl: string;
+  private apiUrl: string;
 
-    constructor(private http: HttpClient) {
-        this.apiUrl = environment.apiUrl;
-    }
+  constructor(private http: HttpClient) {
+    this.apiUrl = environment.apiUrl;
+  }
 
-    getAll() {
-        return this.http.get<Documento[]>(`${this.apiUrl}/documentos`);
-    }
+  getAll() {
+    return this.http.get<Documento[]>(`${this.apiUrl}/documentos`);
+  }
 
-    getById(id: string) {
-        return this.http.get<Documento[]>(`${this.apiUrl}/documentos/${id}`);
-    }
+  getById(id: string) {
+    return this.http.get<Documento[]>(`${this.apiUrl}/documentos/${id}`);
+  }
 
-    create(documento: Documento) {
-        return this.http.post(`${this.apiUrl}/documentos`, documento);
-    }
+  create(documento: Documento) {
+    return this.http.post(`${this.apiUrl}/documentos`, documento);
+  }
 
-    update(documento: Documento) {
-        return this.http.put(`${this.apiUrl}/documentos/${documento._id}`, documento);
-    }
+  update(documento: Partial<Documento>) {
+    return this.http.put(`${this.apiUrl}/documentos/${documento._id}`, documento);
+  }
 
-    delete(id: string) {
-        return this.http.delete(`${this.apiUrl}/documentos/${id}`);
-    }
+  delete(id: string) {
+    return this.http.delete(`${this.apiUrl}/documentos/${id}`);
+  }
 }

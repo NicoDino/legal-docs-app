@@ -7,53 +7,56 @@ import { takeUntil } from 'rxjs/operators';
 import { Documento } from 'src/app/models/documento';
 
 @Component({
-    selector: 'app-crear-campo',
-    templateUrl: './crear-campo.component.html'
+  selector: 'app-crear-campo',
+  templateUrl: './crear-campo.component.html',
 })
 export class CrearCampoComponent implements OnInit, OnDestroy {
-    @ViewChild('closeModal') buttonClose: ElementRef;
-    campoForm: FormGroup;
-    disableGuardar$ = new BehaviorSubject<boolean>(false);
-    unsubscribe$ = new Subject<void>();
-    @Input() documento: Documento;
-    @Output() onCampoGuardar: EventEmitter<any> = new EventEmitter<any>();
+  @ViewChild('closeModal') buttonClose: ElementRef;
+  campoForm: FormGroup;
+  disableGuardar$ = new BehaviorSubject<boolean>(false);
+  unsubscribe$ = new Subject<void>();
+  @Input() documento: Documento;
+  @Output() campoCreado: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(
-        private router: Router,
-        private route: ActivatedRoute,
-        private formBuilder: FormBuilder,
-        private camposService: CamposService
-    ) { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private camposService: CamposService
+  ) {}
 
-    ngOnDestroy(): void {
-        this.unsubscribe$.next();
-        this.unsubscribe$.complete();
-    }
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 
-    ngOnInit(): void {
-        this.campoForm = this.formBuilder.group({
-            nombre: new FormControl(''),
-            descripcion: new FormControl(''),
-            identificador: new FormControl(''),
-            tipo: new FormControl(''),
-            documento: new FormControl(this.documento._id),
-        });
-    }
+  ngOnInit(): void {
+    this.campoForm = this.formBuilder.group({
+      nombre: new FormControl(''),
+      descripcion: new FormControl(''),
+      identificador: new FormControl(''),
+      tipo: new FormControl(''),
+      documento: new FormControl(this.documento._id),
+    });
+  }
 
-    onSubmit() {
-        this.campoForm.controls.documento.setValue(this.documento._id);
-        this.disableGuardar$.next(true);
-        this.camposService.create(this.campoForm.value).subscribe(
-            (res) => {
-                this.buttonClose.nativeElement.click();
-                this.onCampoGuardar.emit();
-            }, (err) => {
-                this.disableGuardar$.next(false);
-            }
-        );
-    }
+  onSubmit() {
+    this.campoForm.controls.documento.setValue(this.documento._id);
+    this.campoCreado.emit(this.campoForm.value);
+    this.buttonClose.nativeElement.click();
+    // this.disableGuardar$.next(true);
+    // this.camposService.create(this.campoForm.value).subscribe(
+    //   (res) => {
+    //     this.buttonClose.nativeElement.click();
+    //     this.disableGuardar$.next(false);
+    //   },
+    //   (err) => {
+    //     this.disableGuardar$.next(false);
+    //   }
+    // );
+  }
 
-    onCancel() {
-        this.router.navigateByUrl('documentos');
-    }
+  onCancel() {
+    this.router.navigateByUrl('documentos');
+  }
 }
