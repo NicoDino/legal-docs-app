@@ -1,9 +1,7 @@
 import { Component, OnInit, OnDestroy, Input, EventEmitter, Output, ElementRef, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Subject, BehaviorSubject } from 'rxjs';
-import { CamposService } from 'src/app/services/campos.service';
-import { takeUntil } from 'rxjs/operators';
 import { Documento } from 'src/app/models/documento';
 
 @Component({
@@ -18,12 +16,7 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
   @Input() documento: Documento;
   @Output() campoCreado: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
-    private camposService: CamposService
-  ) {}
+  constructor(private router: Router, private formBuilder: FormBuilder) {}
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
@@ -44,16 +37,6 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
     this.campoForm.controls.documento.setValue(this.documento._id);
     this.campoCreado.emit(this.campoForm.value);
     this.buttonClose.nativeElement.click();
-    // this.disableGuardar$.next(true);
-    // this.camposService.create(this.campoForm.value).subscribe(
-    //   (res) => {
-    //     this.buttonClose.nativeElement.click();
-    //     this.disableGuardar$.next(false);
-    //   },
-    //   (err) => {
-    //     this.disableGuardar$.next(false);
-    //   }
-    // );
   }
 
   onCancel() {
