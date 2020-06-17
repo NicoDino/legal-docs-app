@@ -1,0 +1,117 @@
+@font-face {
+    font-family: titillium;
+    src: url('/assets/fonts/Titillium-Regular.otf') format("opentype");
+}
+
+@font-face {
+    font-family: titillium-bold;
+    src: url('/assets/fonts/Titillium-Bold.otf') format("opentype");
+}
+  
+  ::ng-deep body {
+    font-family: 'titillium', 'arial', sans-serif;
+  }
+
+  
+::ng-deep .footer {
+    width: 100%;
+    line-height: 60px;
+    padding: 5%;
+    background-color:#4d4d4d;
+    color:white;
+}
+
+
+::ng-deep .navbar{
+    background-color:transparent;
+    padding-left:12%;
+    padding-right: 12%;
+    padding-top: 20px;
+    text-transform: uppercase;
+}
+
+::ng-deep .nav-link{
+    color:rgb(51,51,51);
+    margin-right: 28px;
+    font-size: 15px;
+    padding-top: 2%;
+}
+
+::ng-deep .navbar-brand img{
+    width: 130px;
+}
+
+::ng-deep #portada{
+    padding:12%;
+    padding-top:6%;
+}
+
+::ng-deep #portada .titulo{
+    font-size: 45px;
+    color:rgb(51,51,51);
+    line-height: 55px;
+    font-family: 'titillium-bold', 'arial', sans-serif;
+}
+
+::ng-deep #portada .subtitulo{
+    font-size: 20px;
+    color:#919191;
+}
+
+::ng-deep #portada .title{
+    padding-top:10%;
+    padding-bottom:10%;
+}
+
+::ng-deep .btn-warning{
+    background-color: rgb(245,208,18);
+    width: 180px;
+    font-family: 'titillium-bold', 'arial', sans-serif;
+    border-radius: 20px;
+    text-transform: uppercase;
+    font-size: 15px;
+}
+
+::ng-deep .searchbar{
+    margin-bottom: auto;
+margin-top: auto;
+background-color:
+#fff;
+border-radius: 30px;
+padding-left: 10px;
+border: 3px solid
+    #0099f7;
+    width: 220px;
+}
+
+    ::ng-deep .search_input{
+    color: black;
+    border: 0;
+    outline: 0;
+    background: none;
+    width: 0;
+    caret-color:transparent;
+    transition: width 0.4s linear;
+    width: 160px;
+    line-height: 35px;
+    }
+
+::ng-deep .search_icon{
+    height: 35px;
+    width: 35px;
+    float: right;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    align-items: center;
+    border-radius: 50%;
+    color:rgb(51,51,51);
+    text-decoration:none;
+    }
+
+
+@media only screen and (max-width: 600px) {
+    ::ng-deep #portada #imagen {
+        margin-top: 40px;
+    }
+}

@@ -27,6 +27,9 @@ import { CampoItemComponent } from './documentos/campos/campo-item/campo-item.co
 import { BorradoresComponent } from './borradores/borradores.component';
 
 import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
+import { InicioComponent } from './public/inicio/inicio.component';
+import { PublicMenuComponent } from './public/partials/menu/menu.component';
+import { FooterComponent } from './public/partials/footer/footer.component';
 
 
 @NgModule({
@@ -48,7 +51,10 @@ import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
     CrearDocumentoComponent,
     CrearCampoComponent,
     CampoItemComponent,
-    BorradoresComponent
+    BorradoresComponent,
+    InicioComponent,
+    PublicMenuComponent,
+    FooterComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
