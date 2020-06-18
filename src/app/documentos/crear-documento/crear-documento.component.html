@@ -92,21 +92,16 @@
               [init]="editorInitObject"
             ></editor>
           </div>
-          <div style="overflow: auto;">
-            <div style="float: right;">
+          <div class="row">
+            <div class="col-sm-12 d-flex justify-content-around">
+              <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">
+                Agregar campo
+              </button>
               <button type="button" id="guardarHtml" class="btn btn-sm btn-success" (click)="guardarHtml()">
                 Guardar
               </button>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12 d-flex justify-content-center">
-          <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">
-            Agregar campo
-          </button>
-          <!-- <button type="button" class="btn btn-purple btn-sm" (click)="nextPrev(1)">Continuar</button> -->
         </div>
       </div>
     </form>

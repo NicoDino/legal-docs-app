@@ -1,18 +1,17 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { DocumentosService } from 'src/app/services/documentos.service';
 import { takeUntil } from 'rxjs/operators';
 import { Documento } from 'src/app/models/documento';
-import { EditorComponent } from '@tinymce/tinymce-angular';
 import { CamposService } from 'src/app/services/campos.service';
 @Component({
   selector: 'app-crear-documento',
   templateUrl: './crear-documento.component.html',
   styleUrls: ['crear-documento.component.css'],
 })
-export class CrearDocumentoComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CrearDocumentoComponent implements OnInit, OnDestroy {
   documentoForm: FormGroup;
   disableGuardar$ = new BehaviorSubject<boolean>(false);
   unsubscribe$ = new Subject<void>();
@@ -23,7 +22,7 @@ export class CrearDocumentoComponent implements OnInit, AfterViewInit, OnDestroy
   editorInitObject = {
     menubar: false,
   };
-
+  tinyEditorInstance;
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -46,9 +45,7 @@ export class CrearDocumentoComponent implements OnInit, AfterViewInit, OnDestroy
       tipo: new FormControl(''),
       html: new FormControl(''),
     });
-  }
 
-  ngAfterViewInit(): void {
     this.route.paramMap.pipe(takeUntil(this.unsubscribe$)).subscribe((params) => {
       this.documento._id = params.get('idDocumento');
       if (this.documento._id) {
@@ -64,7 +61,9 @@ export class CrearDocumentoComponent implements OnInit, AfterViewInit, OnDestroy
     });
   }
 
-  handleEditorInit(event) {}
+  handleEditorInit(event) {
+    this.tinyEditorInstance = event.editor;
+  }
 
   onSubmit() {
     this.disableGuardar$.next(true);
@@ -74,7 +73,7 @@ export class CrearDocumentoComponent implements OnInit, AfterViewInit, OnDestroy
         this.vistaEdicion = true;
         this.disableGuardar$.next(false);
       },
-      (err) => {
+      () => {
         this.disableGuardar$.next(false);
       }
     );
@@ -94,7 +93,7 @@ export class CrearDocumentoComponent implements OnInit, AfterViewInit, OnDestroy
 
   closeModal(nuevoCampo): void {
     this.camposService.create(nuevoCampo).subscribe(
-      (res) => {
+      () => {
         // insertamos placeholder para el campo en el texto y guardamos el documento
         this.tiny.editor.execCommand('mceInsertContent', false, '__________');
         this.documentosService
@@ -104,13 +103,13 @@ export class CrearDocumentoComponent implements OnInit, AfterViewInit, OnDestroy
           });
         this.disableGuardar$.next(false);
       },
-      (err) => {
+      () => {
         this.disableGuardar$.next(false);
       }
     );
   }
 
-  campoSelected(index) {
+  campoSelected(i) {
     // TODO: ver si se puede resaltar sobre el campo seleccionado usando su index en el string
     // const contenido: string = this.documentoForm.controls.html.value;
     // const posicion = this.getPosition(contenido, '__________', index + 1);

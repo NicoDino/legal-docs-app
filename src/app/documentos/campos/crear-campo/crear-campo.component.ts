@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input, EventEmitter, Output, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { Documento } from 'src/app/models/documento';
 
@@ -12,7 +12,9 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
   @ViewChild('closeModal') buttonClose: ElementRef;
   campoForm: FormGroup;
   disableGuardar$ = new BehaviorSubject<boolean>(false);
+  showOpciones$ = new BehaviorSubject<boolean>(false);
   unsubscribe$ = new Subject<void>();
+  opcionesFormArray: FormArray;
   @Input() documento: Documento;
   @Output() campoCreado: EventEmitter<any> = new EventEmitter<any>();
 
@@ -25,21 +27,33 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.campoForm = this.formBuilder.group({
-      nombre: new FormControl(''),
+      identificador: new FormControl('', [Validators.required]),
       descripcion: new FormControl(''),
-      identificador: new FormControl(''),
-      tipo: new FormControl(''),
-      documento: new FormControl(this.documento._id),
+      tipo: new FormControl('', [Validators.required]),
+      documento: new FormControl(this.documento._id, [Validators.required]),
+      opciones: new FormArray([new FormControl('')]),
+    });
+    this.opcionesFormArray = this.campoForm.controls.opciones as FormArray;
+    this.campoForm.controls.tipo.valueChanges.subscribe((value) => {
+      this.showOpciones$.next(value === 'opciones');
     });
   }
 
   onSubmit() {
-    this.campoForm.controls.documento.setValue(this.documento._id);
+    if (!this.campoForm.valid) {
+      alert('Datos incompletos, complete el formulario');
+      return;
+    }
     this.campoCreado.emit(this.campoForm.value);
     this.buttonClose.nativeElement.click();
   }
 
   onCancel() {
     this.router.navigateByUrl('documentos');
+  }
+
+  agregarOpcion() {
+    this.opcionesFormArray = this.campoForm.get('opciones') as FormArray;
+    this.opcionesFormArray.push(new FormControl(''));
   }
 }
