@@ -16,11 +16,23 @@
 ::ng-deep .footer {
     width: 100%;
     line-height: 60px;
-    padding: 5%;
-    background-color:#4d4d4d;
+    padding: 12%;
+    padding-bottom: 2%;
+    padding-top: 4%;
+    background-color:rgb(51,51,51);
     color:white;
+    line-height: 45px;;
 }
 
+::ng-deep .footer hr {
+    margin-bottom: 0px;
+    margin-top: 0px; 
+    border-color:white;
+}
+
+::ng-deep .footer .links{
+    padding-right: 95px;
+}
 
 ::ng-deep .navbar{
     background-color:transparent;
@@ -44,6 +56,7 @@
 ::ng-deep #portada{
     padding:12%;
     padding-top:6%;
+    padding-bottom:6%;
 }
 
 ::ng-deep #portada .titulo{
@@ -109,6 +122,59 @@ border: 3px solid
     text-decoration:none;
     }
 
+    ::ng-deep #proceso{
+        padding:12%;
+        padding-top:3%;
+        padding-bottom:6%;
+    }
+
+    ::ng-deep #proceso .container-imagen{
+        height: 120px;
+    }
+
+    ::ng-deep #proceso .imagen{
+        padding:12%;
+    }
+
+    ::ng-deep #proceso span{
+        font-weight: bold;
+        color: rgb(102,102,102);
+    }
+
+::ng-deep #confianza{
+    padding:12%;
+    padding-top: 6%;
+    padding-bottom: 6%;
+    background-image: url('/assets/img/gradient.png');
+    background-position: center;
+    background-size: cover;
+}
+
+::ng-deep #confianza .text{
+    color:white;
+    padding:3%;
+}
+
+::ng-deep #about{
+    padding:12%;
+    padding-top: 6%;
+    padding-bottom: 6%;
+}
+
+::ng-deep #about h1{
+    font-family: 'titillium-bold', 'arial', sans-serif;
+}
+
+::ng-deep #about p{
+    color: rgb(102,102,102);
+}
+
+::ng-deep #about .title-tipo{
+    text-transform: uppercase;
+    margin-top: 13%;
+    margin-bottom:25px;
+    color: rgb(0,51,153);
+}
 
 @media only screen and (max-width: 600px) {
     ::ng-deep #portada #imagen {
