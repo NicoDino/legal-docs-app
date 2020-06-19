@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy, Input, EventEmitter, Output, ElementRef, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, OnDestroy, EventEmitter, Output, ElementRef, ViewChild, Input } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Subject, BehaviorSubject } from 'rxjs';
-import { Documento } from 'src/app/models/documento';
+import { Campo } from 'src/app/models/campo';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-crear-campo',
@@ -14,11 +14,15 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
   disableGuardar$ = new BehaviorSubject<boolean>(false);
   showOpciones$ = new BehaviorSubject<boolean>(false);
   unsubscribe$ = new Subject<void>();
-  opcionesFormArray: FormArray;
-  @Input() documento: Documento;
+  isEdicion = false;
   @Output() campoCreado: EventEmitter<any> = new EventEmitter<any>();
+  @Output() modalCerrado: EventEmitter<any> = new EventEmitter<any>();
+  @Input() campo: Partial<Campo>;
+  constructor(private formBuilder: FormBuilder) {}
 
-  constructor(private router: Router, private formBuilder: FormBuilder) {}
+  get opcionesFormArray() {
+    return this.campoForm.get('opciones') as FormArray;
+  }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
@@ -26,17 +30,54 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.createForm();
+    this.tipoWatcher();
+    this.showOpciones$.next(
+      this.campoForm.get('tipo').value === 'opciones' || this.campoForm.get('tipo').value === 'boolean'
+    );
+  }
+
+  private createForm() {
     this.campoForm = this.formBuilder.group({
-      identificador: new FormControl('', [Validators.required]),
-      descripcion: new FormControl(''),
-      tipo: new FormControl('', [Validators.required]),
-      documento: new FormControl(this.documento._id, [Validators.required]),
-      opciones: new FormArray([new FormControl('')]),
+      identificador: new FormControl(this.campo ? this.campo.identificador : '', [Validators.required]),
+      descripcion: new FormControl(this.campo ? this.campo.descripcion : ''),
+      tipo: new FormControl(this.campo ? this.campo.tipo : '', [Validators.required]),
+      opciones: this.formBuilder.array(this.addOpciones()),
     });
-    this.opcionesFormArray = this.campoForm.controls.opciones as FormArray;
-    this.campoForm.controls.tipo.valueChanges.subscribe((value) => {
-      this.showOpciones$.next(value === 'opciones');
+
+    if (this.campo) {
+      this.isEdicion = true;
+    }
+  }
+
+  private addOpciones(): FormControl[] {
+    const array = [];
+    if (this.campo && this.campo.opciones && this.campo.opciones.length) {
+      this.campo.opciones.forEach((opcion) => {
+        array.push(new FormControl(opcion));
+      });
+      return array;
+    } else {
+      return array;
+    }
+  }
+
+  tipoWatcher() {
+    this.campoForm.controls.tipo.valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe((value) => {
+      this.formatearOpciones(value);
     });
+  }
+
+  private formatearOpciones(value: any) {
+    if (!value) {
+      return;
+    }
+    this.opcionesFormArray.clear();
+    this.opcionesFormArray.push(new FormControl(''));
+    if (value === 'boolean') {
+      this.opcionesFormArray.push(new FormControl(''));
+    }
+    this.showOpciones$.next(value === 'opciones' || value === 'boolean');
   }
 
   onSubmit() {
@@ -44,16 +85,20 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
       alert('Datos incompletos, complete el formulario');
       return;
     }
-    this.campoCreado.emit(this.campoForm.value);
+    /** Limpiamos las opciones vacías, si existen */
+    if (this.campoForm.value.tipo === 'opciones' && this.campoForm.value.opciones) {
+      this.campoForm.value.opciones = this.campoForm.value.opciones.filter((opcion) => !!opcion);
+    }
+    this.campoCreado.emit({ campo: this.campoForm.value, esEdicion: this.isEdicion });
     this.buttonClose.nativeElement.click();
   }
 
-  onCancel() {
-    this.router.navigateByUrl('documentos');
+  cleanForm() {
+    this.modalCerrado.emit();
+    this.buttonClose.nativeElement.click();
   }
 
   agregarOpcion() {
-    this.opcionesFormArray = this.campoForm.get('opciones') as FormArray;
     this.opcionesFormArray.push(new FormControl(''));
   }
 }

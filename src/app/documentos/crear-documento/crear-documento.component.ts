@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Subject, BehaviorSubject } from 'rxjs';
@@ -6,6 +6,8 @@ import { DocumentosService } from 'src/app/services/documentos.service';
 import { takeUntil } from 'rxjs/operators';
 import { Documento } from 'src/app/models/documento';
 import { CamposService } from 'src/app/services/campos.service';
+import { Campo } from 'src/app/models/campo';
+import { CrearCampoComponent } from '../campos/crear-campo/crear-campo.component';
 @Component({
   selector: 'app-crear-documento',
   templateUrl: './crear-documento.component.html',
@@ -18,11 +20,14 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   currentTab = 0;
   documento: Partial<Documento> = {};
   vistaEdicion = false;
-
+  /** utilizado para edicion de campo */
+  idCampoEdicion;
+  campoEditado: Partial<Campo>;
   editorInitObject = {
     menubar: false,
   };
   tinyEditorInstance;
+  showModal = false;
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -32,6 +37,8 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   ) {}
 
   @ViewChild('tinyEditor') tiny;
+  @ViewChild('openModal') openModal: ElementRef;
+  @ViewChild('campoModal') campoModal: CrearCampoComponent;
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
@@ -91,22 +98,44 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('documentos');
   }
 
-  closeModal(nuevoCampo): void {
-    this.camposService.create(nuevoCampo).subscribe(
-      () => {
-        // insertamos placeholder para el campo en el texto y guardamos el documento
-        this.tiny.editor.execCommand('mceInsertContent', false, '__________');
-        this.documentosService
-          .update({ _id: this.documento._id, html: this.documentoForm.controls.html.value })
-          .subscribe((documentoActualizado: Partial<Documento>) => {
-            this.documento = documentoActualizado;
-          });
-        this.disableGuardar$.next(false);
-      },
-      () => {
-        this.disableGuardar$.next(false);
-      }
-    );
+  onModalSubmit(evento): void {
+    this.showModal = false;
+    const nuevoCampo = evento.campo;
+    const esEdicion = evento.esEdicion;
+    nuevoCampo.documento = this.documento._id;
+    if (!esEdicion) {
+      this.camposService.create(nuevoCampo).subscribe(
+        () => {
+          // insertamos placeholder para el campo en el texto y guardamos el documento
+          this.tiny.editor.execCommand('mceInsertContent', false, '__________');
+          this.documentosService
+            .update({ _id: this.documento._id, html: this.documentoForm.controls.html.value })
+            .subscribe((documentoActualizado: Partial<Documento>) => {
+              this.documento = documentoActualizado;
+            });
+          this.disableGuardar$.next(false);
+        },
+        () => {
+          this.disableGuardar$.next(false);
+        }
+      );
+    } else {
+      nuevoCampo._id = this.idCampoEdicion;
+      this.camposService.update(nuevoCampo).subscribe(
+        () => {
+          this.idCampoEdicion = null;
+        },
+        () => {
+          this.idCampoEdicion = null;
+        }
+      );
+    }
+    this.campoEditado = null;
+  }
+
+  onModalCerrado() {
+    this.showModal = false;
+    this.campoEditado = null;
   }
 
   campoSelected(i) {
@@ -129,5 +158,22 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
       .subscribe((documentoActualizado: Partial<Documento>) => {
         this.documento = documentoActualizado;
       });
+  }
+
+  editarCampo(idCampo) {
+    if (!idCampo) {
+      alert('Campo con errores');
+      return;
+    }
+    this.idCampoEdicion = idCampo;
+    this.camposService.getById(idCampo).subscribe((campo) => {
+      this.campoEditado = campo;
+      this.showModal = true;
+      this.openModal.nativeElement.click();
+    });
+  }
+
+  onAgregarCampo() {
+    this.showModal = true;
   }
 }

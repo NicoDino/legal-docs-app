@@ -76,7 +76,12 @@
               *ngFor="let campo of documento?.campos; let i = index"
               (click)="campoSelected(i)"
             >
-              <app-campo-item [campoId]="campo" (campoEliminado)="handleCampoEliminado(i)"> </app-campo-item>
+              <app-campo-item
+                [campoId]="campo"
+                (campoEliminado)="handleCampoEliminado(i)"
+                (editarCampo)="editarCampo($event)"
+              >
+              </app-campo-item>
             </li>
           </ul>
         </div>
@@ -94,7 +99,14 @@
           </div>
           <div class="row">
             <div class="col-sm-12 d-flex justify-content-around">
-              <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">
+              <button
+                type="button"
+                class="btn btn-info btn-sm"
+                data-toggle="modal"
+                data-target="#myModal"
+                (click)="onAgregarCampo()"
+                #openModal
+              >
                 Agregar campo
               </button>
               <button type="button" id="guardarHtml" class="btn btn-sm btn-success" (click)="guardarHtml()">
@@ -109,5 +121,12 @@
 
   <br />
 
-  <app-crear-campo [documento]="documento" (campoCreado)="closeModal($event)"> </app-crear-campo>
+  <app-crear-campo
+    *ngIf="showModal"
+    [campo]="campoEditado"
+    (campoCreado)="onModalSubmit($event)"
+    (modalCerrado)="onModalCerrado()"
+    #campoModal
+  >
+  </app-crear-campo>
 </div>

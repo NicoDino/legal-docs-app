@@ -11,6 +11,7 @@ import { EventsDocumentosService } from '../../services/eventsDocumentos.service
 export class CampoItemComponent implements OnInit, OnDestroy {
   @Input() campoId: string;
   @Output() campoEliminado: EventEmitter<any> = new EventEmitter<any>();
+  @Output() editarCampo: EventEmitter<string> = new EventEmitter<string>();
 
   campo: any = {};
   collapsed = false;
@@ -25,10 +26,13 @@ export class CampoItemComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.campoService.getById(this.campoId).subscribe((registro) => {
-      this.campo = registro;
-      this.identificador = this.campo.nombre + 'identificador';
-    });
+    this.campoService
+      .getById(this.campoId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((registro) => {
+        this.campo = registro;
+        this.identificador = this.campo.nombre + 'identificador';
+      });
   }
 
   borrarCampo(idCampo: string) {
@@ -41,5 +45,9 @@ export class CampoItemComponent implements OnInit, OnDestroy {
           this.campoEliminado.emit();
         });
     }
+  }
+
+  onEditarCampo(idCampo: string) {
+    this.editarCampo.emit(idCampo);
   }
 }
