@@ -1,105 +1,132 @@
 <div class="container-fluid">
-    <div class="row heading">
-        <div class="col-sm-6">
-            <h2>Documentos<br><small class="subtitle">Crear nuevo</small></h2>
+  <div class="row heading">
+    <div class="col-sm-6">
+      <h2>Documentos<br /><small class="subtitle">Crear nuevo</small></h2>
+    </div>
+    <div class="col-6">
+      <button type="button" class="btn btn-sm btn-link float-right" (click)="onCancel()">
+        <i class="material-icons float-left">
+          arrow_back
+        </i>
+      </button>
+    </div>
+  </div>
+</div>
+<div>
+  <div class="container" *ngIf="!vistaEdicion">
+    <form [formGroup]="documentoForm" (ngSubmit)="onSubmit()">
+      <div class="row justify-content-center mt-5">
+        <div class="col-12">
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input
+              formControlName="nombre"
+              type="text"
+              class="form-control"
+              id="nombre"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-default"
+            />
+          </div>
         </div>
         <div class="col-6">
-
-            <button type="button" class="btn btn-sm btn-link float-right" (click)="onCancel()"><i
-                    class="material-icons float-left">
-                    arrow_back
-                </i></button>
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Tipo</label>
+            <select formControlName="tipo" class="form-control" id="tipo">
+              <option>profesional</option>
+              <option>particular</option>
+            </select>
+          </div>
         </div>
-    </div>
-</div>
-<div class="container">
-
-    <div style="text-align:center;margin-top:40px;">
-        <span class="step"></span>
-        <span class="step"></span>
-        <span class="step"></span>
-    </div>
-    <div class="tab">
-        <form [formGroup]="documentoForm" (ngSubmit)="onSubmit()">
-            <div class="row justify-content-center mt-5">
-                <div class="col-12">
-                    <div class="form-group">
-                        <label for="nombre">Nombre</label>
-                        <input formControlName="nombre" type="text" class="form-control" id="nombre"
-                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect1">Tipo</label>
-                        <select formControlName="tipo" class="form-control" id="tipo">
-                            <option>profesional</option>
-                            <option>particular</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <label for="precio">Precio</label>
-                        <input formControlName="precio" type="number" class="form-control" id="precio"
-                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
-                    </div>
-                </div>
-            </div>
-            <div style="overflow:auto;">
-                <div style="float:right;">
-                    <button type="submit" class="btn btn-sm btn-success"
-                        [disabled]="disableGuardar$ | async">Guardar</button>
-                </div>
-            </div>
-        </form>
-    </div>
-
-    <div class="tab">
-        <p class="text-center mt-2"><small *ngIf="documento.campos.length < 1" class="float-center">Aún no se han
-                cargado
-                campos al
-                documento</small></p>
-
-        <div class="row mb-2">
-            <div class="col-sm-12 d-flex justify-content-center">
-                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Cargar
-                    campo</button>
-                <button type="button" class="btn btn-purple btn-sm" (click)="nextPrev(1)">Continuar</button>
-
-            </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label for="precio">Precio</label>
+            <input
+              formControlName="precio"
+              type="number"
+              class="form-control"
+              id="precio"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-default"
+            />
+          </div>
         </div>
-        <ul class="list-group">
-            <li class="list-group-item" *ngFor="let campo of documento.campos">
-                <app-campo-item [campoId]="campo">
-                </app-campo-item>
+      </div>
+      <div style="overflow: auto;">
+        <div style="float: right;">
+          <button type="submit" class="btn btn-sm btn-success" [disabled]="disableGuardar$ | async">Guardar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="container-fluid" *ngIf="vistaEdicion">
+    <form [formGroup]="documentoForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <!-- Columna izquieda, lista de campos -->
+        <div class="col-3">
+          <p class="text-center mt-2">
+            <small *ngIf="documento?.campos?.length < 1" class="float-center"
+              >Aún no se han cargado campos al documento</small
+            >
+          </p>
+          <ul class="list-group">
+            <li
+              class="list-group-item"
+              *ngFor="let campo of documento?.campos; let i = index"
+              (click)="campoSelected(i)"
+            >
+              <app-campo-item
+                [campoId]="campo"
+                (campoEliminado)="handleCampoEliminado(i)"
+                (editarCampo)="editarCampo($event)"
+              >
+              </app-campo-item>
             </li>
-        </ul>
-    </div>
-
-    <div class="tab">
-        <form [formGroup]="documentoForm" (ngSubmit)="onSubmit()">
-            <div class="row">
-                <div class="col-12">
-                    <div class="form-group">
-                        <label for="html">Contenido</label>
-                        <editor apiKey="xw7i6xqrjfmfj32n3l20w1lb0mek7bbf4kffwtu7is30t377" plugins="wordcount" id="html"
-                            formControlName="html"></editor>
-                    </div>
-                    <div style="overflow:auto;">
-                        <div style="float:right;">
-                            <button type="button" id="guardarHtml" class="btn btn-sm btn-success"
-                                (click)="guardarHtml()">Guardar</button>
-                        </div>
-                    </div>
-                </div>
+          </ul>
+        </div>
+        <!-- Columna derecha, editor -->
+        <div class="col-9">
+          <div class="form-group">
+            <label for="html">Contenido</label>
+            <editor
+              #tinyEditor
+              apiKey="xw7i6xqrjfmfj32n3l20w1lb0mek7bbf4kffwtu7is30t377"
+              formControlName="html"
+              (onInit)="handleEditorInit($event)"
+              [init]="editorInitObject"
+            ></editor>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 d-flex justify-content-around">
+              <button
+                type="button"
+                class="btn btn-info btn-sm"
+                data-toggle="modal"
+                data-target="#myModal"
+                (click)="onAgregarCampo()"
+                #openModal
+              >
+                Agregar campo
+              </button>
+              <button type="button" id="guardarHtml" class="btn btn-sm btn-success" (click)="guardarHtml()">
+                Guardar
+              </button>
             </div>
-        </form>
-    </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
 
-    <!-- Circles which indicates the steps of the form: -->
-    <br>
+  <br />
+
+  <app-crear-campo
+    *ngIf="showModal"
+    [campo]="campoEditado"
+    (campoCreado)="onModalSubmit($event)"
+    (modalCerrado)="onModalCerrado()"
+    #campoModal
+  >
+  </app-crear-campo>
 </div>
-
-<app-crear-campo [documento]="documento" (onCampoGuardar)="closeModal()">
-</app-crear-campo>
