@@ -1,0 +1,29 @@
+<app-public-menu></app-public-menu>
+<section id="faqs">
+    <h1 class="text-center">FAQ</h1>
+    <div class="accordion mt-5" id="accordionFaqs">
+        <div class="row" *ngFor="let faq of faqs;index as i">
+            <div class="col-sm-1" style="padding: 12px;">
+                <img id="imagen" class="float-right align-middle" *ngIf="!faq.active"
+                    src="assets/img/question-closed.png" width="22px">
+                <img id="imagen" class="float-right align-middle" *ngIf="faq.active" src="assets/img/question-open.png"
+                    width="22px">
+            </div>
+            <div class="col-sm-11">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                            [attr.data-target]="'#preg-' + i" aria-expanded="true" (click)="faq.active = !faq.active;">
+                            {{ faq.pregunta }}
+                        </button>
+                    </div>
+                    <div id="preg-{{i}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionFaqs">
+                        <div class="card-body" [innerHTML]="faq.contenido">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<app-public-footer></app-public-footer>

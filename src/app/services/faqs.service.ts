@@ -17,6 +17,10 @@ export class FaqsService {
         return this.http.get<Faq[]>(`${this.apiUrl}/faqs`);
     }
 
+    getAllPublic() {
+        return this.http.get<Faq[]>(`${this.apiUrl}/faqs/public`);
+    }
+
     create(faq: Faq) {
         return this.http.post(`${this.apiUrl}/faqs`, faq);
     }

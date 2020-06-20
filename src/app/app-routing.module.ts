@@ -14,6 +14,7 @@ import { CrearCampoComponent } from './documentos/campos/crear-campo/crear-campo
 import { CrearDocumentoComponent } from './documentos/crear-documento/crear-documento.component';
 import { BorradoresComponent } from './borradores/borradores.component';
 import { InicioComponent } from './public/inicio/inicio.component';
+import { PublicFaqsComponent } from './public/faqs/faqs.component';
 
 const appRoutes: Routes = [
   /* RUTAS PRIVADAS */
@@ -32,14 +33,15 @@ const appRoutes: Routes = [
   { path: 'crear-campo/:idDocumento', component: CrearCampoComponent, canActivate: [AuthGuard] },
   { path: 'crear-documento/:step/:idDocumento', component: CrearDocumentoComponent, canActivate: [AuthGuard] },
   { path: 'crear-documento', component: CrearDocumentoComponent, canActivate: [AuthGuard] },
+  { path: 'borradores', component: BorradoresComponent, canActivate: [AuthGuard] },
 
   /*  RUTAS PUBLICAS  */
   { path: 'login', component: LoginComponent },
   { path: 'app-reestablecer-pass', component: ReestablecerPassComponent },
-  { path: 'borradores', component: BorradoresComponent, canActivate: [AuthGuard] },
+  { path: 'preguntas-frecuentes', component: PublicFaqsComponent },
 
   // otherwise redirect to home
-  { path: '**', redirectTo: '/inicio' },
+  { path: '**', redirectTo: '/inicio' }
 ];
 @NgModule({
   imports: [RouterModule.forRoot(appRoutes)],
