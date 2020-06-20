@@ -30,6 +30,7 @@ import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
 import { InicioComponent } from './public/inicio/inicio.component';
 import { PublicMenuComponent } from './public/partials/menu/menu.component';
 import { FooterComponent } from './public/partials/footer/footer.component';
+import { PublicFaqsComponent } from './public/faqs/faqs.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { FooterComponent } from './public/partials/footer/footer.component';
     BorradoresComponent,
     InicioComponent,
     PublicMenuComponent,
-    FooterComponent
+    FooterComponent,
+    PublicFaqsComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

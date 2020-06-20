@@ -34,6 +34,10 @@
     padding-right: 95px;
 }
 
+::ng-deep .footer .link{
+    color: white !important;
+}
+
 ::ng-deep .navbar{
     background-color:transparent;
     padding-left:12%;
@@ -174,6 +178,39 @@ border: 3px solid
     margin-top: 13%;
     margin-bottom:25px;
     color: rgb(0,51,153);
+}
+
+::ng-deep #faqs{
+    padding:12%;
+    padding-top: 3%;
+    padding-bottom: 6%;
+}
+
+::ng-deep #faqs h1{
+    font-family: 'titillium-bold', 'arial', sans-serif;
+}
+::ng-deep #faqs .card{
+    border:0px;
+    border-bottom: 1px solid rgb(176,176,176);
+}
+
+::ng-deep #faqs .card-body{
+    padding: 0px;
+    font-weight: lighter;
+    color:rgb(102,102,102);
+}
+
+::ng-deep #faqs .card-header{
+    background:white;
+    padding: 0px;
+    border: 0px;
+}
+
+::ng-deep #faqs .card-header .btn-link{
+    padding-left: 0px;
+    color:rgb(51,51,51);
+    font-weight: bold;
+    text-decoration: none !important;
 }
 
 @media only screen and (max-width: 600px) {
