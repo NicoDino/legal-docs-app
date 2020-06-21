@@ -31,6 +31,7 @@ import { InicioComponent } from './public/inicio/inicio.component';
 import { PublicMenuComponent } from './public/partials/menu/menu.component';
 import { FooterComponent } from './public/partials/footer/footer.component';
 import { PublicFaqsComponent } from './public/faqs/faqs.component';
+import { PublicDocumentosComponent } from './public/documentos/documentos.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { PublicFaqsComponent } from './public/faqs/faqs.component';
     InicioComponent,
     PublicMenuComponent,
     FooterComponent,
-    PublicFaqsComponent
+    PublicFaqsComponent,
+    PublicDocumentosComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

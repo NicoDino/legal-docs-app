@@ -6,8 +6,18 @@
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="#">Inicio</a>
-            <a class="nav-item nav-link" href="#">Documentos</a>
+            <a class="nav-item nav-link" href="#">Inicio</a>
+            <li class="nav-item nav-link dropdown">
+                <a href="#" id="documentosDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    Documentos
+                </a>
+                <div class="dropdown-menu" aria-labelledby="documentosDropdown">
+                    <a class="dropdown-item" href="/documentos/particular">Particulares</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/documentos/profesional">Profesionales</a>
+                </div>
+            </li>
             <a class="nav-item nav-link" href="/preguntas-frecuentes">Faq</a>
             <a class="nav-item nav-link" href="#">Consultar a un abogado</a>
             <div class="searchbar">
