@@ -1,0 +1,23 @@
+<p>crear-borrador works!</p>
+
+<div class="container-fluid" *ngIf="showDoc">
+  <!-- <form [formGroup]="documentoForm" (ngSubmit)="onSubmit()"> -->
+  <div class="row">
+    <!-- Columna izquieda, lista de campos -->
+    <div class="col-4">
+      <div class="card">
+        <h5 class="card-header">{{ documento.campos[campoIndex].identificador }}</h5>
+        <div class="card-body">
+          <!-- <h5 class="card-title">Special title treatment</h5> -->
+          <p class="card-text">{{ documento.campos[campoIndex].descripcion }}</p>
+          <input type="text" />
+        </div>
+      </div>
+    </div>
+    <!-- Columna derecha, editor -->
+    <div class="col-8">
+      <div [innerHTML]="documento.html"></div>
+    </div>
+  </div>
+  <!-- </form> -->
+</div>

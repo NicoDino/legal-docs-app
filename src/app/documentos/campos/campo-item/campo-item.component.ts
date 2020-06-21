@@ -26,6 +26,7 @@ export class CampoItemComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    debugger;
     this.campoService
       .getById(this.campoId)
       .pipe(takeUntil(this.unsubscribe$))

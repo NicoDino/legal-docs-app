@@ -31,10 +31,18 @@ import { InicioComponent } from './public/inicio/inicio.component';
 import { PublicMenuComponent } from './public/partials/menu/menu.component';
 import { FooterComponent } from './public/partials/footer/footer.component';
 import { PublicFaqsComponent } from './public/faqs/faqs.component';
-
+import { CrearBorradorComponent } from './borradores/crear-borrador/crear-borrador.component';
 
 @NgModule({
-  imports: [BrowserModule, ReactiveFormsModule, HttpClientModule, FormsModule, EditorModule, AppRoutingModule, MDBBootstrapModulesPro],
+  imports: [
+    BrowserModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    FormsModule,
+    EditorModule,
+    AppRoutingModule,
+    MDBBootstrapModulesPro,
+  ],
   declarations: [
     AppComponent,
     AlertComponent,
@@ -56,7 +64,8 @@ import { PublicFaqsComponent } from './public/faqs/faqs.component';
     InicioComponent,
     PublicMenuComponent,
     FooterComponent,
-    PublicFaqsComponent
+    PublicFaqsComponent,
+    CrearBorradorComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
@@ -66,4 +75,4 @@ import { PublicFaqsComponent } from './public/faqs/faqs.component';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
