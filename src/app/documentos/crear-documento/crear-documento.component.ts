@@ -21,7 +21,6 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   documento: Partial<Documento> = {};
   vistaEdicion = false;
   /** utilizado para edicion de campo */
-  idCampoEdicion;
   campoEditado: Partial<Campo>;
   editorInitObject = {
     menubar: false,
@@ -120,15 +119,12 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
         }
       );
     } else {
-      nuevoCampo._id = this.idCampoEdicion;
-      this.camposService.update(nuevoCampo).subscribe(
-        () => {
-          this.idCampoEdicion = null;
-        },
-        () => {
-          this.idCampoEdicion = null;
-        }
-      );
+      nuevoCampo._id = this.campoEditado._id;
+      this.camposService.update(nuevoCampo).subscribe((res) => {
+        this.documentosService.getById(this.documento._id).subscribe((rta: any) => {
+          this.documento = rta;
+        });
+      });
     }
     this.campoEditado = null;
   }
@@ -160,17 +156,14 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
       });
   }
 
-  editarCampo(idCampo) {
-    if (!idCampo) {
-      alert('Campo con errores');
+  editarCampo(campo) {
+    if (!campo) {
+      alert('Error: campo no encontrado ');
       return;
     }
-    this.idCampoEdicion = idCampo;
-    this.camposService.getById(idCampo).subscribe((campo) => {
-      this.campoEditado = campo;
-      this.showModal = true;
-      this.openModal.nativeElement.click();
-    });
+    this.campoEditado = campo;
+    this.showModal = true;
+    this.openModal.nativeElement.click();
   }
 
   onAgregarCampo() {
