@@ -17,11 +17,15 @@ export class CategoriasService {
     return this.http.get<Categoria[]>(`${this.apiUrl}/categorias`);
   }
 
+  getAllPublic() {
+    return this.http.get<Categoria[]>(`${this.apiUrl}/categorias/public`);
+  }
+
   create(categoria: Categoria) {
     return this.http.post(`${this.apiUrl}/categorias`, categoria);
   }
 
-  delete(id: string){
-        return this.http.delete(`${this.apiUrl}/categorias/${id}`);
+  delete(id: string) {
+    return this.http.delete(`${this.apiUrl}/categorias/${id}`);
   }
 }

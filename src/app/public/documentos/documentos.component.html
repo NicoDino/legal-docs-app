@@ -1,0 +1,58 @@
+<app-public-menu></app-public-menu>
+<section id="documentos">
+    <h1 class="text-center" *ngIf="tipo === 'profesional'">MODELOS PROFESIONALES</h1>
+    <h1 class="text-center" *ngIf="tipo === 'particular'">MODELOS PARTICULARES</h1>
+    <div *ngIf="tipo === 'profesional'" class="mensaje">
+        <p>Todos los documentos, modelos, ejemplos, actas, cartas y contratos administrativos y legales para
+            profesionales,
+            están dirigidos a todo tipo de empresas de cualquier tamaño desde la empresa unipersonal hasta las grandes
+            empresas.
+            Elegí un modelo de documento de la siguiente lista y completalo guiado por un formulario muy simple.</p>
+    </div>
+    <div *ngIf="tipo === 'particular'" class="mensaje">
+        <p>Todos los documentos, modelos, ejemplos, actas, cartas y contratos administrativos y legales para
+            particulares. Elegí un modelo de documento de la siguiente lista y completalo con un formulario muy
+            simple.</p>
+    </div>
+    <div class="accordion mt-5" id="accordionDocumentos">
+        <div class="row" *ngFor="let categoria of categorias;index as i">
+            <div class="col-sm-1" style="padding: 12px;">
+                <img id="imagen" class="float-right align-middle" *ngIf="!categoria.active"
+                    src="assets/img/question-closed.png" width="22px">
+                <img id="imagen" class="float-right align-middle" *ngIf="categoria.active"
+                    src="assets/img/question-open.png" width="22px">
+            </div>
+            <div class="col-sm-11">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                            [attr.data-target]="'#categoria-' + i" aria-expanded="true"
+                            (click)="categoria.active = !categoria.active;">
+                            {{ categoria.nombre | uppercase }}
+                        </button>
+                    </div>
+                    <div id="categoria-{{i}}" class="collapse" aria-labelledby="headingOne"
+                        data-parent="#accordionDocumentos">
+                        <div class="card-body listado-documentos">
+                            <div *ngFor="let doc of categoria.documentos">
+                                <a>
+                                    - {{doc.nombre}}
+                                </a>
+                            </div>
+                            <div *ngFor="let subcategoria of categoria.descendientes">
+                                <b class="subcategoria">{{subcategoria.nombre | uppercase}}</b>
+                                <br>
+                                <div *ngFor="let doc of subcategoria.documentos">
+                                    <a>
+                                        - {{doc.nombre}}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<app-public-footer></app-public-footer>

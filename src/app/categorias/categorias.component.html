@@ -10,7 +10,7 @@
     </div>
   </div>
 
-  <div *ngFor="let categoria of $categorias  | async">
+  <div *ngFor="let categoria of $categorias | async">
     <ul class="list-group" *ngIf="!categoria.padre">
       <li class="list-group-item">
         <app-arbol-item [categoria]="categoria"></app-arbol-item>

@@ -15,6 +15,7 @@ import { CrearDocumentoComponent } from './documentos/crear-documento/crear-docu
 import { BorradoresComponent } from './borradores/borradores.component';
 import { InicioComponent } from './public/inicio/inicio.component';
 import { PublicFaqsComponent } from './public/faqs/faqs.component';
+import { PublicDocumentosComponent } from './public/documentos/documentos.component';
 
 const appRoutes: Routes = [
   /* RUTAS PRIVADAS */
@@ -39,6 +40,7 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'app-reestablecer-pass', component: ReestablecerPassComponent },
   { path: 'preguntas-frecuentes', component: PublicFaqsComponent },
+  { path: 'documentos/:tipo', component: PublicDocumentosComponent },
 
   // otherwise redirect to home
   { path: '**', redirectTo: '/inicio' }

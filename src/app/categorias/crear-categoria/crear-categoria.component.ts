@@ -19,7 +19,7 @@ export class CrearCategoriaComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private categoriaService: CategoriasService
-  ) {}
+  ) { }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
@@ -27,9 +27,10 @@ export class CrearCategoriaComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-   this.route.paramMap.pipe(takeUntil(this.unsubscribe$)).subscribe((params) => {
+    this.route.paramMap.pipe(takeUntil(this.unsubscribe$)).subscribe((params) => {
       this.categoriaForm = this.formBuilder.group({
         nombre: new FormControl(''),
+        tipo: new FormControl(''),
         padre: new FormControl(params.get('idPadre')),
       });
     });
