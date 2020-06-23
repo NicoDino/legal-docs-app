@@ -1,9 +1,11 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { DocumentosService } from 'src/app/services/documentos.service';
 import { Documento } from 'src/app/models/documento';
-import { takeUntil, filter } from 'rxjs/operators';
+import { takeUntil, filter, distinctUntilChanged } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ActivatedRoute, NavigationEnd } from '@angular/router';
+import { Borrador } from 'src/app/models/borrador';
+import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-crear-borrador',
@@ -13,16 +15,21 @@ import { ActivatedRoute, NavigationEnd } from '@angular/router';
 export class CrearBorradorComponent implements OnInit, OnDestroy {
   unsubscribe$ = new Subject<void>();
   idDocumento: String;
-  documento: Documento;
   showDoc = false;
   campoIndex = 0;
-  constructor(private route: ActivatedRoute, private docService: DocumentosService) {}
+  borrador: Partial<Borrador> = {};
+  documento: Partial<Documento>;
+  borradorForm: FormGroup;
+  editorInitObject = {
+    menubar: false,
+    toolbar: false,
+  };
+  tinyEditorInstance;
+  editorForm: FormGroup;
+  constructor(private route: ActivatedRoute, private docService: DocumentosService, private formBuilder: FormBuilder) {}
 
-  ngOnInit(): void {
-    this.route.paramMap.pipe(takeUntil(this.unsubscribe$)).subscribe((params) => {
-      this.idDocumento = params.get('idDocumento');
-      this.loadDoc(this.idDocumento);
-    });
+  get camposFormArray() {
+    return this.borradorForm.get('campos') as FormArray;
   }
 
   ngOnDestroy(): void {
@@ -30,13 +37,76 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  loadDoc(idDoc) {
+  handleEditorInit(event) {
+    this.tinyEditorInstance = event.editor;
+    this.tinyEditorInstance.setMode('readonly');
+  }
+
+  ngOnInit(): void {
+    this.borradorForm = this.formBuilder.group({
+      emailCliente: '',
+      documento: '',
+      campos: this.formBuilder.array([]),
+    });
+    this.editorForm = this.formBuilder.group({
+      html: this.formBuilder.control(''),
+    });
+    this.getParams();
+  }
+
+  private getParams() {
+    this.route.paramMap.pipe(takeUntil(this.unsubscribe$)).subscribe((params) => {
+      this.idDocumento = params.get('idDocumento');
+      this.loadDocumento(this.idDocumento);
+    });
+  }
+
+  loadDocumento(idDoc) {
     this.docService
       .getById(idDoc)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((doc) => {
         this.documento = doc;
+        this.crearBorrador(doc);
+        this.editorForm.get('html').setValue(doc.html);
         this.showDoc = true;
+        this.initInputWatcher();
       });
+  }
+
+  private crearBorrador(doc: Documento) {
+    this.borradorForm.get('documento').setValue(doc._id);
+    doc.campos.forEach((campo) => {
+      this.camposFormArray.push(new FormControl(''));
+    });
+
+    console.log(this.borradorForm.value);
+  }
+
+  private initInputWatcher() {
+    this.camposFormArray.valueChanges.pipe(distinctUntilChanged(), takeUntil(this.unsubscribe$)).subscribe((value) => {
+      this.tinyEditorInstance.dom.setHTML(
+        this.tinyEditorInstance.dom.select(this.getCampoTagId(this.campoIndex)),
+        value[this.campoIndex] || '__________'
+      );
+    });
+  }
+
+  private getCampoTagId(index) {
+    const idCampo = this.documento.campos[index].identificador.toLowerCase().replace(/\s/g, '_');
+    return `#id_${idCampo}`;
+  }
+
+  getCampoSiguiente() {
+    if (this.campoIndex < this.camposFormArray.length - 1) {
+      this.campoIndex++;
+    }
+    console.log(this.borradorForm.value);
+  }
+
+  getCampoAnterior() {
+    if (this.campoIndex > 0) {
+      this.campoIndex--;
+    }
   }
 }
