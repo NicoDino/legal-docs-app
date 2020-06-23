@@ -32,6 +32,7 @@ import { PublicMenuComponent } from './public/partials/menu/menu.component';
 import { FooterComponent } from './public/partials/footer/footer.component';
 import { PublicFaqsComponent } from './public/faqs/faqs.component';
 import { PublicDocumentosComponent } from './public/documentos/documentos.component';
+import { PreviewDocumentoComponent } from './public/documentos/vista-documento/preview-documento.component';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { PublicDocumentosComponent } from './public/documentos/documentos.compon
     PublicMenuComponent,
     FooterComponent,
     PublicFaqsComponent,
-    PublicDocumentosComponent
+    PublicDocumentosComponent,
+    PreviewDocumentoComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
