@@ -46,11 +46,34 @@
     text-transform: uppercase;
 }
 
+::ng-deep .nav-link a{
+    color:rgb(51,51,51);
+    font-size: 15px;
+    padding-top: 2%;
+    text-decoration: none;
+}
+
 ::ng-deep .nav-link{
     color:rgb(51,51,51);
     margin-right: 28px;
     font-size: 15px;
     padding-top: 2%;
+}
+
+::ng-deep .dropdown-menu{
+    background-color:rgb(0, 51, 153);
+    border: 0px;
+    border-radius: 0px;
+}
+
+::ng-deep .dropdown-menu a{
+    color:white;
+}
+
+::ng-deep .dropdown-item:hover {
+    background-color:rgb(0, 51, 153);
+    color:white;
+    font-weight: bold;
 }
 
 ::ng-deep .navbar-brand img{
@@ -81,12 +104,15 @@
 }
 
 ::ng-deep .btn-warning{
-    background-color: rgb(245,208,18);
-    width: 180px;
-    font-family: 'titillium-bold', 'arial', sans-serif;
-    border-radius: 20px;
-    text-transform: uppercase;
-    font-size: 15px;
+    background-color:
+rgb(245,208,18);
+width: 180px;
+font-family: 'titillium-bold', 'arial', sans-serif;
+border-radius: 30px;
+text-transform: uppercase;
+font-size: 15px;
+padding-top: 8px;
+padding-bottom: 7px;
 }
 
 ::ng-deep .searchbar{
@@ -206,11 +232,106 @@ border: 3px solid
     border: 0px;
 }
 
+::ng-deep #documentos{
+    padding:12%;
+    padding-top: 3%;
+    padding-bottom: 6%;
+}
+
 ::ng-deep #faqs .card-header .btn-link{
     padding-left: 0px;
     color:rgb(51,51,51);
     font-weight: bold;
     text-decoration: none !important;
+}
+
+::ng-deep #documentos h1{
+    font-family: 'titillium-bold', 'arial', sans-serif;
+}
+::ng-deep #documentos .card{
+    border:0px;
+    border-bottom: 1px solid rgb(176,176,176);
+}
+
+::ng-deep #documentos .card-body{
+    padding: 0px;
+    font-weight: lighter;
+    color:rgb(102,102,102);
+}
+
+::ng-deep #documentos .card-header{
+    background:white;
+    padding: 0px;
+    border: 0px;
+}
+
+::ng-deep #documentos .subcategoria{
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+::ng-deep #documentos .listado-documentos{
+    line-height: 30px;
+}
+
+::ng-deep #documentos .listado-documentos a{
+    color:rgb(51,51,51);
+    text-decoration: none;
+}
+
+::ng-deep #documentos .card-header .btn-link{
+    padding-left: 0px;
+    color:rgb(51,51,51);
+    font-weight: bold;
+    text-decoration: none !important;
+}
+
+::ng-deep #documentos .mensaje{
+    padding: 6%;
+    padding-top: 2%;
+    padding-bottom: 1%;
+    background:rgb(245,208,18);
+    font-family: 'titillium-bold', 'arial', sans-serif;
+}
+
+
+::ng-deep #info-documento{
+    padding:12%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    background-color: rgb(247, 247, 247);
+    margin-top: 20px;
+}
+
+::ng-deep #info-documento h5{
+    color:rgb(51,51,51);
+}
+
+::ng-deep #info-documento .caracteristicas{
+    min-height: 90px;
+}
+
+::ng-deep #info-documento .caracteristicas h5{
+    color:rgb(51,51,51);
+    font-weight: bolder;
+    line-height: 12px;
+    font-size: 18px;
+}
+
+::ng-deep #info-documento .caracteristicas .grey{
+    color: rgb(102,102,102);
+}
+
+::ng-deep #pasos{
+    padding:12%;
+    padding-top: 2%;
+    padding-bottom: 3%;
+    background-color: rgb(0,153,274);
+    color:white;
+}
+
+::ng-deep #pasos h5{
+    font-family: 'titillium-bold', 'arial', sans-serif;
 }
 
 @media only screen and (max-width: 600px) {

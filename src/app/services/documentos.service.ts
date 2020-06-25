@@ -17,8 +17,16 @@ export class DocumentosService {
     return this.http.get<Documento[]>(`${this.apiUrl}/documentos`);
   }
 
+  getAllPublic() {
+    return this.http.get<Documento[]>(`${this.apiUrl}/documentos/public`);
+  }
+
   getById(id: string) {
     return this.http.get<Documento>(`${this.apiUrl}/documentos/${id}`);
+  }
+
+  getByIdPublic(id: string) {
+    return this.http.get<Documento[]>(`${this.apiUrl}/documentos/public/${id}`);
   }
 
   create(documento: Documento) {

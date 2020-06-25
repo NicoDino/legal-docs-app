@@ -32,6 +32,8 @@ import { PublicMenuComponent } from './public/partials/menu/menu.component';
 import { FooterComponent } from './public/partials/footer/footer.component';
 import { PublicFaqsComponent } from './public/faqs/faqs.component';
 import { CrearBorradorComponent } from './borradores/crear-borrador/crear-borrador.component';
+import { PublicDocumentosComponent } from './public/documentos/documentos.component';
+import { PreviewDocumentoComponent } from './public/documentos/vista-documento/preview-documento.component';
 
 @NgModule({
   imports: [
@@ -66,6 +68,8 @@ import { CrearBorradorComponent } from './borradores/crear-borrador/crear-borrad
     FooterComponent,
     PublicFaqsComponent,
     CrearBorradorComponent,
+    PublicDocumentosComponent,
+    PreviewDocumentoComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

@@ -8,6 +8,7 @@ import { Documento } from 'src/app/models/documento';
 import { CamposService } from 'src/app/services/campos.service';
 import { Campo } from 'src/app/models/campo';
 import { CrearCampoComponent } from '../campos/crear-campo/crear-campo.component';
+import { CategoriasService } from 'src/app/services/categorias.service';
 @Component({
   selector: 'app-crear-documento',
   templateUrl: './crear-documento.component.html',
@@ -18,6 +19,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   disableGuardar$ = new BehaviorSubject<boolean>(false);
   unsubscribe$ = new Subject<void>();
   currentTab = 0;
+  categorias: any[] = [];
   documento: Partial<Documento> = {};
   vistaEdicion = false;
   /** utilizado para edicion de campo */
@@ -32,8 +34,9 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private documentosService: DocumentosService,
     private camposService: CamposService,
+    private categoriaService: CategoriasService,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   @ViewChild('tinyEditor') tiny;
   @ViewChild('openModal') openModal: ElementRef;
@@ -48,10 +51,10 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     this.documentoForm = this.formBuilder.group({
       nombre: new FormControl(''),
       precio: new FormControl(''),
-      tipo: new FormControl(''),
+      categoria: new FormControl(''),
       html: new FormControl(''),
     });
-
+    this.getCategorias();
     this.route.paramMap.pipe(takeUntil(this.unsubscribe$)).subscribe((params) => {
       this.documento._id = params.get('idDocumento');
       if (this.documento._id) {
@@ -59,7 +62,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
           this.documento = rta;
           this.documentoForm.controls.nombre.setValue(rta.nombre);
           this.documentoForm.controls.precio.setValue(rta.precio);
-          this.documentoForm.controls.tipo.setValue(rta.tipo);
+          this.documentoForm.controls.categoria.setValue(rta.categoria);
           this.documentoForm.controls.html.setValue(rta.html);
           this.vistaEdicion = true;
         });
@@ -170,5 +173,11 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
 
   onAgregarCampo() {
     this.showModal = true;
+  }
+
+  private getCategorias() {
+    this.categoriaService.getAll().subscribe(resultado => {
+      this.categorias = resultado;
+    });
   }
 }
