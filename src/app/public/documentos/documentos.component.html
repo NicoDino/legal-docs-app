@@ -35,7 +35,7 @@
                         data-parent="#accordionDocumentos">
                         <div class="card-body listado-documentos">
                             <div *ngFor="let doc of categoria.documentos">
-                                <a>
+                                <a href="/ver-documento/{{doc._id}}">
                                     - {{doc.nombre}}
                                 </a>
                             </div>
@@ -43,7 +43,7 @@
                                 <b class="subcategoria">{{subcategoria.nombre | uppercase}}</b>
                                 <br>
                                 <div *ngFor="let doc of subcategoria.documentos">
-                                    <a>
+                                    <a href="/ver-documento/{{doc._id}}">
                                         - {{doc.nombre}}
                                     </a>
                                 </div>

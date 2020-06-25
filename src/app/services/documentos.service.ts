@@ -25,6 +25,10 @@ export class DocumentosService {
     return this.http.get<Documento[]>(`${this.apiUrl}/documentos/${id}`);
   }
 
+  getByIdPublic(id: string) {
+    return this.http.get<Documento[]>(`${this.apiUrl}/documentos/public/${id}`);
+  }
+
   create(documento: Documento) {
     return this.http.post(`${this.apiUrl}/documentos`, documento);
   }
