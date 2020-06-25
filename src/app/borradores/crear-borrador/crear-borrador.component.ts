@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 import { ActivatedRoute, NavigationEnd } from '@angular/router';
 import { Borrador } from 'src/app/models/borrador';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
+import { BorradoresService } from 'src/app/services/borradores.service';
 
 @Component({
   selector: 'app-crear-borrador',
@@ -14,7 +15,7 @@ import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 })
 export class CrearBorradorComponent implements OnInit, OnDestroy {
   unsubscribe$ = new Subject<void>();
-  idDocumento: String;
+  idDocumento: string;
   showDoc = false;
   campoIndex = 0;
   borrador: Partial<Borrador> = {};
@@ -26,7 +27,13 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
   };
   tinyEditorInstance;
   editorForm: FormGroup;
-  constructor(private route: ActivatedRoute, private docService: DocumentosService, private formBuilder: FormBuilder) {}
+  showMailForm = false;
+  constructor(
+    private route: ActivatedRoute,
+    private docService: DocumentosService,
+    private formBuilder: FormBuilder,
+    private borradorService: BorradoresService
+  ) {}
 
   get camposFormArray() {
     return this.borradorForm.get('campos') as FormArray;
@@ -100,13 +107,22 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
   getCampoSiguiente() {
     if (this.campoIndex < this.camposFormArray.length - 1) {
       this.campoIndex++;
+    } else {
+      this.showDoc = false;
+      this.showMailForm = true;
     }
-    console.log(this.borradorForm.value);
   }
 
   getCampoAnterior() {
     if (this.campoIndex > 0) {
       this.campoIndex--;
     }
+  }
+
+  enviarDocumento() {
+    console.log(this.borradorForm.value);
+    this.borradorService.create(this.borradorForm.value).subscribe((res) => {
+      alert('Enviaremos el archivo a su correo');
+    });
   }
 }

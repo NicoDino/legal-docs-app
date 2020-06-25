@@ -1,12 +1,10 @@
 <div class="container-fluid" *ngIf="showDoc">
   <h2>{{ documento?.nombre }}</h2>
   <br />
-  <!-- <form [formGroup]="documentoForm" (ngSubmit)="onSubmit()"> -->
   <div class="row">
     <!-- Columna izquieda, lista de campos -->
     <div class="col-4 pr-4">
       <div class="card" [formGroup]="borradorForm">
-        <!-- <h5 class="card-header">{{ documento.campos[campoIndex].identificador }}</h5> -->
         <div class="card-body">
           <div class="row mb-5">
             <p class="card-text">{{ documento.campos[campoIndex].descripcion }}</p>
@@ -47,4 +45,24 @@
     </div>
   </div>
   <!-- </form> -->
+</div>
+
+<div class="container-fluid" *ngIf="showMailForm">
+  <div class="row justify-content-center" [formGroup]="borradorForm">
+    <div class="card">
+      <div class="card-body">
+        <div class="row mb-5">
+          <p class="card-text">Dirección de correo electrónico (para recibir el documento)</p>
+        </div>
+        <div class="row mb-5">
+          <input type="text" formControlName="emailCliente" />
+        </div>
+        <div class="row btn-group">
+          <button type="button" class="btn btn-secondary" (click)="enviarDocumento()">
+            Obtener documento
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
