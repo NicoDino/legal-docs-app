@@ -9,8 +9,22 @@
           <div class="row mb-5">
             <p class="card-text">{{ documento.campos[campoIndex].descripcion }}</p>
           </div>
-          <div class="row mb-5">
+          <div class="row mb-5" *ngIf="documento.campos[campoIndex].tipo === 'input'">
             <input type="text" [formControl]="camposFormArray.controls[campoIndex]" />
+          </div>
+          <div class="row mb-5" *ngIf="documento.campos[campoIndex].tipo === 'opciones'">
+            <select [formControl]="camposFormArray.controls[campoIndex]" class="form-control" id="tipo">
+              <option *ngFor="let opcion of documento.campos[campoIndex].opciones" [value]="opcion">{{
+                opcion
+              }}</option>
+            </select>
+          </div>
+          <div class="row mb-5" *ngIf="documento.campos[campoIndex].tipo === 'boolean'">
+            <select [formControl]="camposFormArray.controls[campoIndex]" class="form-control" id="tipo">
+              <option *ngFor="let opcion of documento.campos[campoIndex].opciones" [value]="opcion">{{
+                opcion
+              }}</option>
+            </select>
           </div>
           <div class="row btn-group">
             <button

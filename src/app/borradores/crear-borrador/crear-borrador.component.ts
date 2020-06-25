@@ -86,8 +86,6 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
     doc.campos.forEach((campo) => {
       this.camposFormArray.push(new FormControl(''));
     });
-
-    console.log(this.borradorForm.value);
   }
 
   private initInputWatcher() {
