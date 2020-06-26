@@ -29,6 +29,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   };
   tinyEditorInstance;
   showModal = false;
+  step = '1';
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -36,7 +37,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     private camposService: CamposService,
     private categoriaService: CategoriasService,
     private route: ActivatedRoute
-  ) { }
+  ) {}
 
   @ViewChild('tinyEditor') tiny;
   @ViewChild('openModal') openModal: ElementRef;
@@ -48,23 +49,24 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.getCategorias();
     this.documentoForm = this.formBuilder.group({
       nombre: new FormControl(''),
       precio: new FormControl(''),
-      categoria: new FormControl(''),
+      categoria: new FormControl('Elija una categoria'),
       html: new FormControl(''),
     });
-    this.getCategorias();
     this.route.paramMap.pipe(takeUntil(this.unsubscribe$)).subscribe((params) => {
       this.documento._id = params.get('idDocumento');
+      this.step = params.get('step');
       if (this.documento._id) {
         this.documentosService.getById(this.documento._id).subscribe((rta: any) => {
           this.documento = rta;
           this.documentoForm.controls.nombre.setValue(rta.nombre);
           this.documentoForm.controls.precio.setValue(rta.precio);
-          this.documentoForm.controls.categoria.setValue(rta.categoria);
+          this.documentoForm.controls.categoria.setValue(rta.categoria._id);
           this.documentoForm.controls.html.setValue(rta.html);
-          this.vistaEdicion = true;
+          this.vistaEdicion = this.step !== '2';
         });
       }
     });
@@ -97,7 +99,11 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   }
 
   onCancel() {
-    this.router.navigateByUrl('documentos');
+    if (this.vistaEdicion) {
+      this.vistaEdicion = false;
+    } else {
+      this.router.navigateByUrl('documentos');
+    }
   }
 
   onModalSubmit(evento): void {
@@ -176,7 +182,8 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   }
 
   private getCategorias() {
-    this.categoriaService.getAll().subscribe(resultado => {
+    this.categoriaService.getAll().subscribe((resultado) => {
+      console.log(resultado);
       this.categorias = resultado;
     });
   }
