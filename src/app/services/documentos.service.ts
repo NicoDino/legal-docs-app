@@ -22,7 +22,7 @@ export class DocumentosService {
   }
 
   getById(id: string) {
-    return this.http.get<Documento[]>(`${this.apiUrl}/documentos/${id}`);
+    return this.http.get<Documento>(`${this.apiUrl}/documentos/${id}`);
   }
 
   getByIdPublic(id: string) {

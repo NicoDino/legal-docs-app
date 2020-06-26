@@ -39,6 +39,7 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
 
   private createForm() {
     this.campoForm = this.formBuilder.group({
+      // TODO validar identificador que sea solo letras sin simbolos, porq va a ser el id en el html
       identificador: new FormControl(this.campo ? this.campo.identificador : '', [Validators.required]),
       descripcion: new FormControl(this.campo ? this.campo.descripcion : ''),
       tipo: new FormControl(this.campo ? this.campo.tipo : '', [Validators.required]),

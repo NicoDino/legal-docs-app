@@ -107,9 +107,11 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     nuevoCampo.documento = this.documento._id;
     if (!esEdicion) {
       this.camposService.create(nuevoCampo).subscribe(
-        () => {
+        (campoCreado: Campo) => {
           // insertamos placeholder para el campo en el texto y guardamos el documento
-          this.tiny.editor.execCommand('mceInsertContent', false, '__________');
+          const idCampo = campoCreado.identificador.toLowerCase().replace(/\s/g, '_');
+          // insertar este codigo \uFEFF evita que el tag agregado encierre todo el texto a continuacion
+          this.tiny.editor.execCommand('mceInsertContent', false, `<span id=id_${idCampo}>__________</span>\uFEFF`);
           this.documentosService
             .update({ _id: this.documento._id, html: this.documentoForm.controls.html.value })
             .subscribe((documentoActualizado: Partial<Documento>) => {

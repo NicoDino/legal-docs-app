@@ -15,6 +15,7 @@ import { CrearDocumentoComponent } from './documentos/crear-documento/crear-docu
 import { BorradoresComponent } from './borradores/borradores.component';
 import { InicioComponent } from './public/inicio/inicio.component';
 import { PublicFaqsComponent } from './public/faqs/faqs.component';
+import { CrearBorradorComponent } from './borradores/crear-borrador/crear-borrador.component';
 import { PublicDocumentosComponent } from './public/documentos/documentos.component';
 import { PreviewDocumentoComponent } from './public/documentos/vista-documento/preview-documento.component';
 
@@ -35,20 +36,21 @@ const appRoutes: Routes = [
   { path: 'crear-campo/:idDocumento', component: CrearCampoComponent, canActivate: [AuthGuard] },
   { path: 'crear-documento/:step/:idDocumento', component: CrearDocumentoComponent, canActivate: [AuthGuard] },
   { path: 'crear-documento', component: CrearDocumentoComponent, canActivate: [AuthGuard] },
-  { path: 'borradores', component: BorradoresComponent, canActivate: [AuthGuard] },
 
   /*  RUTAS PUBLICAS  */
   { path: 'login', component: LoginComponent },
   { path: 'app-reestablecer-pass', component: ReestablecerPassComponent },
   { path: 'preguntas-frecuentes', component: PublicFaqsComponent },
+  { path: 'borradores', component: BorradoresComponent, canActivate: [AuthGuard] },
+  { path: 'nuevo-borrador/:idDocumento', component: CrearBorradorComponent, canActivate: [AuthGuard] },
   { path: 'documentos/:tipo', component: PublicDocumentosComponent },
   { path: 'ver-documento/:idDocumento', component: PreviewDocumentoComponent },
 
   // otherwise redirect to home
-  { path: '**', redirectTo: '/inicio' }
+  { path: '**', redirectTo: '/inicio' },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(appRoutes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
