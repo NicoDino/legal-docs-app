@@ -37,8 +37,8 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'app-reestablecer-pass', component: ReestablecerPassComponent },
   { path: 'preguntas-frecuentes', component: PublicFaqsComponent },
-  { path: 'borradores', component: BorradoresComponent, canActivate: [AuthGuard] },
-  { path: 'nuevo-borrador/:idDocumento', component: CrearBorradorComponent, canActivate: [AuthGuard] },
+  { path: 'borradores', component: BorradoresComponent },
+  { path: 'nuevo-borrador/:idDocumento', component: CrearBorradorComponent },
   { path: 'documentos/:tipo', component: PublicDocumentosComponent },
   { path: 'ver-documento/:idDocumento', component: PreviewDocumentoComponent },
 
