@@ -19,23 +19,36 @@
         <div class="col-12">
           <div class="form-group">
             <label for="nombre">Nombre</label>
-            <input formControlName="nombre" type="text" class="form-control" id="nombre"
-              aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
+            <input
+              formControlName="nombre"
+              type="text"
+              class="form-control"
+              id="nombre"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-default"
+            />
           </div>
         </div>
         <div class="col-6">
           <div class="form-group">
             <label for="exampleFormControlSelect1">Categoria</label>
-            <select formControlName="categoria" class="form-control" id="categoria">
-              <option *ngFor="let c of categorias" [ngValue]="c._id">{{c.nombre}}</option>
+            <select formControlName="categoria" class="form-control">
+              <option>Elija una categoria</option>
+              <option *ngFor="let c of categorias" [value]="c._id">{{ c.nombre }}</option>
             </select>
           </div>
         </div>
         <div class="col-6">
           <div class="form-group">
             <label for="precio">Precio</label>
-            <input formControlName="precio" type="number" class="form-control" id="precio"
-              aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
+            <input
+              formControlName="precio"
+              type="number"
+              class="form-control"
+              id="precio"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-default"
+            />
           </div>
         </div>
       </div>
@@ -53,8 +66,9 @@
         <!-- Columna izquieda, lista de campos -->
         <div class="col-3">
           <p class="text-center mt-2">
-            <small *ngIf="documento?.campos?.length < 1" class="float-center">Aún no se han cargado campos al
-              documento</small>
+            <small *ngIf="documento?.campos?.length < 1" class="float-center"
+              >Aún no se han cargado campos al documento</small
+            >
           </p>
           <ul class="list-group">
             <li
@@ -75,13 +89,24 @@
         <div class="col-9">
           <div class="form-group">
             <label for="html">Contenido</label>
-            <editor #tinyEditor apiKey="xw7i6xqrjfmfj32n3l20w1lb0mek7bbf4kffwtu7is30t377" formControlName="html"
-              (onInit)="handleEditorInit($event)" [init]="editorInitObject"></editor>
+            <editor
+              #tinyEditor
+              apiKey="xw7i6xqrjfmfj32n3l20w1lb0mek7bbf4kffwtu7is30t377"
+              formControlName="html"
+              (onInit)="handleEditorInit($event)"
+              [init]="editorInitObject"
+            ></editor>
           </div>
           <div class="row">
             <div class="col-sm-12 d-flex justify-content-around">
-              <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal"
-                (click)="onAgregarCampo()" #openModal>
+              <button
+                type="button"
+                class="btn btn-info btn-sm"
+                data-toggle="modal"
+                data-target="#myModal"
+                (click)="onAgregarCampo()"
+                #openModal
+              >
                 Agregar campo
               </button>
               <button type="button" id="guardarHtml" class="btn btn-sm btn-success" (click)="guardarHtml()">
@@ -96,7 +121,12 @@
 
   <br />
 
-  <app-crear-campo *ngIf="showModal" [campo]="campoEditado" (campoCreado)="onModalSubmit($event)"
-    (modalCerrado)="onModalCerrado()" #campoModal>
+  <app-crear-campo
+    *ngIf="showModal"
+    [campo]="campoEditado"
+    (campoCreado)="onModalSubmit($event)"
+    (modalCerrado)="onModalCerrado()"
+    #campoModal
+  >
   </app-crear-campo>
 </div>
