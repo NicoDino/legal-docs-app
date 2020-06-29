@@ -12,7 +12,6 @@
     font-family: 'titillium', 'arial', sans-serif;
   }
 
-  
 ::ng-deep .footer {
     width: 100%;
     line-height: 60px;
@@ -332,6 +331,31 @@ border: 3px solid
 
 ::ng-deep #pasos h5{
     font-family: 'titillium-bold', 'arial', sans-serif;
+}
+
+::ng-deep #busqueda{
+    padding:12%;
+    padding-top: 3%;
+    padding-bottom: 6%;
+}
+
+::ng-deep #busqueda h1{
+    font-family: 'titillium-bold', 'arial', sans-serif;
+    margin-bottom: 40px;
+}
+
+::ng-deep #busqueda .title{
+    font-family: 'titillium-bold', 'arial', sans-serif;
+}
+
+::ng-deep #busqueda .descripcion{
+    color: rgb(102,102,102);
+}
+
+::ng-deep #busqueda .documento{
+    margin-top: 30px;
+    border:0px;
+    border-bottom: 1px solid rgb(176,176,176);
 }
 
 @media only screen and (max-width: 600px) {

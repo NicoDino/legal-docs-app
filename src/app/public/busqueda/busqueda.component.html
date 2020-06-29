@@ -1,0 +1,15 @@
+<app-public-menu></app-public-menu>
+<section id="busqueda">
+    <h1 class="text-center">RESULTADOS DE LA BÚSQUEDA</h1>
+    <p *ngIf="documentos.length > 0" class="title">Tenemos {{documentos.length}} documentos para "{{busqueda}}".</p>
+    <p *ngIf="documentos.length == 0" class="title">No se han encontrado documentos que coincidan con
+        "{{busqueda}}".
+    </p>
+    <div class="documento" *ngFor="let documento of documentos">
+        <p class="title">{{documento.nombre}}
+        </p>
+        <p class="descripcion">{{documento.descripcion}}
+        </p>
+    </div>
+</section>
+<app-public-footer></app-public-footer>
