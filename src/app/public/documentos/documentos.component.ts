@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { DocumentosService } from 'src/app/services/documentos.service';
 import { CategoriasService } from 'src/app/services/categorias.service';
-import { element } from 'protractor';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

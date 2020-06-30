@@ -37,7 +37,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     private camposService: CamposService,
     private categoriaService: CategoriasService,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   @ViewChild('tinyEditor') tiny;
   @ViewChild('openModal') openModal: ElementRef;
@@ -52,6 +52,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     this.getCategorias();
     this.documentoForm = this.formBuilder.group({
       nombre: new FormControl(''),
+      descripcion: new FormControl(''),
       precio: new FormControl(''),
       categoria: new FormControl('Elija una categoria'),
       html: new FormControl(''),
@@ -63,6 +64,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
         this.documentosService.getById(this.documento._id).subscribe((rta: any) => {
           this.documento = rta;
           this.documentoForm.controls.nombre.setValue(rta.nombre);
+          this.documentoForm.controls.descripcion.setValue(rta.descripcion);
           this.documentoForm.controls.precio.setValue(rta.precio);
           this.documentoForm.controls.categoria.setValue(rta.categoria._id);
           this.documentoForm.controls.html.setValue(rta.html);

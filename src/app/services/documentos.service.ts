@@ -13,6 +13,10 @@ export class DocumentosService {
     this.apiUrl = environment.apiUrl;
   }
 
+  search(busqueda: string) {
+    return this.http.get<Documento[]>(`${this.apiUrl}/documentos/search/${busqueda}`);
+  }
+
   getAll() {
     return this.http.get<Documento[]>(`${this.apiUrl}/documentos`);
   }

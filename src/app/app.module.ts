@@ -34,6 +34,7 @@ import { PublicFaqsComponent } from './public/faqs/faqs.component';
 import { CrearBorradorComponent } from './borradores/crear-borrador/crear-borrador.component';
 import { PublicDocumentosComponent } from './public/documentos/documentos.component';
 import { PreviewDocumentoComponent } from './public/documentos/vista-documento/preview-documento.component';
+import { PublicBusquedaComponent } from './public/busqueda/busqueda.component';
 
 @NgModule({
   imports: [
@@ -70,6 +71,7 @@ import { PreviewDocumentoComponent } from './public/documentos/vista-documento/p
     CrearBorradorComponent,
     PublicDocumentosComponent,
     PreviewDocumentoComponent,
+    PublicBusquedaComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
@@ -79,4 +81,4 @@ import { PreviewDocumentoComponent } from './public/documentos/vista-documento/p
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
