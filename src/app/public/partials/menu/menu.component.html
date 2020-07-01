@@ -21,8 +21,9 @@
             <a class="nav-item nav-link" href="/preguntas-frecuentes">Faq</a>
             <a class="nav-item nav-link" href="#">Consultar a un abogado</a>
             <div class="searchbar">
-                <input class="search_input" type="text" name="" placeholder="Buscar un documento">
-                <a href="#" class="search_icon"><img src="assets/img/lupa.png" width="100%"></a>
+                <input class="search_input" type="text" [(ngModel)]="busqueda" placeholder="Buscar un documento"
+                    ngDefaultControl>
+                <a class="search_icon" href="/busqueda/{{busqueda}}"><img src="assets/img/lupa.png" width="100%"></a>
             </div>
         </div>
     </div>
