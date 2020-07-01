@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Borrador } from 'src/app/models/borrador';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { BorradoresService } from 'src/app/services/borradores.service';
+import { CheckoutService } from 'src/app/services/checkout.service';
 
 @Component({
   selector: 'app-crear-borrador',
@@ -25,7 +26,7 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
   editorInitObject = {
     menubar: false,
     toolbar: false,
-    height: 400
+    height: 400,
   };
   tinyEditorInstance;
   editorForm: FormGroup;
@@ -35,7 +36,7 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
     private docService: DocumentosService,
     private formBuilder: FormBuilder,
     private borradorService: BorradoresService
-  ) { }
+  ) {}
 
   get camposFormArray() {
     return this.borradorForm.get('campos') as FormArray;
@@ -122,7 +123,8 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
   enviarDocumento() {
     console.log(this.borradorForm.value);
     this.borradorService.create(this.borradorForm.value).subscribe((res) => {
-      alert('Enviaremos el archivo a su correo');
+      alert('Una vez recibido el pago, enviaremos el archivo a su correo');
+      window.location.href = res;
     });
   }
 }

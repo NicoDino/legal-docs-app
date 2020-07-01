@@ -33,12 +33,12 @@ const appRoutes: Routes = [
   { path: 'crear-campo/:idDocumento', component: CrearCampoComponent, canActivate: [AuthGuard] },
   { path: 'crear-documento/:step/:idDocumento', component: CrearDocumentoComponent, canActivate: [AuthGuard] },
   { path: 'crear-documento', component: CrearDocumentoComponent, canActivate: [AuthGuard] },
+  { path: 'borradores', component: BorradoresComponent, canActivate: [AuthGuard] },
 
   /*  RUTAS PUBLICAS  */
   { path: 'login', component: LoginComponent },
   { path: 'app-reestablecer-pass', component: ReestablecerPassComponent },
   { path: 'preguntas-frecuentes', component: PublicFaqsComponent },
-  { path: 'borradores', component: BorradoresComponent, canActivate: [AuthGuard] },
   { path: 'nuevo-borrador/:idDocumento', component: CrearBorradorComponent },
   { path: 'documentos/:tipo', component: PublicDocumentosComponent },
   { path: 'ver-documento/:idDocumento', component: PreviewDocumentoComponent },
@@ -51,4 +51,4 @@ const appRoutes: Routes = [
   imports: [RouterModule.forRoot(appRoutes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

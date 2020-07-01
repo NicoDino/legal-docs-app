@@ -37,7 +37,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     private camposService: CamposService,
     private categoriaService: CategoriasService,
     private route: ActivatedRoute
-  ) { }
+  ) {}
 
   @ViewChild('tinyEditor') tiny;
   @ViewChild('openModal') openModal: ElementRef;
@@ -57,6 +57,10 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
       categoria: new FormControl('Elija una categoria'),
       html: new FormControl(''),
     });
+    this.loadDocumento();
+  }
+
+  private loadDocumento() {
     this.route.paramMap.pipe(takeUntil(this.unsubscribe$)).subscribe((params) => {
       this.documento._id = params.get('idDocumento');
       this.step = params.get('step');
@@ -64,9 +68,9 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
         this.documentosService.getById(this.documento._id).subscribe((rta: any) => {
           this.documento = rta;
           this.documentoForm.controls.nombre.setValue(rta.nombre);
-          this.documentoForm.controls.descripcion.setValue(rta.descripcion);
           this.documentoForm.controls.precio.setValue(rta.precio);
-          this.documentoForm.controls.categoria.setValue(rta.categoria._id);
+          this.documentoForm.controls.descripcion.setValue(rta.descripcion);
+          this.documentoForm.controls.categoria.setValue(rta.categoria ? rta.categoria._id : '');
           this.documentoForm.controls.html.setValue(rta.html);
           this.vistaEdicion = this.step !== '2';
         });
@@ -80,16 +84,30 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.disableGuardar$.next(true);
-    this.documentosService.create(this.documentoForm.value).subscribe(
-      (res: any) => {
-        this.documento = res.data;
-        this.vistaEdicion = true;
-        this.disableGuardar$.next(false);
-      },
-      () => {
-        this.disableGuardar$.next(false);
-      }
-    );
+    if (!this.documento._id) {
+      this.documentosService.create(this.documentoForm.value).subscribe(
+        (res: any) => {
+          this.documento = res.data;
+          this.vistaEdicion = true;
+          this.disableGuardar$.next(false);
+        },
+        () => {
+          this.disableGuardar$.next(false);
+        }
+      );
+    } else {
+      const documentoEditado = this.documentoForm.value;
+      documentoEditado._id = this.documento._id;
+      this.documentosService.update(documentoEditado).subscribe(
+        (res: any) => {
+          this.documento = res.data;
+          this.disableGuardar$.next(false);
+        },
+        () => {
+          this.disableGuardar$.next(false);
+        }
+      );
+    }
   }
 
   guardarHtml() {

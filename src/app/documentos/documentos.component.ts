@@ -1,4 +1,12 @@
-import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, HostListener } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  ChangeDetectorRef,
+  HostListener,
+  AfterViewInit,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { EventsDocumentosService } from './services/eventsDocumentos.service';
@@ -10,7 +18,7 @@ import { MdbTableDirective, MdbTablePaginationComponent } from 'ng-uikit-pro-sta
   selector: 'app-documentos',
   templateUrl: './documentos.component.html',
 })
-export class DocumentosComponent implements OnInit {
+export class DocumentosComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild('row', { static: true }) row: ElementRef;

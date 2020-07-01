@@ -6,22 +6,14 @@ import { Borrador } from '../models/borrador';
 @Injectable({
   providedIn: 'root',
 })
-export class BorradoresService {
+export class CheckoutService {
   private apiUrl: string;
 
   constructor(private http: HttpClient) {
     this.apiUrl = environment.apiUrl;
   }
 
-  getAll() {
-    return this.http.get<Borrador[]>(`${this.apiUrl}/borradores`);
-  }
-
-  create(borrador: Borrador) {
-    return this.http.post<string>(`${this.apiUrl}/borradores`, borrador);
-  }
-
-  delete(id: string) {
-    return this.http.delete(`${this.apiUrl}/borradores/${id}`);
+  getLink(body) {
+    return this.http.post<any>(`${this.apiUrl}/mercadopago`, body);
   }
 }
