@@ -114,6 +114,18 @@ padding-top: 8px;
 padding-bottom: 7px;
 }
 
+::ng-deep .btn-primary{
+    background-color:
+rgb(0,153,274);
+width: 180px;
+font-family: 'titillium-bold', 'arial', sans-serif;
+border-radius: 30px;
+text-transform: uppercase;
+font-size: 15px;
+padding-top: 8px;
+padding-bottom: 7px;
+}
+
 ::ng-deep .searchbar{
     margin-bottom: auto;
 margin-top: auto;
@@ -357,6 +369,99 @@ border: 3px solid
     border:0px;
     border-bottom: 1px solid rgb(176,176,176);
 }
+
+::ng-deep #crear-borrador{
+    padding:12%;
+    padding-top: 3%;
+    padding-bottom: 6%;
+}
+
+::ng-deep #crear-borrador .card{
+    border: 0px;
+}
+
+::ng-deep #crear-borrador .card-body{
+    padding: 0px;
+}
+
+::ng-deep #crear-borrador .btn-warning{
+    width: 145px;
+}
+
+::ng-deep #crear-borrador .btn-primary{
+    width: 145px;
+}
+
+::ng-deep #crear-borrador select{
+-moz-appearance: none;
+-webkit-appearance: none;
+appearance: none;
+background: url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") white no-repeat 98.5% !important;
+background: url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png")
+white no-repeat calc(100% - 10px) !important;
+}
+
+::ng-deep #fin-documento{
+    padding:12%;
+    padding-top: 3%;
+    padding-bottom: 6%;
+}
+
+::ng-deep #fin-documento h1{
+    font-family: 'titillium-bold', 'arial', sans-serif;
+    margin-bottom: 25px;
+}
+
+::ng-deep #fin-documento #pago-seguro{
+    height: 250px;
+    background:
+    rgb(230,230,230);
+    padding: 26px;
+    border-radius: 20px;
+    padding-top: 18px;
+}
+
+::ng-deep #fin-documento .mensaje{
+    padding: 2%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+padding-top: 1%;
+padding-bottom: 1%;
+background:
+rgb(245,208,18);
+font-family: 'titillium-bold', 'arial', sans-serif;
+margin-bottom: 20px;
+line-height: 19px;
+}
+
+::ng-deep #fin-documento .card{
+    border: 0px;
+}
+
+::ng-deep #fin-documento .btn-warning{
+    width: 100%;
+    text-transform: capitalize;
+}
+
+::ng-deep #fin-documento .email{
+    width: 400px;
+    border-radius: 20px;
+    border: 1px solid
+    black;
+    padding: 1%;
+        padding-left: 1%;
+    color:
+    rgb(153,153,153);
+    padding-left: 3%;
+    margin-top: 5px;
+}
+
+::ng-deep #fin-documento #pago-seguro h5{
+    font-family: 'titillium-bold', 'arial', sans-serif;
+    margin-bottom: 18px;
+}
+
+
 
 @media only screen and (max-width: 600px) {
     ::ng-deep #portada #imagen {

@@ -1,0 +1,114 @@
+<app-public-menu></app-public-menu>
+<div id="crear-borrador" *ngIf="showDoc">
+  <h5><b>{{documento?.nombre}}</b></h5>
+  <br />
+  <div class="row">
+    <!-- Columna izquieda, lista de campos -->
+    <div class="col-4 pr-4">
+      <div class="card" [formGroup]="borradorForm">
+        <div class="card-body">
+          <div class="row mb-5">
+            <div class="col-sm-12">
+              <p class="card-text">{{ documento.campos[campoIndex].descripcion }}</p>
+            </div>
+          </div>
+          <div class="row mb-5" *ngIf="documento.campos[campoIndex].tipo === 'input'">
+            <div class="col-sm-12">
+              <input type="text" class="form-control btn-block" [formControl]="camposFormArray.controls[campoIndex]" />
+            </div>
+          </div>
+          <div class="row mb-5" *ngIf="documento.campos[campoIndex].tipo === 'opciones'">
+            <div class="col-sm-12">
+              <select [formControl]="camposFormArray.controls[campoIndex]" class="form-control" id="tipo">
+                <option *ngFor="let opcion of documento.campos[campoIndex].opciones" [value]="opcion">{{
+                opcion
+              }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="row mb-5" *ngIf="documento.campos[campoIndex].tipo === 'boolean'">
+            <select [formControl]="camposFormArray.controls[campoIndex]" class="form-control" id="tipo">
+              <option *ngFor="let opcion of documento.campos[campoIndex].opciones" [value]="opcion">{{
+                opcion
+              }}</option>
+            </select>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <button type="button" class="btn btn-warning" (click)="getCampoAnterior()" [disabled]="campoIndex < 1">
+                Paso anterior
+              </button>
+            </div>
+            <div class="col-sm-6">
+              <button type="button" class="btn btn-primary" (click)="getCampoSiguiente()"
+                [disabled]="campoIndex >= camposFormArray.length">
+                Paso siguiente
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Columna derecha, editor -->
+    <div class="col-8" [formGroup]="editorForm">
+      <editor #tinyEditor apiKey="xw7i6xqrjfmfj32n3l20w1lb0mek7bbf4kffwtu7is30t377" formControlName="html"
+        (onInit)="handleEditorInit($event)" [init]="editorInitObject"></editor>
+    </div>
+  </div>
+  <!-- </form> -->
+</div>
+
+<div id="fin-documento" *ngIf="showMailForm">
+  <div class="row">
+    <div class="col-12">
+      <h1>Tu documento está listo</h1>
+    </div>
+  </div>
+  <div class="row" [formGroup]="borradorForm">
+    <div class="col-sm-9">
+      <div class="mensaje">
+        <div class="row">
+          <div class="col-9">
+            <h5>{{documento?.nombre}}</h5>
+            <p>Descarga inmediata en formatos Word y PDF<br>
+              Precio en pesos argentinos.</p>
+          </div>
+          <div class="col-3 d-flex justify-content-end align-items-center ">
+            <h5 class="align-middle">$ {{documento?.precio}}</h5>
+          </div>
+        </div>
+      </div>
+      <div class="card text-center">
+        <div class="card-body">
+          <div class="row mb-1">
+            <div class="col-12">
+              <p class="card-text">Dirección de correo electrónico (para recibir el documento)</p>
+            </div>
+          </div>
+          <div class="row mb-5">
+            <div class="col-12">
+              <input type="text" class="email" formControlName="emailCliente" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <input type="checkbox" class="mr-1" />
+              <label> Acepto las condiciones generales de venta <a href="">(leer las CGV)</a></label>
+              <button type="button" class="btn btn-warning" (click)="enviarDocumento()" [disabled]="!aceptoTerminos">
+                HACER EL PEDIDO (servidor seguro)
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div id="pago-seguro" class="text-center">
+        <h5>PAGO SEGURO</h5>
+        <p class="text-left"><small>Pagá con total seguridad.<br>
+            Nuestro banco asociado garantiza <b>la seguridad de sus operaciones.</b></small></p>
+      </div>
+    </div>
+  </div>
+</div>
+<app-public-footer></app-public-footer>

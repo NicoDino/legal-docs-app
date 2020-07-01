@@ -31,7 +31,7 @@ import { InicioComponent } from './public/inicio/inicio.component';
 import { PublicMenuComponent } from './public/partials/menu/menu.component';
 import { FooterComponent } from './public/partials/footer/footer.component';
 import { PublicFaqsComponent } from './public/faqs/faqs.component';
-import { CrearBorradorComponent } from './borradores/crear-borrador/crear-borrador.component';
+import { CrearBorradorComponent } from './public/documentos/crear-borrador/crear-borrador.component';
 import { PublicDocumentosComponent } from './public/documentos/documentos.component';
 import { PreviewDocumentoComponent } from './public/documentos/vista-documento/preview-documento.component';
 import { PublicBusquedaComponent } from './public/busqueda/busqueda.component';
@@ -68,10 +68,11 @@ import { PublicBusquedaComponent } from './public/busqueda/busqueda.component';
     PublicMenuComponent,
     FooterComponent,
     PublicFaqsComponent,
-    CrearBorradorComponent,
+    CrearDocumentoComponent,
     PublicDocumentosComponent,
     PreviewDocumentoComponent,
-    PublicBusquedaComponent
+    PublicBusquedaComponent,
+    CrearBorradorComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
