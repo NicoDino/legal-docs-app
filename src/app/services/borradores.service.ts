@@ -4,24 +4,24 @@ import { environment } from 'src/environments/environment';
 import { Borrador } from '../models/borrador';
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 export class BorradoresService {
-    private apiUrl: string;
+  private apiUrl: string;
 
-    constructor(private http: HttpClient) {
-        this.apiUrl = environment.apiUrl;
-    }
+  constructor(private http: HttpClient) {
+    this.apiUrl = environment.apiUrl;
+  }
 
-    getAll() {
-        return this.http.get<Borrador[]>(`${this.apiUrl}/borradores`);
-    }
+  getAll() {
+    return this.http.get<Borrador[]>(`${this.apiUrl}/borradores`);
+  }
 
-    create(borrador: Borrador) {
-        return this.http.post(`${this.apiUrl}/borradores`, borrador);
-    }
+  create(borrador: Borrador) {
+    return this.http.post<string>(`${this.apiUrl}/borradores`, borrador);
+  }
 
-    delete(id: string) {
-        return this.http.delete(`${this.apiUrl}/borradores/${id}`);
-    }
+  delete(id: string) {
+    return this.http.delete(`${this.apiUrl}/borradores/${id}`);
+  }
 }

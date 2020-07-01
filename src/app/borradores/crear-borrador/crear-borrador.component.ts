@@ -121,14 +121,9 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
 
   enviarDocumento() {
     console.log(this.borradorForm.value);
-    // this.borradorService.create(this.borradorForm.value).subscribe((res) => {
-    //   alert('Enviaremos el archivo a su correo');
-    // });
-
-    this.checkoutService.getLink(this.borradorForm.get('emailCliente').value).subscribe((res) => {
+    this.borradorService.create(this.borradorForm.value).subscribe((res) => {
+      alert('Una vez recibido el pago, enviaremos el archivo a su correo');
       window.location.href = res;
-
-      debugger;
     });
   }
 }
