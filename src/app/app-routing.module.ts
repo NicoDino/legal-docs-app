@@ -15,7 +15,7 @@ import { CrearDocumentoComponent } from './documentos/crear-documento/crear-docu
 import { BorradoresComponent } from './borradores/borradores.component';
 import { InicioComponent } from './public/inicio/inicio.component';
 import { PublicFaqsComponent } from './public/faqs/faqs.component';
-import { CrearBorradorComponent } from './borradores/crear-borrador/crear-borrador.component';
+import { CrearBorradorComponent } from './public/documentos/crear-borrador/crear-borrador.component';
 import { PublicDocumentosComponent } from './public/documentos/documentos.component';
 import { PreviewDocumentoComponent } from './public/documentos/vista-documento/preview-documento.component';
 import { PublicBusquedaComponent } from './public/busqueda/busqueda.component';
@@ -39,7 +39,7 @@ const appRoutes: Routes = [
   { path: 'app-reestablecer-pass', component: ReestablecerPassComponent },
   { path: 'preguntas-frecuentes', component: PublicFaqsComponent },
   { path: 'borradores', component: BorradoresComponent, canActivate: [AuthGuard] },
-  { path: 'nuevo-borrador/:idDocumento', component: CrearBorradorComponent, canActivate: [AuthGuard] },
+  { path: 'nuevo-borrador/:idDocumento', component: CrearBorradorComponent },
   { path: 'documentos/:tipo', component: PublicDocumentosComponent },
   { path: 'ver-documento/:idDocumento', component: PreviewDocumentoComponent },
   { path: 'busqueda/:busqueda', component: PublicBusquedaComponent },

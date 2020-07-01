@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { DocumentosService } from 'src/app/services/documentos.service';
 import { Documento } from 'src/app/models/documento';
-import { takeUntil, filter, distinctUntilChanged } from 'rxjs/operators';
+import { takeUntil, distinctUntilChanged } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { ActivatedRoute, NavigationEnd } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Borrador } from 'src/app/models/borrador';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { BorradoresService } from 'src/app/services/borradores.service';
@@ -11,12 +11,13 @@ import { BorradoresService } from 'src/app/services/borradores.service';
 @Component({
   selector: 'app-crear-borrador',
   templateUrl: './crear-borrador.component.html',
-  styleUrls: ['./crear-borrador.component.css'],
+  styleUrls: ['./../../public.css'],
 })
 export class CrearBorradorComponent implements OnInit, OnDestroy {
   unsubscribe$ = new Subject<void>();
   idDocumento: string;
   showDoc = false;
+  aceptoTerminos = false;
   campoIndex = 0;
   borrador: Partial<Borrador> = {};
   documento: Partial<Documento>;
@@ -24,6 +25,7 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
   editorInitObject = {
     menubar: false,
     toolbar: false,
+    height: 400
   };
   tinyEditorInstance;
   editorForm: FormGroup;
@@ -33,7 +35,7 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
     private docService: DocumentosService,
     private formBuilder: FormBuilder,
     private borradorService: BorradoresService
-  ) {}
+  ) { }
 
   get camposFormArray() {
     return this.borradorForm.get('campos') as FormArray;
@@ -70,7 +72,7 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
 
   loadDocumento(idDoc) {
     this.docService
-      .getById(idDoc)
+      .getByIdPublic(idDoc)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((doc) => {
         this.documento = doc;
