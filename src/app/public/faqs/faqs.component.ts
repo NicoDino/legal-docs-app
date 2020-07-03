@@ -9,6 +9,8 @@ import { FaqsService } from 'src/app/services/faqs.service';
 })
 export class PublicFaqsComponent {
     faqs: any[] = [];
+    public loading = true;
+
     constructor(private faqsService: FaqsService) { }
 
     ngOnInit(): void {
@@ -20,7 +22,8 @@ export class PublicFaqsComponent {
             this.faqs = resultado;
             this.faqs.forEach(element => {
                 element.active = false;
-            })
+            });
+            this.loading = false;
         });
     }
 

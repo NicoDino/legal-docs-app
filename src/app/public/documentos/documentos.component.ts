@@ -12,6 +12,7 @@ export class PublicDocumentosComponent {
     tipo: string;
     documentos: any[] = [];
     categorias: any[] = [];
+    public loading = true;
 
     constructor(private documentosService: DocumentosService, private categoriasService: CategoriasService, private route: ActivatedRoute) { }
 
@@ -32,7 +33,8 @@ export class PublicDocumentosComponent {
                     cat.descendientes.forEach(subcat => {
                         subcat.documentos = this.documentos.filter(doc => doc.categoria === subcat._id);
                     });
-                })
+                });
+                this.loading = false;
             });
         });
     }

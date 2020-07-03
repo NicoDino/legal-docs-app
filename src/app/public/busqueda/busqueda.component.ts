@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 export class PublicBusquedaComponent {
     busqueda: string;
     documentos: any[] = [];
+    public loading = true;
 
     constructor(private documentosService: DocumentosService, private categoriasService: CategoriasService, private route: ActivatedRoute) { }
 
@@ -24,6 +25,7 @@ export class PublicBusquedaComponent {
     private getDatos() {
         this.documentosService.search(this.busqueda).subscribe(documentos => {
             this.documentos = documentos;
+            this.loading = false;
         });
     }
 

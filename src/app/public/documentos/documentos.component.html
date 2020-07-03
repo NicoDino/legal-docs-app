@@ -14,7 +14,8 @@
             particulares. Elegí un modelo de documento de la siguiente lista y completalo con un formulario muy
             simple.</p>
     </div>
-    <div class="accordion mt-5" id="accordionDocumentos">
+    <app-loader *ngIf="loading"></app-loader>
+    <div class="accordion mt-5" id="accordionDocumentos" *ngIf="!loading">
         <div class="row" *ngFor="let categoria of categorias;index as i">
             <div class="col-sm-1" style="padding: 12px;">
                 <img id="imagen" class="float-right align-middle" *ngIf="!categoria.active"

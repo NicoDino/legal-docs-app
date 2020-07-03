@@ -1,5 +1,6 @@
 <app-public-menu></app-public-menu>
-<div id="crear-borrador" *ngIf="showDoc">
+<app-loader *ngIf="loading"></app-loader>
+<div id="crear-borrador" *ngIf="showDoc && !loading">
   <h5><b>{{documento?.nombre}}</b></h5>
   <br />
   <div class="row">
