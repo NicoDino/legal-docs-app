@@ -93,7 +93,7 @@
           </div>
           <div class="row">
             <div class="col-12">
-              <input type="checkbox" class="mr-1" />
+              <input type="checkbox" class="mr-1" (click)="aceptarCondiciones()" />
               <label> Acepto las condiciones generales de venta <a href="">(leer las CGV)</a></label>
               <button type="button" class="btn btn-warning" (click)="enviarDocumento()" [disabled]="!aceptoTerminos">
                 HACER EL PEDIDO (servidor seguro)

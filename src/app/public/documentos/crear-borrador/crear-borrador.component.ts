@@ -123,6 +123,10 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
     }
   }
 
+  aceptarCondiciones() {
+    this.aceptoTerminos = !this.aceptoTerminos;
+  }
+
   enviarDocumento() {
     console.log(this.borradorForm.value);
     this.borradorService.create(this.borradorForm.value).subscribe((res) => {
