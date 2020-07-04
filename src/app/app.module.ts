@@ -35,6 +35,8 @@ import { CrearBorradorComponent } from './public/documentos/crear-borrador/crear
 import { PublicDocumentosComponent } from './public/documentos/documentos.component';
 import { PreviewDocumentoComponent } from './public/documentos/vista-documento/preview-documento.component';
 import { PublicBusquedaComponent } from './public/busqueda/busqueda.component';
+import { LoaderComponent } from './public/partials/loader/loader.component';
+import { FinOperacionComponent } from './public/documentos/fin-operacion/fin-operacion.component';
 
 @NgModule({
   imports: [
@@ -72,7 +74,9 @@ import { PublicBusquedaComponent } from './public/busqueda/busqueda.component';
     PublicDocumentosComponent,
     PreviewDocumentoComponent,
     PublicBusquedaComponent,
-    CrearBorradorComponent
+    CrearBorradorComponent,
+    LoaderComponent,
+    FinOperacionComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

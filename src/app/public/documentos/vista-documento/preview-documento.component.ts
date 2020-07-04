@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 export class PreviewDocumentoComponent {
     documento: any = [];
     idDocumento: string;
+    public loading = true;
 
     constructor(private documentosService: DocumentosService, private route: ActivatedRoute) { }
 
@@ -23,6 +24,7 @@ export class PreviewDocumentoComponent {
     private getDatos() {
         this.documentosService.getByIdPublic(this.idDocumento).subscribe(resultado => {
             this.documento = resultado;
+            this.loading = false;
         });
     }
 

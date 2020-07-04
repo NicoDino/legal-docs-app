@@ -31,12 +31,14 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
   tinyEditorInstance;
   editorForm: FormGroup;
   showMailForm = false;
+  public loading = true;
+
   constructor(
     private route: ActivatedRoute,
     private docService: DocumentosService,
     private formBuilder: FormBuilder,
     private borradorService: BorradoresService
-  ) {}
+  ) { }
 
   get camposFormArray() {
     return this.borradorForm.get('campos') as FormArray;
@@ -81,6 +83,7 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
         this.editorForm.get('html').setValue(doc.html);
         this.showDoc = true;
         this.initInputWatcher();
+        this.loading = false;
       });
   }
 
@@ -118,6 +121,10 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
     if (this.campoIndex > 0) {
       this.campoIndex--;
     }
+  }
+
+  aceptarCondiciones() {
+    this.aceptoTerminos = !this.aceptoTerminos;
   }
 
   enviarDocumento() {

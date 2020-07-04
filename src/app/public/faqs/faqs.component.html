@@ -1,7 +1,8 @@
 <app-public-menu></app-public-menu>
 <section id="faqs">
     <h1 class="text-center">FAQ</h1>
-    <div class="accordion mt-5" id="accordionFaqs">
+    <app-loader *ngIf="loading"></app-loader>
+    <div *ngIf="!loading" class="accordion mt-5" id="accordionFaqs">
         <div class="row" *ngFor="let faq of faqs;index as i">
             <div class="col-sm-1" style="padding: 12px;">
                 <img id="imagen" class="float-right align-middle" *ngIf="!faq.active"

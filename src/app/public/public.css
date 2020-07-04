@@ -8,9 +8,9 @@
     src: url('/assets/fonts/Titillium-Bold.otf') format("opentype");
 }
   
-  ::ng-deep body {
+::ng-deep body {
     font-family: 'titillium', 'arial', sans-serif;
-  }
+}
 
 ::ng-deep .footer {
     width: 100%;
@@ -144,7 +144,6 @@ border: 3px solid
     outline: 0;
     background: none;
     width: 0;
-    caret-color:transparent;
     transition: width 0.4s linear;
     width: 160px;
     line-height: 35px;
@@ -161,6 +160,11 @@ border: 3px solid
     border-radius: 50%;
     color:rgb(51,51,51);
     text-decoration:none;
+    background:white;
+    box-shadow: 0px 0px 0px transparent;
+    border: 0px solid transparent;
+    text-shadow: 0px 0px 0px transparent;
+    cursor:pointer;
     }
 
     ::ng-deep #proceso{
@@ -459,6 +463,21 @@ line-height: 19px;
 ::ng-deep #fin-documento #pago-seguro h5{
     font-family: 'titillium-bold', 'arial', sans-serif;
     margin-bottom: 18px;
+}
+
+::ng-deep #fin-operacion{
+    padding:12%;
+    padding-top: 3%;
+    padding-bottom: 6%;
+}
+
+::ng-deep #fin-operacion h1{
+    font-family: 'titillium-bold', 'arial', sans-serif;
+    margin-bottom: 25px;
+}
+
+::ng-deep #fin-operacion .card{
+    border: 0px;
 }
 
 

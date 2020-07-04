@@ -1,5 +1,6 @@
 <app-public-menu></app-public-menu>
-<div id="crear-borrador" *ngIf="showDoc">
+<app-loader *ngIf="loading"></app-loader>
+<div id="crear-borrador" *ngIf="showDoc && !loading">
   <h5><b>{{documento?.nombre}}</b></h5>
   <br />
   <div class="row">
@@ -92,7 +93,7 @@
           </div>
           <div class="row">
             <div class="col-12">
-              <input type="checkbox" class="mr-1" />
+              <input type="checkbox" class="mr-1" (click)="aceptarCondiciones()" />
               <label> Acepto las condiciones generales de venta <a href="">(leer las CGV)</a></label>
               <button type="button" class="btn btn-warning" (click)="enviarDocumento()" [disabled]="!aceptoTerminos">
                 HACER EL PEDIDO (servidor seguro)

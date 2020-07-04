@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-public-menu',
@@ -7,5 +8,9 @@ import { Component } from '@angular/core';
 export class PublicMenuComponent {
     busqueda = '';
 
-    constructor() { }
+    constructor(private router: Router) { }
+
+    buscar() {
+        this.router.navigate([`/busqueda/${this.busqueda}`]);
+    }
 }

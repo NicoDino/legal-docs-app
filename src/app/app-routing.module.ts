@@ -19,6 +19,7 @@ import { CrearBorradorComponent } from './public/documentos/crear-borrador/crear
 import { PublicDocumentosComponent } from './public/documentos/documentos.component';
 import { PreviewDocumentoComponent } from './public/documentos/vista-documento/preview-documento.component';
 import { PublicBusquedaComponent } from './public/busqueda/busqueda.component';
+import { FinOperacionComponent } from './public/documentos/fin-operacion/fin-operacion.component';
 
 const appRoutes: Routes = [
   /* RUTAS PRIVADAS */
@@ -43,6 +44,7 @@ const appRoutes: Routes = [
   { path: 'documentos/:tipo', component: PublicDocumentosComponent },
   { path: 'ver-documento/:idDocumento', component: PreviewDocumentoComponent },
   { path: 'busqueda/:busqueda', component: PublicBusquedaComponent },
+  { path: 'fin-operacion/:exito', component: FinOperacionComponent },
 
   // otherwise redirect to home
   { path: '**', redirectTo: '/inicio' },
@@ -51,4 +53,4 @@ const appRoutes: Routes = [
   imports: [RouterModule.forRoot(appRoutes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

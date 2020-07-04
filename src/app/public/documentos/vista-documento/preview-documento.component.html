@@ -1,5 +1,6 @@
 <app-public-menu></app-public-menu>
-<section id="info-documento">
+<app-loader *ngIf="loading"></app-loader>
+<section id="info-documento" *ngIf="!loading">
     <div class="row">
         <div class="col-4">
             <img class="imagen" src="assets/img/preview-doc.png" width="190px">
