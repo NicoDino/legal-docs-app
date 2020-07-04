@@ -1,0 +1,50 @@
+<app-public-menu></app-public-menu>
+<app-loader *ngIf="loading"></app-loader>
+<section id="fin-operacion" *ngIf="!loading && exito">
+    <div class="row">
+        <div class="col-12">
+            <div class="card text-center">
+                <div class="card-body">
+                    <div class="row mb-1">
+                        <div class="col-12">
+                            <h1 class="text-center">¡PAGO EXITOSO!</h1>
+                            <p class="card-text">Hemos recibido su pago con éxito! Recibirá en su casilla de correo el
+                                documento adquirido.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <a href="/" class="btn btn-warning mt-5">
+                                Volver al inicio
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="fin-operacion" *ngIf="!loading && !exito">
+    <div class="row">
+        <div class="col-12">
+            <div class="card text-center">
+                <div class="card-body">
+                    <div class="row mb-1">
+                        <div class="col-12">
+                            <h1 class="text-center">ERROR EN EL PAGO</h1>
+                            <p class="card-text">Hubo un error con el pago del documento. Reintente más tarde.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <a href="/" class="btn btn-warning mt-5">
+                                Volver al inicio
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<app-public-footer></app-public-footer>

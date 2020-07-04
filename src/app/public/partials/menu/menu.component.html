@@ -19,11 +19,15 @@
                 </div>
             </li>
             <a class="nav-item nav-link" href="/preguntas-frecuentes">Faq</a>
-            <a class="nav-item nav-link" href="#">Consultar a un abogado</a>
+            <a class="nav-item nav-link"
+                href="https://wa.me/542995238152?text=Me%20interesa%20consultar%20con%20un%20abogado">Consultar a un
+                abogado</a>
             <div class="searchbar">
-                <input class="search_input" type="text" [(ngModel)]="busqueda" placeholder="Buscar un documento"
-                    ngDefaultControl>
-                <a class="search_icon" href="/busqueda/{{busqueda}}"><img src="assets/img/lupa.png" width="100%"></a>
+                <form (submit)="buscar()" action="#">
+                    <input class="search_input" type="text" [(ngModel)]="busqueda" placeholder="Buscar un documento"
+                        name="busqueda">
+                    <button class="search_icon" type="submit"><img src="assets/img/lupa.png" width="100%"></button>
+                </form>
             </div>
         </div>
     </div>

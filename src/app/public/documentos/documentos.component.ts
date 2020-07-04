@@ -27,7 +27,7 @@ export class PublicDocumentosComponent {
         this.categoriasService.getAllPublic().subscribe(resultado => {
             this.categorias = resultado.filter(element => element.tipo === this.tipo && element.descendientes.length > 0);
             this.documentosService.getAllPublic().subscribe(documentos => {
-                this.documentos = documentos;
+                this.documentos = documentos.filter(doc => doc.html !== '');
                 this.categorias.forEach(cat => {
                     cat.documentos = this.documentos.filter(doc => doc.categoria === cat._id);
                     cat.descendientes.forEach(subcat => {
