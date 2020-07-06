@@ -1,0 +1,15 @@
+<app-loader *ngIf="loading"></app-loader>
+<div class="card-body listado-documentos">
+    <span *ngIf="documentos.length === 0">La categoría aún no posee documentos</span>
+    <div *ngFor="let doc of documentos">
+        <a href="/ver-documento/{{doc._id}}">
+            - {{doc.nombre}}
+        </a>
+    </div>
+    <div *ngFor="let subcategoria of subcategorias" style="padding-left: 20px;">
+        <b class="subcategoria">{{subcategoria.nombre | uppercase}}</b>
+        <br>
+        <public-item-arbol [categoria]="subcategoria">
+        </public-item-arbol>
+    </div>
+</div>

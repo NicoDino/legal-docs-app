@@ -37,6 +37,7 @@ import { PreviewDocumentoComponent } from './public/documentos/vista-documento/p
 import { PublicBusquedaComponent } from './public/busqueda/busqueda.component';
 import { LoaderComponent } from './public/partials/loader/loader.component';
 import { FinOperacionComponent } from './public/documentos/fin-operacion/fin-operacion.component';
+import { PublicItemArbolComponent } from './public/documentos/public-items-arbol/public-item-arbol.component';
 
 @NgModule({
   imports: [
@@ -76,7 +77,8 @@ import { FinOperacionComponent } from './public/documentos/fin-operacion/fin-ope
     PublicBusquedaComponent,
     CrearBorradorComponent,
     LoaderComponent,
-    FinOperacionComponent
+    FinOperacionComponent,
+    PublicItemArbolComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

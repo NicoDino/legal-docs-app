@@ -34,22 +34,8 @@
                     </div>
                     <div id="categoria-{{i}}" class="collapse" aria-labelledby="headingOne"
                         data-parent="#accordionDocumentos">
-                        <div class="card-body listado-documentos">
-                            <div *ngFor="let doc of categoria.documentos">
-                                <a href="/ver-documento/{{doc._id}}">
-                                    - {{doc.nombre}}
-                                </a>
-                            </div>
-                            <div *ngFor="let subcategoria of categoria.descendientes">
-                                <b class="subcategoria">{{subcategoria.nombre | uppercase}}</b>
-                                <br>
-                                <div *ngFor="let doc of subcategoria.documentos">
-                                    <a href="/ver-documento/{{doc._id}}">
-                                        - {{doc.nombre}}
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                        <public-item-arbol [categoria]="categoria">
+                        </public-item-arbol>
                     </div>
                 </div>
             </div>
