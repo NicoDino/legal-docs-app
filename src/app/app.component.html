@@ -1,3 +1,4 @@
 <alert></alert>
-<menu *ngIf="currentUser"></menu>
+<menu *ngIf="admin && currentUser"></menu>
+<app-public-menu *ngIf="!admin"></app-public-menu>
 <router-outlet></router-outlet>
