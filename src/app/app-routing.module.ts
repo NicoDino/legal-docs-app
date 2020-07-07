@@ -24,20 +24,20 @@ import { FinOperacionComponent } from './public/documentos/fin-operacion/fin-ope
 const appRoutes: Routes = [
   /* RUTAS PRIVADAS */
   { path: '', component: InicioComponent },
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'categorias', component: CategoriasComponent, canActivate: [AuthGuard] },
-  { path: 'crear-categoria/:idPadre', component: CrearCategoriaComponent, canActivate: [AuthGuard] },
-  { path: 'faqs', component: FaqsComponent, canActivate: [AuthGuard] },
-  { path: 'crear-faq', component: CrearFaqComponent, canActivate: [AuthGuard] },
-  { path: 'app-configuracion-usuario', component: ConfiguracionUsuarioComponent, canActivate: [AuthGuard] },
-  { path: 'documentos', component: DocumentosComponent, canActivate: [AuthGuard] },
-  { path: 'crear-campo/:idDocumento', component: CrearCampoComponent, canActivate: [AuthGuard] },
-  { path: 'crear-documento/:step/:idDocumento', component: CrearDocumentoComponent, canActivate: [AuthGuard] },
-  { path: 'crear-documento', component: CrearDocumentoComponent, canActivate: [AuthGuard] },
-  { path: 'borradores', component: BorradoresComponent, canActivate: [AuthGuard] },
+  { path: 'admin/home', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'admin/categorias', component: CategoriasComponent, canActivate: [AuthGuard] },
+  { path: 'admin/crear-categoria/:idPadre', component: CrearCategoriaComponent, canActivate: [AuthGuard] },
+  { path: 'admin/faqs', component: FaqsComponent, canActivate: [AuthGuard] },
+  { path: 'admin/crear-faq', component: CrearFaqComponent, canActivate: [AuthGuard] },
+  { path: 'admin/app-configuracion-usuario', component: ConfiguracionUsuarioComponent, canActivate: [AuthGuard] },
+  { path: 'admin/documentos', component: DocumentosComponent, canActivate: [AuthGuard] },
+  { path: 'admin/crear-campo/:idDocumento', component: CrearCampoComponent, canActivate: [AuthGuard] },
+  { path: 'admin/crear-documento/:step/:idDocumento', component: CrearDocumentoComponent, canActivate: [AuthGuard] },
+  { path: 'admin/crear-documento', component: CrearDocumentoComponent, canActivate: [AuthGuard] },
+  { path: 'admin/borradores', component: BorradoresComponent, canActivate: [AuthGuard] },
 
   /*  RUTAS PUBLICAS  */
-  { path: 'login', component: LoginComponent },
+  { path: 'admin/login', component: LoginComponent },
   { path: 'app-reestablecer-pass', component: ReestablecerPassComponent },
   { path: 'preguntas-frecuentes', component: PublicFaqsComponent },
   { path: 'nuevo-borrador/:idDocumento', component: CrearBorradorComponent },
@@ -47,7 +47,7 @@ const appRoutes: Routes = [
   { path: 'fin-operacion/:exito', component: FinOperacionComponent },
 
   // otherwise redirect to home
-  { path: '**', redirectTo: '/inicio' },
+  { path: '**', redirectTo: '/' },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(appRoutes)],
