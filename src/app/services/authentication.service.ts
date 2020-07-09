@@ -11,7 +11,7 @@ export class AuthenticationService {
   currentUserSubject = new BehaviorSubject<User>(null);
   currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor(private http: HttpClient, private router: Router, private jwtHelper: JwtHelperService) { }
+  constructor(private http: HttpClient, private router: Router, private jwtHelper: JwtHelperService) {}
 
   public get currentUserValue(): User {
     return JSON.parse(localStorage.getItem('currentUser'));
@@ -27,7 +27,7 @@ export class AuthenticationService {
       this.currentUserSubject.next(response.user);
       localStorage.setItem('token', response.token);
       localStorage.setItem('currentUser', JSON.stringify(response.user));
-      this.router.navigate(['/home']);
+      this.router.navigate(['admin/home']);
     });
   }
 

@@ -125,7 +125,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     if (this.vistaEdicion) {
       this.vistaEdicion = false;
     } else {
-      this.router.navigateByUrl('documentos');
+      this.router.navigateByUrl('admin/documentos');
     }
   }
 
@@ -134,37 +134,49 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     const nuevoCampo = evento.campo;
     const esEdicion = evento.esEdicion;
     nuevoCampo.documento = this.documento._id;
-    if (!esEdicion) {
-      // insertamos placeholder para el campo en el texto y guardamos el documento
-      const idCampo = nuevoCampo.identificador.toLowerCase().replace(/\s/g, '_');
-      // insertar el codigo \uFEFF evita que el tag agregado encierre todo el texto a continuacion
-      this.tiny.editor.execCommand('mceInsertContent', false, `<span id=id_${idCampo}>__________</span>\uFEFF`);
-      const contenido: string = this.tiny.editor.getContent();
-      nuevoCampo.posicion = contenido.indexOf(`id_${idCampo}`);
-      this.camposService.create(nuevoCampo).subscribe(
-        (campoCreado: Campo) => {
-          this.documentosService
-            .update({ _id: this.documento._id, html: this.documentoForm.controls.html.value })
-            .subscribe((documentoActualizado: Partial<Documento>) => {
-              this.documento = documentoActualizado;
-              this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
-            });
-          this.disableGuardar$.next(false);
-        },
-        () => {
-          this.disableGuardar$.next(false);
-        }
-      );
+    if (esEdicion) {
+      this.modificarCampo(nuevoCampo);
     } else {
-      nuevoCampo._id = this.campoEditado._id;
-      this.camposService.update(nuevoCampo).subscribe((res) => {
-        this.documentosService.getById(this.documento._id).subscribe((rta: any) => {
-          this.documento = rta;
-          this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
-        });
-      });
+      // insertamos placeholder para el campo en el texto y guardamos el documento
+      this.crearCampo(nuevoCampo);
     }
     this.campoEditado = null;
+  }
+
+  private modificarCampo(nuevoCampo: any) {
+    nuevoCampo._id = this.campoEditado._id;
+    this.camposService.update(nuevoCampo).subscribe((res) => {
+      this.documentosService.getById(this.documento._id).subscribe((rta: any) => {
+        this.documento = rta;
+        this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
+      });
+    });
+  }
+
+  private crearCampo(nuevoCampo: any) {
+    const idCampo = nuevoCampo.identificador.toLowerCase().replace(/\s/g, '_');
+    // insertar el codigo \uFEFF evita que el tag agregado encierre todo el texto a continuacion
+    this.tiny.editor.execCommand(
+      'mceInsertContent',
+      false,
+      `<span contenteditable="false"  id=id_${idCampo}>__________</span>\uFEFF`
+    );
+    const contenido: string = this.tiny.editor.getContent();
+    nuevoCampo.posicion = contenido.indexOf(`id_${idCampo}`);
+    this.camposService.create(nuevoCampo).subscribe(
+      (campoCreado: Campo) => {
+        this.documentosService
+          .update({ _id: this.documento._id, html: this.documentoForm.controls.html.value })
+          .subscribe((documentoActualizado: Partial<Documento>) => {
+            this.documento = documentoActualizado;
+            this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
+          });
+        this.disableGuardar$.next(false);
+      },
+      () => {
+        this.disableGuardar$.next(false);
+      }
+    );
   }
 
   onModalCerrado() {
