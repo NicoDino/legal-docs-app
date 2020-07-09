@@ -471,9 +471,8 @@ line-height: 19px;
     padding-bottom: 6%;
 }
 
-::ng-deep #fin-operacion h1{
-    font-family: 'titillium-bold', 'arial', sans-serif;
-    margin-bottom: 25px;
+::ng-deep #fin-operacion h2{
+    margin-top: 15px;
 }
 
 ::ng-deep #fin-operacion .card{
