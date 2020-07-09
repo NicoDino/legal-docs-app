@@ -59,15 +59,15 @@ export class DocumentosComponent implements OnInit, AfterViewInit {
   }
 
   crearDocumento() {
-    this.router.navigateByUrl('crear-documento');
+    this.router.navigateByUrl('admin/crear-documento');
   }
 
   camposDocumento(idDocumento) {
-    this.router.navigateByUrl(`crear-documento/1/${idDocumento}`);
+    this.router.navigateByUrl(`admin/crear-documento/1/${idDocumento}`);
   }
 
   editarContenido(idDocumento) {
-    this.router.navigateByUrl(`crear-documento/2/${idDocumento}`);
+    this.router.navigateByUrl(`admin/crear-documento/2/${idDocumento}`);
   }
 
   borrarDocumento(idDocumento: string) {
