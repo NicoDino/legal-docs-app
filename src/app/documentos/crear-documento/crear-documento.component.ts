@@ -37,7 +37,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     private camposService: CamposService,
     private categoriaService: CategoriasService,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   @ViewChild('tinyEditor') tiny;
   @ViewChild('openModal') openModal: ElementRef;
@@ -122,7 +122,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     if (this.vistaEdicion) {
       this.vistaEdicion = false;
     } else {
-      this.router.navigateByUrl('documentos');
+      this.router.navigateByUrl('admin/documentos');
     }
   }
 

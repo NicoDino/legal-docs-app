@@ -35,9 +35,9 @@ export class DocumentosComponent implements OnInit, AfterViewInit {
     private router: Router,
     private eventos: EventsDocumentosService,
     private cdRef: ChangeDetectorRef
-  ) {}
+  ) { }
 
-  @HostListener('input') oninput() {}
+  @HostListener('input') oninput() { }
 
   ngOnInit(): void {
     this.getDocumentos();
@@ -63,11 +63,11 @@ export class DocumentosComponent implements OnInit, AfterViewInit {
   }
 
   camposDocumento(idDocumento) {
-    this.router.navigateByUrl(`crear-documento/1/${idDocumento}`);
+    this.router.navigateByUrl(`admin/crear-documento/1/${idDocumento}`);
   }
 
   editarContenido(idDocumento) {
-    this.router.navigateByUrl(`crear-documento/2/${idDocumento}`);
+    this.router.navigateByUrl(`admin/crear-documento/2/${idDocumento}`);
   }
 
   borrarDocumento(idDocumento: string) {

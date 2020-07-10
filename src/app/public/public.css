@@ -380,6 +380,45 @@ border: 3px solid
     padding-bottom: 6%;
 }
 
+::ng-deep #crear-borrador .modal{
+    background: rgba(0, 0, 0, 0.55);
+}
+
+::ng-deep #crear-borrador .modal-content{
+    border-radius: 0px;
+    padding-left: 6%;
+    padding-right: 6%;
+    padding-bottom: 2%;
+    background: rgb(245,208,18);
+}
+
+::ng-deep #crear-borrador .modal-header{
+    border: 0px;
+    padding: 0;
+    padding-top: 10px;
+}
+
+::ng-deep #crear-borrador .modal-body{
+    padding-top: 0px;
+}
+
+::ng-deep #crear-borrador .modal-body .btn{
+    background:black;
+    color:white;
+    font-weight: bold;
+    border-radius: 23px;
+    font-size: 14px;
+    width: 44px;
+}
+::ng-deep #crear-borrador .modal-backdrop
+{
+    opacity:0.5 !important;
+}
+
+::ng-deep #crear-borrador .modal-dialog{
+    padding-top: 6%;
+}
+
 ::ng-deep #crear-borrador .card{
     border: 0px;
 }

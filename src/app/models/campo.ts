@@ -3,6 +3,7 @@ export interface Campo {
   documento: string;
   identificador: string;
   descripcion: string;
+  ayuda: string;
   tipo: string;
   opciones: any;
   min: number;
