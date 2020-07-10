@@ -11,6 +11,7 @@ import { takeUntil } from 'rxjs/operators';
 export class CrearCampoComponent implements OnInit, OnDestroy {
   @ViewChild('closeModal') buttonClose: ElementRef;
   campoForm: FormGroup;
+  identificadorControl: FormControl;
   disableGuardar$ = new BehaviorSubject<boolean>(false);
   showOpciones$ = new BehaviorSubject<boolean>(false);
   unsubscribe$ = new Subject<void>();
@@ -18,7 +19,7 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
   @Output() campoCreado: EventEmitter<any> = new EventEmitter<any>();
   @Output() modalCerrado: EventEmitter<any> = new EventEmitter<any>();
   @Input() campo: Partial<Campo>;
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder) {}
 
   get opcionesFormArray() {
     return this.campoForm.get('opciones') as FormArray;
@@ -39,14 +40,17 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
 
   private createForm() {
     this.campoForm = this.formBuilder.group({
-      // TODO validar identificador que sea solo letras sin simbolos, porq va a ser el id en el html
-      identificador: new FormControl(this.campo ? this.campo.identificador : '', [Validators.required]),
+      identificador: new FormControl(this.campo ? this.campo.identificador : '', [
+        Validators.required,
+        // El identificador debe contener solo letras o espacios sin simbolos, porq va a ser el id en el html
+        Validators.pattern('^[a-zA-Z ]*$'),
+      ]),
       descripcion: new FormControl(this.campo ? this.campo.descripcion : ''),
       ayuda: new FormControl(this.campo ? this.campo.ayuda : ''),
       tipo: new FormControl(this.campo ? this.campo.tipo : '', [Validators.required]),
       opciones: this.formBuilder.array(this.addOpciones()),
     });
-
+    this.identificadorControl = this.campoForm.get('identificador') as FormControl;
     if (this.campo) {
       this.isEdicion = true;
     }
