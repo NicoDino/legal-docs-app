@@ -35,9 +35,9 @@ export class DocumentosComponent implements OnInit, AfterViewInit {
     private router: Router,
     private eventos: EventsDocumentosService,
     private cdRef: ChangeDetectorRef
-  ) {}
+  ) { }
 
-  @HostListener('input') oninput() {}
+  @HostListener('input') oninput() { }
 
   ngOnInit(): void {
     this.getDocumentos();

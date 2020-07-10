@@ -18,7 +18,7 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
   @Output() campoCreado: EventEmitter<any> = new EventEmitter<any>();
   @Output() modalCerrado: EventEmitter<any> = new EventEmitter<any>();
   @Input() campo: Partial<Campo>;
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder) { }
 
   get opcionesFormArray() {
     return this.campoForm.get('opciones') as FormArray;
@@ -42,6 +42,7 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
       // TODO validar identificador que sea solo letras sin simbolos, porq va a ser el id en el html
       identificador: new FormControl(this.campo ? this.campo.identificador : '', [Validators.required]),
       descripcion: new FormControl(this.campo ? this.campo.descripcion : ''),
+      ayuda: new FormControl(this.campo ? this.campo.ayuda : ''),
       tipo: new FormControl(this.campo ? this.campo.tipo : '', [Validators.required]),
       opciones: this.formBuilder.array(this.addOpciones()),
     });

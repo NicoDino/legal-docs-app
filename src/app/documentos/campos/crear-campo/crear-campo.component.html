@@ -14,15 +14,8 @@
               <div class="col-6">
                 <div class="form-group">
                   <label for="precio">Identificador</label>
-                  <input
-                    formControlName="identificador"
-                    type="text"
-                    class="form-control"
-                    id="identificador"
-                    aria-label="Sizing example input"
-                    aria-describedby="inputGroup-sizing-default"
-                    required
-                  />
+                  <input formControlName="identificador" type="text" class="form-control" id="identificador"
+                    aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required />
                 </div>
               </div>
               <div class="col-6">
@@ -32,6 +25,7 @@
                     <option value="input">Texto Libre</option>
                     <option value="boolean">Binario</option>
                     <option value="opciones">Selección</option>
+                    <option value="date">Fecha</option>
                   </select>
                 </div>
               </div>
@@ -41,19 +35,12 @@
               <div class="row" *ngFor="let opcionControl of opcionesFormArray.controls; let i = index">
                 <div class="col-10">
                   <div class="form-group justify-content-start">
-                    <input
-                      [formControl]="opcionesFormArray.controls[i]"
-                      type="text"
-                      class="form-control"
-                      aria-label="Sizing example input"
-                      aria-describedby="inputGroup-sizing-default"
-                    />
+                    <input [formControl]="opcionesFormArray.controls[i]" type="text" class="form-control"
+                      aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
                   </div>
                 </div>
-                <div
-                  class="col-2"
-                  *ngIf="i === opcionesFormArray.controls.length - 1 && campoForm.controls.tipo.value === 'opciones'"
-                >
+                <div class="col-2"
+                  *ngIf="i === opcionesFormArray.controls.length - 1 && campoForm.controls.tipo.value === 'opciones'">
                   <button (click)="agregarOpcion()" type="button">Agregar</button>
                 </div>
               </div>
@@ -61,20 +48,21 @@
             <div class="row">
               <div class="col-12">
                 <div class="form-group justify-content-start">
-                  <label for="precio">Descripción</label>
-                  <textarea
-                    rows="3"
-                    formControlName="descripcion"
-                    type="text"
-                    class="form-control"
-                    id="descripcion"
-                    aria-label="Sizing example input"
-                    aria-describedby="inputGroup-sizing-default"
-                  ></textarea>
+                  <label for="descripcion">Descripción</label>
+                  <textarea rows="3" formControlName="descripcion" type="text" class="form-control" id="descripcion"
+                    aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"></textarea>
                 </div>
               </div>
             </div>
-
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group justify-content-start">
+                  <label for="ayuda">Ayuda</label>
+                  <textarea rows="3" formControlName="ayuda" type="text" class="form-control" id="ayuda"
+                    aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"></textarea>
+                </div>
+              </div>
+            </div>
             <div class="row mb-3">
               <div class="col-12">
                 <button type="submit" class="btn btn-sm btn-success btn-block" [disabled]="disableGuardar$ | async">
