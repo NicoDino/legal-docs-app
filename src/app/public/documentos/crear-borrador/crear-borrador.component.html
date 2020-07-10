@@ -33,6 +33,11 @@
               }}</option>
             </select>
           </div>
+          <div class="row mb-5" *ngIf="documento.campos[campoIndex].tipo === 'date'">
+            <div class="col-sm-12">
+              <input type="date" class="form-control btn-block" [formControl]="camposFormArray.controls[campoIndex]" />
+            </div>
+          </div>
           <div class="row">
             <div class="col-sm-6">
               <button type="button" class="btn btn-warning" (click)="getCampoAnterior()" [disabled]="campoIndex < 1">
