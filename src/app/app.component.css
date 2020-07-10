@@ -59,3 +59,9 @@ menu {
 ::ng-deep .error-label {
   color: red;
 }
+::ng-deep .text-overflow {
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}

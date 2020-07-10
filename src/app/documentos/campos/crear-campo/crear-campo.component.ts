@@ -40,17 +40,11 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
 
   private createForm() {
     this.campoForm = this.formBuilder.group({
-      identificador: new FormControl(this.campo ? this.campo.identificador : '', [
-        Validators.required,
-        // El identificador debe contener solo letras o espacios sin simbolos, porq va a ser el id en el html
-        Validators.pattern('^[a-zA-Z ]*$'),
-      ]),
       descripcion: new FormControl(this.campo ? this.campo.descripcion : ''),
       ayuda: new FormControl(this.campo ? this.campo.ayuda : ''),
       tipo: new FormControl(this.campo ? this.campo.tipo : '', [Validators.required]),
       opciones: this.formBuilder.array(this.addOpciones()),
     });
-    this.identificadorControl = this.campoForm.get('identificador') as FormControl;
     if (this.campo) {
       this.isEdicion = true;
     }

@@ -37,7 +37,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     private camposService: CamposService,
     private categoriaService: CategoriasService,
     private route: ActivatedRoute
-  ) { }
+  ) {}
 
   @ViewChild('tinyEditor') tiny;
   @ViewChild('openModal') openModal: ElementRef;
@@ -137,7 +137,6 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     if (esEdicion) {
       this.modificarCampo(nuevoCampo);
     } else {
-      // insertamos placeholder para el campo en el texto y guardamos el documento
       this.crearCampo(nuevoCampo);
     }
     this.campoEditado = null;
@@ -146,37 +145,35 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   private modificarCampo(nuevoCampo: any) {
     nuevoCampo._id = this.campoEditado._id;
     this.camposService.update(nuevoCampo).subscribe((res) => {
-      this.documentosService.getById(this.documento._id).subscribe((rta: any) => {
-        this.documento = rta;
-        this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
-      });
+      this.refreshDocumento();
     });
   }
 
   private crearCampo(nuevoCampo: any) {
-    const idCampo = nuevoCampo.identificador.toLowerCase().replace(/\s/g, '_');
-    // insertar el codigo \uFEFF evita que el tag agregado encierre todo el texto a continuacion
+    const identificador = `campo_${this.documento.campos.length}`;
+    // // insertar el codigo \uFEFF evita que el tag agregado encierre todo el texto a continuacion
     this.tiny.editor.execCommand(
       'mceInsertContent',
       false,
-      `<span contenteditable="false"  id=id_${idCampo}>__________</span>\uFEFF`
+      `<span contenteditable="false"  id=${identificador}>__________</span>\uFEFF`
     );
     const contenido: string = this.tiny.editor.getContent();
-    nuevoCampo.posicion = contenido.indexOf(`id_${idCampo}`);
-    this.camposService.create(nuevoCampo).subscribe(
-      (campoCreado: Campo) => {
-        this.documentosService
-          .update({ _id: this.documento._id, html: this.documentoForm.controls.html.value })
-          .subscribe((documentoActualizado: Partial<Documento>) => {
-            this.documento = documentoActualizado;
-            this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
-          });
-        this.disableGuardar$.next(false);
-      },
-      () => {
-        this.disableGuardar$.next(false);
-      }
-    );
+    nuevoCampo.posicion = contenido.indexOf(identificador);
+    nuevoCampo.identificador = identificador;
+    this.documentosService
+      .update({ _id: this.documento._id, html: this.documentoForm.controls.html.value })
+      .subscribe((rta: Partial<Documento>) => {
+        this.camposService.create(nuevoCampo).subscribe((campoCreado: Campo) => {
+          this.refreshDocumento();
+        });
+      });
+  }
+
+  private refreshDocumento() {
+    this.documentosService.getById(this.documento._id).subscribe((rta: Partial<Documento>) => {
+      this.documento = rta;
+      this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
+    });
   }
 
   onModalCerrado() {
@@ -187,17 +184,15 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   campoSelected(i) {
     // TODO: ver si se puede resaltar sobre el campo seleccionado usando su index en el string
     // const contenido: string = this.documentoForm.controls.html.value;
-    // const posicion = this.getPosition(contenido, '__________', index + 1);
-  }
-
-  getPosition(string, subString, index) {
-    return string.split(subString, index).join(subString).length;
   }
 
   handleCampoEliminado(index) {
     const contenido: string = this.documentoForm.controls.html.value;
-    const posicion = this.getPosition(contenido, '__________', index + 1);
-    const resultado = contenido.substring(0, posicion) + contenido.substring(posicion + 10);
+    const campo = this.documento.campos[index];
+    const posicionIdentificador = contenido.indexOf(campo.identificador);
+    const posicionInicial = posicionIdentificador - 10;
+    const posicionFinal = contenido.indexOf('</span>', posicionIdentificador) + 7;
+    const resultado = contenido.substring(0, posicionInicial) + contenido.substring(posicionFinal);
     this.documentoForm.controls.html.setValue(resultado);
     this.documentosService
       .update({ _id: this.documento._id, html: this.documentoForm.controls.html.value })
@@ -223,7 +218,6 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
 
   private getCategorias() {
     this.categoriaService.getAll().subscribe((resultado) => {
-      console.log(resultado);
       this.categorias = resultado;
     });
   }

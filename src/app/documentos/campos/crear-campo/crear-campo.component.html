@@ -11,24 +11,7 @@
         <div class="container-fluid">
           <form [formGroup]="campoForm" (ngSubmit)="onSubmit()">
             <div class="row justify-content-center mt-1">
-              <div class="col-6">
-                <div class="form-group">
-                  <label for="precio">Identificador</label>
-                  <input
-                    formControlName="identificador"
-                    type="text"
-                    class="form-control"
-                    id="identificador"
-                    aria-label="Sizing example input"
-                    aria-describedby="inputGroup-sizing-default"
-                    required
-                  />
-                  <div class="error-label" *ngIf="identificadorControl.invalid">
-                    Solo letras y espacios
-                  </div>
-                </div>
-              </div>
-              <div class="col-6">
+              <div class="col-12">
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Tipo</label>
                   <select formControlName="tipo" class="form-control" id="tipo">
