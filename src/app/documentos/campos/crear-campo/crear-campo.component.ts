@@ -81,6 +81,7 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
     this.showOpciones$.next(value === 'opciones' || value === 'boolean');
   }
 
+  // TODO agregar validación para que el identificador no se repita dentro del mismo documento
   onSubmit() {
     if (!this.campoForm.valid) {
       alert('Datos incompletos, complete el formulario');

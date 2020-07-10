@@ -1,5 +1,6 @@
 export interface Campo {
   _id: string;
+  posicion: number;
   documento: string;
   identificador: string;
   descripcion: string;
