@@ -40,6 +40,7 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
 
   private createForm() {
     this.campoForm = this.formBuilder.group({
+      nombre: new FormControl(this.campo ? this.campo.nombre : '', [Validators.required]),
       descripcion: new FormControl(this.campo ? this.campo.descripcion : ''),
       ayuda: new FormControl(this.campo ? this.campo.ayuda : ''),
       tipo: new FormControl(this.campo ? this.campo.tipo : '', [Validators.required]),
