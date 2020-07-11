@@ -25,6 +25,7 @@
     "jquery": "^3.5.1",
     "material-design-icons": "^3.0.1",
     "ng-uikit-pro-standard": "^1.0.0",
+    "ngx-spinner": "^9.0.2",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

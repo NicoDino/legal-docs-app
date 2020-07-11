@@ -1,41 +1,61 @@
 <nav class="navbar navbar-expand-lg navbar-light">
-    <a class="navbar-brand" href="/admin/home">Logo</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+  <a class="navbar-brand" href="/admin/home">Logo</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-        </ul>
-        <ul class="navbar-nav float-right">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownDocumento" role="button"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Documentos
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownDocumento">
-                    <a class="dropdown-item" href="/admin/documentos">Listado de Documentos</a>
-                    <a class="dropdown-item" href="/admin/categorias">Categorías de Documentos</a>
-                    <a class="dropdown-item" href="/admin/borradores">Listado de Borradores</a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/admin/faqs">Faqs</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    <i class="material-icons float-left">
-                        account_circle
-                    </i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="app-configuracion-usuario">Actualizar Datos</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" (click)="logout()">Cerrar sesión</a>
-                </div>
-            </li>
-        </ul>
-    </div>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto"></ul>
+    <ul class="navbar-nav float-right">
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          id="navbarDropdownDocumento"
+          role="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Documentos
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownDocumento">
+          <a class="dropdown-item" href="/admin/documentos">Listado de Documentos</a>
+          <a class="dropdown-item" href="/admin/categorias">Categorías de Documentos</a>
+          <a class="dropdown-item" href="/admin/borradores">Listado de Borradores</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/admin/faqs">Faqs</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          id="navbarDropdown"
+          role="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          <i class="material-icons float-left">
+            account_circle
+          </i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="admin/app-configuracion-usuario">Actualizar Datos</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" (click)="logout()">Cerrar sesión</a>
+        </div>
+      </li>
+    </ul>
+  </div>
 </nav>
