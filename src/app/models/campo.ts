@@ -3,6 +3,7 @@ export interface Campo {
   posicion: number;
   documento: string;
   identificador: string;
+  nombre: string;
   descripcion: string;
   ayuda: string;
   tipo: string;

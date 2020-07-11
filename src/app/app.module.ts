@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
@@ -38,16 +39,18 @@ import { PublicBusquedaComponent } from './public/busqueda/busqueda.component';
 import { LoaderComponent } from './public/partials/loader/loader.component';
 import { FinOperacionComponent } from './public/documentos/fin-operacion/fin-operacion.component';
 import { PublicItemArbolComponent } from './public/documentos/public-items-arbol/public-item-arbol.component';
-
+import { NgxSpinnerModule } from 'ngx-spinner';
 @NgModule({
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
     EditorModule,
     AppRoutingModule,
     MDBBootstrapModulesPro,
+    NgxSpinnerModule,
   ],
   declarations: [
     AppComponent,
@@ -78,7 +81,7 @@ import { PublicItemArbolComponent } from './public/documentos/public-items-arbol
     CrearBorradorComponent,
     LoaderComponent,
     FinOperacionComponent,
-    PublicItemArbolComponent
+    PublicItemArbolComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
@@ -88,4 +91,4 @@ import { PublicItemArbolComponent } from './public/documentos/public-items-arbol
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

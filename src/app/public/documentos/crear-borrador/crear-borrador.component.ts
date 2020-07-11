@@ -38,7 +38,7 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
     private docService: DocumentosService,
     private formBuilder: FormBuilder,
     private borradorService: BorradoresService
-  ) { }
+  ) {}
 
   get camposFormArray() {
     return this.borradorForm.get('campos') as FormArray;
@@ -104,8 +104,8 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
   }
 
   private getCampoTagId(index) {
-    const idCampo = this.documento.campos[index].identificador.toLowerCase().replace(/\s/g, '_');
-    return `#id_${idCampo}`;
+    const idCampo = this.documento.campos[index].identificador;
+    return `#${idCampo}`;
   }
 
   getCampoSiguiente() {

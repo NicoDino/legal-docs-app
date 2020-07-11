@@ -1,58 +1,67 @@
-menu{
-    padding: 0%;
-    margin-top: 0%;
-    margin-bottom: 0%;
+menu {
+  padding: 0%;
+  margin-top: 0%;
+  margin-bottom: 0%;
 }
 
-::ng-deep .heading{
-    justify-content: left !important;
-    background:#fff;
-    color:#495b7d;
-    padding: 1%;
-    padding-top: 2%;
-    border-bottom: 1px solid#f0f0f0;
-    margin-bottom: 2%;
+::ng-deep .heading {
+  justify-content: left !important;
+  background: #fff;
+  color: #495b7d;
+  padding: 1%;
+  padding-top: 2%;
+  border-bottom: 1px solid#f0f0f0;
+  margin-bottom: 2%;
 }
 
-::ng-deep .heading h2{
-    font-size: 18px;
+::ng-deep .heading h2 {
+  font-size: 18px;
 }
 
-
-::ng-deep .heading h2 .subtitle{
-    font-size:15px;
-    color: #7a96ca;
+::ng-deep .heading h2 .subtitle {
+  font-size: 15px;
+  color: #7a96ca;
 }
 
-::ng-deep .btn{
-    border-radius: 2px;
-    padding: 10px;
+::ng-deep .btn {
+  border-radius: 2px;
+  padding: 10px;
 }
 
-::ng-deep .btn-success{
-    border: 0px;
+::ng-deep .btn-success {
+  border: 0px;
 }
 
-::ng-deep .list-group-item{
-    background:#f7f7f7;
-    border: 0px;
-    border-radius: 6px;
-    padding: 2%;
-    border-radius: 0px;
-    margin-bottom: 10px !important;
+::ng-deep .list-group-item {
+  background: #f7f7f7;
+  border: 0px;
+  border-radius: 6px;
+  padding: 2%;
+  border-radius: 0px;
+  margin-bottom: 10px !important;
 }
 
-::ng-deep .list-group-item .collapse .list-group-item{
-    background:white !important;
-    margin-bottom: 0px !important;
-    padding-bottom: 2px;
+::ng-deep .list-group-item .collapse .list-group-item {
+  background: white !important;
+  margin-bottom: 0px !important;
+  padding-bottom: 2px;
 }
 
-::ng-deep .list-group-item span{
-    color: #646464;
+::ng-deep .list-group-item span {
+  color: #646464;
 }
 
 ::ng-deep .list-group-item .material-icons {
-    font-size: 16px;
-    line-height: 16px;
-  }
+  font-size: 16px;
+  line-height: 16px;
+}
+
+::ng-deep .error-label {
+  color: red;
+}
+::ng-deep .text-overflow {
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}
