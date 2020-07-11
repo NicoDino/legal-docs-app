@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { DocumentosService } from 'src/app/services/documentos.service';
 import { takeUntil } from 'rxjs/operators';
@@ -51,10 +51,10 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getCategorias();
     this.documentoForm = this.formBuilder.group({
-      nombre: new FormControl(''),
-      descripcion: new FormControl(''),
-      precio: new FormControl(''),
-      categoria: new FormControl('Elija una categoria'),
+      nombre: new FormControl('', [Validators.required]),
+      descripcion: new FormControl('', [Validators.required]),
+      precio: new FormControl('', [Validators.required]),
+      categoria: new FormControl('Elija una categoria', [Validators.required]),
       html: new FormControl(''),
     });
     this.loadDocumento();
@@ -84,6 +84,10 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    if (this.documentoForm.invalid) {
+      alert('Debe completar todos los campos');
+      return;
+    }
     this.disableGuardar$.next(true);
     if (!this.documento._id) {
       this.documentosService.create(this.documentoForm.value).subscribe(
