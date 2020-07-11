@@ -11,4 +11,5 @@ export interface Documento {
   campos: Campo[];
   preview: string;
   precio: number;
+  camposInsertados: number;
 }

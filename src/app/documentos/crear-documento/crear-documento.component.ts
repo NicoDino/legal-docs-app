@@ -150,7 +150,8 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   }
 
   private crearCampo(nuevoCampo: any) {
-    const identificador = `campo_${this.documento.campos.length}`;
+    const numeroCampo = this.documento.camposInsertados ? this.documento.camposInsertados + 1 : 1;
+    const identificador = `campo_${numeroCampo}`;
     // // insertar el codigo \uFEFF evita que el tag agregado encierre todo el texto a continuacion
     this.tiny.editor.execCommand(
       'mceInsertContent',
