@@ -27,6 +27,8 @@ const appRoutes: Routes = [
   { path: 'admin/home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'admin/categorias', component: CategoriasComponent, canActivate: [AuthGuard] },
   { path: 'admin/crear-categoria/:idPadre', component: CrearCategoriaComponent, canActivate: [AuthGuard] },
+  { path: 'admin/crear-categoria/editar/:idCat', component: CrearCategoriaComponent, canActivate: [AuthGuard] },
+  { path: 'admin/crear-categoria', component: CrearCategoriaComponent, canActivate: [AuthGuard] },
   { path: 'admin/faqs', component: FaqsComponent, canActivate: [AuthGuard] },
   { path: 'admin/crear-faq/:idFaq', component: CrearFaqComponent, canActivate: [AuthGuard] },
   { path: 'admin/crear-faq', component: CrearFaqComponent, canActivate: [AuthGuard] },

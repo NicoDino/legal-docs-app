@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { CategoriasService } from 'src/app/services/categorias.service';
 import { BehaviorSubject, Subscription, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Categoria } from 'src/app/models/categoria';
 
 @Component({
   selector: 'app-crear-categoria',
@@ -14,6 +15,11 @@ export class CrearCategoriaComponent implements OnInit, OnDestroy {
   categoriaForm: FormGroup;
   disableGuardar$ = new BehaviorSubject<boolean>(false);
   unsubscribe$ = new Subject<void>();
+  padre: Partial<Categoria> = {};
+  categoria: Partial<Categoria> = {};
+  private idPadre; idCategoria; tipo;
+  public loading = true;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -28,27 +34,82 @@ export class CrearCategoriaComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.route.paramMap.pipe(takeUntil(this.unsubscribe$)).subscribe((params) => {
+      this.idPadre = params.get('idPadre');
+      this.idCategoria = params.get('idCat');
       this.categoriaForm = this.formBuilder.group({
         nombre: new FormControl(''),
         tipo: new FormControl(''),
-        padre: new FormControl(params.get('idPadre')),
+        padre: new FormControl('')
       });
+      if (this.idPadre) {
+        this.loadPadre();
+      }
+      if (this.idCategoria) {
+        this.loadCategoria();
+      }
     });
   }
 
+  loadPadre() {
+    this.padre._id = this.idPadre;
+    if (this.padre._id) {
+      this.categoriaService.getById(this.padre._id).subscribe((rta: any) => {
+        this.padre = rta;
+        this.categoriaForm.controls.tipo.setValue(rta.tipo);
+        this.categoriaForm.controls.padre.setValue(this.idPadre);
+        this.loading = false;
+      });
+    } else {
+      this.loading = false;
+    }
+  }
+
+  loadCategoria() {
+    this.categoria._id = this.idCategoria;
+    if (this.categoria._id) {
+      this.categoriaService.getById(this.categoria._id).subscribe((rta: any) => {
+        this.categoria = rta;
+        this.categoriaForm.controls.nombre.setValue(rta.nombre);
+        this.categoriaForm.controls.tipo.setValue(rta.tipo);
+        this.categoriaForm.controls.padre.setValue(rta.padre);
+        this.loading = false;
+      });
+    } else {
+      this.loading = false;
+    }
+  }
+
   onSubmit() {
+    if (this.categoriaForm.invalid) {
+      alert('Debe completar todos los campos');
+      return;
+    }
     this.disableGuardar$.next(true);
-    this.categoriaService.create(this.categoriaForm.value).subscribe(
-      (res) => {
-        this.router.navigateByUrl('categorias');
-      },
-      (err) => {
-        this.disableGuardar$.next(false);
-      }
-    );
+    if (!this.categoria._id) {
+      this.categoriaService.create(this.categoriaForm.value).subscribe(
+        (res) => {
+          this.router.navigate(['/admin/categorias']);
+        }, (err) => {
+          this.disableGuardar$.next(false);
+        }
+      );
+    } else {
+      const categoriaEditada = this.categoriaForm.value;
+      categoriaEditada._id = this.categoria._id;
+      this.categoriaService.update(categoriaEditada).subscribe(
+        (res: any) => {
+          this.categoria = res;
+          this.disableGuardar$.next(false);
+          this.router.navigate(['/admin/categorias']);
+        },
+        () => {
+          this.disableGuardar$.next(false);
+        }
+      );
+    }
   }
 
   onCancel() {
-    this.router.navigateByUrl('categorias');
+    this.router.navigateByUrl('/admin/categorias');
   }
 }

@@ -1,6 +1,10 @@
 <div class="row heading">
   <div class="col-sm-6">
-    <h2>Categorías<br><small class="subtitle">Crear nueva</small></h2>
+    <h2>Categorías<br>
+      <small class="subtitle" *ngIf="padre._id">Nueva subcategoría de {{padre.nombre}}</small>
+      <small class="subtitle" *ngIf="!padre._id && !categoria._id">Nueva subcategoría padre</small>
+      <small class="subtitle" *ngIf="categoria._id">Editar subcategoría</small>
+    </h2>
   </div>
   <div class="col-6">
 
@@ -23,7 +27,8 @@
       <div class="col-6">
         <div class="form-group">
           <label for="exampleFormControlSelect1">Tipo</label>
-          <select formControlName="tipo" class="form-control" id="tipo">
+          <select formControlName="tipo" class="form-control" id="tipo"
+            [attr.disabled]="padre._id || categoria.padre || categoria.descendientes">
             <option>profesional</option>
             <option>particular</option>
           </select>
