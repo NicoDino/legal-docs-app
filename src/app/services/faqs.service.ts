@@ -21,8 +21,16 @@ export class FaqsService {
         return this.http.get<Faq[]>(`${this.apiUrl}/faqs/public`);
     }
 
+    getById(id: string) {
+        return this.http.get<Faq>(`${this.apiUrl}/faqs/${id}`);
+    }
+
     create(faq: Faq) {
         return this.http.post(`${this.apiUrl}/faqs`, faq);
+    }
+
+    update(faq: Partial<Faq>) {
+        return this.http.put(`${this.apiUrl}/faqs/${faq._id}`, faq);
     }
 
     delete(id: string) {

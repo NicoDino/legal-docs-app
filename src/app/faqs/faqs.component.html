@@ -9,26 +9,35 @@
             </button>
         </div>
     </div>
-    <div *ngFor="let faq of $faqs | async">
+    <div class="row text-center">
+        <div class="col-sm-12">
+            <app-loader *ngIf="loading"></app-loader>
+        </div>
+    </div>
+    <div *ngFor="let faq of faqs">
         <ul class="list-group">
             <li class="list-group-item">
                 <div class="row justify-content-start pb-3">
-                    <div class="col-11 justify-content-center ">
+                    <div class="col-12 justify-content-center ">
                         <span class="align-bottom">{{ faq.pregunta }}</span>
-                        <hr>
-                        <small [innerHTML]="faq.contenido"></small>
-                    </div>
-                    <div class="col-1 justify-content-center">
                         <div class="btn-group float-right">
                             <button type="button" class="btn btn-xs btn-link">
                                 <i class="material-icons small float-left" (click)="borrarFaq(faq._id)">
                                     delete
                                 </i>
                             </button>
+                            <button type="button" class="btn btn-xs btn-link">
+                                <i class="material-icons small float-left" (click)="editarFaq(faq._id)">
+                                    edit
+                                </i>
+                            </button>
                         </div>
+                        <hr>
+                        <small [innerHTML]="faq.contenido"></small>
                     </div>
                 </div>
             </li>
         </ul>
     </div>
 </div>
+<br>
