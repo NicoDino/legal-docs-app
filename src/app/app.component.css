@@ -1,3 +1,17 @@
+@font-face {
+  font-family: titillium;
+  src: url('/assets/fonts/Titillium-Regular.otf') format("opentype");
+}
+
+@font-face {
+  font-family: titillium-bold;
+  src: url('/assets/fonts/Titillium-Bold.otf') format("opentype");
+}
+
+::ng-deep body {
+  font-family: 'titillium', 'arial', sans-serif;
+}
+
 menu {
   padding: 0%;
   margin-top: 0%;
@@ -64,4 +78,11 @@ menu {
   text-overflow: ellipsis;
   white-space: nowrap;
   display: block;
+}
+
+::ng-deep .btn{
+  border-radius: 20px;
+  font-family: 'titillium-bold', 'arial', sans-serif;
+  padding-left: 20px;
+  padding-right: 20px;
 }

@@ -1,7 +1,7 @@
-<div class="row justify-content-start pb-3">
+<div class="row justify-content-start pb-3" *ngIf="!loading">
   <div class="col-8 justify-content-center ">
     <span class="align-bottom">{{ categoria.nombre }} <small
-        *ngIf="categoria.descendientes.length>0">({{categoria.descendientes.length}})</small></span>
+        *ngIf="categoria.descendientes?.length>0">({{categoria.descendientes.length}})</small></span>
   </div>
   <div class=" col-4 justify-content-center">
     <div class="btn-group float-right">
@@ -11,9 +11,14 @@
           unfold_more
         </i>
       </a>
-      <button type="button" class="btn btn-xs btn-link" (click)="crearCategoria(categoria._id)">
+      <button type="button" class="btn btn-xs btn-link" (click)="crearCategoria(categoria._id)" *ngIf="sumarCampos">
         <i class="material-icons float-right small">
           add
+        </i>
+      </button>
+      <button type="button" class="btn btn-xs btn-link" (click)="editarCategoria(categoria._id)">
+        <i class="material-icons float-right small">
+          edit
         </i>
       </button>
       <button *ngIf="categoria.descendientes?.length < 1" type="button" class="btn btn-xs btn-link">
@@ -24,10 +29,10 @@
     </div>
   </div>
 </div>
-<div class="collapse show " id="cat-{{categoria._id}}" #accordion *ngIf="categoria.descendientes?.length > 0">
+<div class="collapse" id="cat-{{categoria._id}}" #accordion *ngIf="categoria.descendientes?.length > 0 && !loading">
   <ul class="list-group ">
-    <li class="list-group-item" *ngFor="let categoria of categoria.descendientes">
-      <app-arbol-item [categoria]="categoria"></app-arbol-item>
+    <li class="list-group-item" *ngFor="let subcat of categoria.descendientes">
+      <app-arbol-item *ngIf="subcat.nombre" [categoria]="subcat" [nivel]="nivel"></app-arbol-item>
     </li>
   </ul>
 </div>

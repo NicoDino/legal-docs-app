@@ -5,6 +5,7 @@ import { CategoriasService } from 'src/app/services/categorias.service';
 import { EventsService } from '../services/events.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-arbol-item',
@@ -13,9 +14,12 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class ArbolItemComponent implements OnInit, OnDestroy {
   @Input() categoria: Categoria;
+  @Input() nivel: number;
   collapsed = false;
   identificador: string;
   unsubscribe$ = new Subject<void>();
+  public loading = true;
+  public sumarCampos = false;
 
   constructor(private router: Router, private categoriaService: CategoriasService, private eventos: EventsService) { }
 
@@ -26,10 +30,17 @@ export class ArbolItemComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.identificador = this.categoria.nombre + 'identificador';
+    this.loading = false;
+    this.sumarCampos = this.nivel < 2;
+    this.nivel = this.nivel + 1;
   }
 
   crearCategoria(idPadre) {
-    this.router.navigateByUrl(`crear-categoria/${idPadre}`);
+    this.router.navigateByUrl(`/admin/crear-categoria/${idPadre}`);
+  }
+
+  editarCategoria(idCat: string) {
+    this.router.navigateByUrl(`/admin/crear-categoria/editar/${idCat}`);
   }
 
   borrarCategoria(idCategoria: string) {

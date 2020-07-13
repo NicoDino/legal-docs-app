@@ -13,6 +13,9 @@ export class FaqsComponent implements OnInit {
 
     // categorias: Categoria[];
     $faqs: Observable<Faq[]> = new Observable<Faq[]>();
+    faqs: Faq[];
+    public loading = true;
+
     constructor(private faqsService: FaqsService, private router: Router, private eventos: EventsFaqsService) { }
 
     ngOnInit(): void {
@@ -22,10 +25,11 @@ export class FaqsComponent implements OnInit {
 
     private getFaqs() {
         this.$faqs = this.faqsService.getAll();
+        this.loadElements();
     }
 
     crearFaq() {
-        this.router.navigateByUrl('crear-faq');
+        this.router.navigateByUrl('/admin/crear-faq');
     }
 
     borrarFaq(idFaq: string) {
@@ -38,6 +42,14 @@ export class FaqsComponent implements OnInit {
             );
         }
     }
+    editarFaq(idFaq: string) {
+        this.router.navigateByUrl(`admin/crear-faq/${idFaq}`);
+    }
 
-
+    loadElements() {
+        this.$faqs.subscribe((values) => {
+            this.faqs = values;
+            this.loading = false;
+        });
+    }
 }

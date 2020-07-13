@@ -1,9 +1,15 @@
 .navbar{
-    background:#495b7d !important;
+    background:rgb(0, 153, 247) !important;
+    height: 80px;
+}
+
+.navbar-brand{
+    width: 120px;
 }
 
 .navbar-light .navbar-nav .nav-link {
     color: white;
+    font-weight: bold;
 }
 
 .navbar-light .navbar-brand {

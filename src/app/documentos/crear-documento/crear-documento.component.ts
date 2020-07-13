@@ -23,6 +23,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   categorias: any[] = [];
   documento: Partial<Documento> = {};
   vistaEdicion = false;
+  loading = true;
   /** utilizado para edicion de campo */
   campoEditado: Partial<Campo>;
   editorInitObject = {
@@ -40,7 +41,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     private categoriaService: CategoriasService,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService
-  ) {}
+  ) { }
 
   @ViewChild('tinyEditor') tiny;
   @ViewChild('openModal') openModal: ElementRef;
@@ -58,6 +59,8 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
       nombre: new FormControl('', [Validators.required]),
       descripcion: new FormControl('', [Validators.required]),
       precio: new FormControl('', [Validators.required]),
+      hojasDesde: new FormControl('', [Validators.required]),
+      hojasHasta: new FormControl('', [Validators.required]),
       categoria: new FormControl('Elija una categoria', [Validators.required]),
       html: new FormControl(''),
     });
@@ -74,14 +77,18 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
           this.documento = rta;
           this.documentoForm.controls.nombre.setValue(rta.nombre);
           this.documentoForm.controls.precio.setValue(rta.precio);
+          this.documentoForm.controls.hojasDesde.setValue(rta.hojasDesde);
+          this.documentoForm.controls.hojasHasta.setValue(rta.hojasHasta);
           this.documentoForm.controls.descripcion.setValue(rta.descripcion);
           this.documentoForm.controls.categoria.setValue(rta.categoria ? rta.categoria._id : '');
           this.documentoForm.controls.html.setValue(rta.html);
           this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
-          this.vistaEdicion = this.step !== '2';
+          this.vistaEdicion = this.step !== '1';
+          this.loading = false;
         });
       } else {
         this.spinner.hide();
+        this.loading = false;
       }
     });
   }
@@ -90,7 +97,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     this.tinyEditorInstance = event.editor;
   }
 
-  onSubmit() {
+  onSubmit(salir) {
     if (this.documentoForm.invalid) {
       alert('Debe completar todos los campos');
       return;
@@ -104,6 +111,8 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
           this.vistaEdicion = true;
           this.disableGuardar$.next(false);
           this.spinner.hide();
+          if (salir)
+            this.router.navigate(['/admin/documentos']);
         },
         () => {
           this.spinner.hide();
@@ -118,6 +127,8 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
           this.spinner.hide();
           this.documento = res;
           this.disableGuardar$.next(false);
+          if (salir)
+            this.router.navigate(['/admin/documentos']);
         },
         () => {
           this.spinner.hide();
@@ -127,7 +138,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     }
   }
 
-  guardarHtml() {
+  guardarHtml(salir) {
     this.spinner.show();
     this.documento.html = this.documentoForm.controls.html.value;
     this.documentosService.update(this.documento).subscribe(
@@ -135,8 +146,8 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
         this.spinner.hide();
         this.documento = res;
         this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
-
-        this.onCancel();
+        if (salir)
+          this.router.navigate(['/admin/documentos']);
       },
       () => {
         this.spinner.hide();
@@ -145,11 +156,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   }
 
   onCancel() {
-    if (this.vistaEdicion) {
-      this.vistaEdicion = false;
-    } else {
-      this.router.navigateByUrl('admin/documentos');
-    }
+    this.router.navigateByUrl('admin/documentos');
   }
 
   onModalSubmit(evento): void {

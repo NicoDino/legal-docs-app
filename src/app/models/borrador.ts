@@ -5,4 +5,5 @@ export interface Borrador {
   emailCliente: string;
   documento: string;
   campos: string[];
+  createdAt: Date;
 }

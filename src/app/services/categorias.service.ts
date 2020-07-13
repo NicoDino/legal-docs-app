@@ -25,6 +25,14 @@ export class CategoriasService {
     return this.http.post(`${this.apiUrl}/categorias`, categoria);
   }
 
+  update(categoria: Partial<Categoria>) {
+    return this.http.put(`${this.apiUrl}/categorias/${categoria._id}`, categoria);
+  }
+
+  getById(id: string) {
+    return this.http.get<Categoria>(`${this.apiUrl}/categorias/${id}`);
+  }
+
   delete(id: string) {
     return this.http.delete(`${this.apiUrl}/categorias/${id}`);
   }

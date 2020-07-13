@@ -27,7 +27,7 @@ export class DocumentosComponent implements OnInit, AfterViewInit {
   headElements = ['nombre', 'tipo', 'campos', 'valor'];
   previous: string;
   maxVisibleItems = 8;
-
+  public loading = true;
   $documentos: Observable<Documento[]> = new Observable<Documento[]>();
 
   constructor(
@@ -63,11 +63,11 @@ export class DocumentosComponent implements OnInit, AfterViewInit {
   }
 
   camposDocumento(idDocumento) {
-    this.router.navigateByUrl(`admin/crear-documento/1/${idDocumento}`);
+    this.router.navigateByUrl(`admin/crear-documento/2/${idDocumento}`);
   }
 
   editarContenido(idDocumento) {
-    this.router.navigateByUrl(`admin/crear-documento/2/${idDocumento}`);
+    this.router.navigateByUrl(`admin/crear-documento/1/${idDocumento}`);
   }
 
   borrarDocumento(idDocumento: string) {
@@ -85,6 +85,7 @@ export class DocumentosComponent implements OnInit, AfterViewInit {
       this.mdbTable.setDataSource(this.elements);
       this.elements = this.mdbTable.getDataSource();
       this.previous = this.mdbTable.getDataSource();
+      this.loading = false;
     });
   }
 }

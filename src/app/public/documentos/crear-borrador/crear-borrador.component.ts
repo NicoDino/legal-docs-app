@@ -38,7 +38,7 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
     private docService: DocumentosService,
     private formBuilder: FormBuilder,
     private borradorService: BorradoresService
-  ) {}
+  ) { }
 
   get camposFormArray() {
     return this.borradorForm.get('campos') as FormArray;
@@ -58,6 +58,7 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
     this.borradorForm = this.formBuilder.group({
       emailCliente: '',
       documento: '',
+      createdAt: new Date(),
       campos: this.formBuilder.array([]),
     });
     this.editorForm = this.formBuilder.group({
@@ -128,7 +129,6 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
   }
 
   enviarDocumento() {
-    console.log(this.borradorForm.value);
     this.borradorService.create(this.borradorForm.value).subscribe((res) => {
       alert('Una vez recibido el pago, enviaremos el archivo a su correo');
       window.location.href = res;
