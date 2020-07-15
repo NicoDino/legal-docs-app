@@ -28,6 +28,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   campoEditado: Partial<Campo>;
   editorInitObject = {
     menubar: false,
+    branding: false,
   };
   tinyEditorInstance;
   showModal = false;
@@ -41,7 +42,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     private categoriaService: CategoriasService,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService
-  ) { }
+  ) {}
 
   @ViewChild('tinyEditor') tiny;
   @ViewChild('openModal') openModal: ElementRef;
@@ -111,8 +112,9 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
           this.vistaEdicion = true;
           this.disableGuardar$.next(false);
           this.spinner.hide();
-          if (salir)
+          if (salir) {
             this.router.navigate(['/admin/documentos']);
+          }
         },
         () => {
           this.spinner.hide();
@@ -127,8 +129,9 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
           this.spinner.hide();
           this.documento = res;
           this.disableGuardar$.next(false);
-          if (salir)
+          if (salir) {
             this.router.navigate(['/admin/documentos']);
+          }
         },
         () => {
           this.spinner.hide();
@@ -146,8 +149,9 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
         this.spinner.hide();
         this.documento = res;
         this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
-        if (salir)
+        if (salir) {
           this.router.navigate(['/admin/documentos']);
+        }
       },
       () => {
         this.spinner.hide();

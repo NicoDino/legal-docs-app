@@ -27,6 +27,7 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
     menubar: false,
     toolbar: false,
     height: 400,
+    branding: false,
   };
   tinyEditorInstance;
   editorForm: FormGroup;
