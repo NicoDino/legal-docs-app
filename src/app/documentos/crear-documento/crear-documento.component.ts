@@ -28,6 +28,46 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   campoEditado: Partial<Campo>;
   editorInitObject = {
     menubar: false,
+    branding: false,
+    language: 'es',
+    style_formats: [
+      {
+        title: 'No disponible',
+        inline: 'span',
+        styles: { filter: 'blur(6px)', 'user-select': 'none' },
+      },
+      {
+        title: 'Encabezados',
+        items: [
+          { title: 'Encabezado 1', format: 'h1' },
+          { title: 'Encabezado 2', format: 'h2' },
+          { title: 'Encabezado 3', format: 'h3' },
+          { title: 'Encabezado 4', format: 'h4' },
+          { title: 'Encabezado 5', format: 'h5' },
+          { title: 'Encabezado 6', format: 'h6' },
+        ],
+      },
+      {
+        title: 'Estilos',
+        items: [
+          { title: 'Negrita', icon: 'bold', format: 'bold' },
+          { title: 'Cursiva', icon: 'italic', format: 'italic' },
+          { title: 'Subrayado', icon: 'underline', format: 'underline' },
+          { title: 'Tachado', icon: 'strikethrough', format: 'strikethrough' },
+          { title: 'Superíndice', icon: 'superscript', format: 'superscript' },
+          { title: 'Subíndice', icon: 'subscript', format: 'subscript' },
+        ],
+      },
+      {
+        title: 'Alinear',
+        items: [
+          { title: 'Izquierda', icon: 'alignleft', format: 'alignleft' },
+          { title: 'Centro', icon: 'aligncenter', format: 'aligncenter' },
+          { title: 'Derecha', icon: 'alignright', format: 'alignright' },
+          { title: 'Justificar', icon: 'alignjustify', format: 'alignjustify' },
+        ],
+      },
+    ],
   };
   tinyEditorInstance;
   showModal = false;
@@ -41,7 +81,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     private categoriaService: CategoriasService,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService
-  ) { }
+  ) {}
 
   @ViewChild('tinyEditor') tiny;
   @ViewChild('openModal') openModal: ElementRef;
@@ -111,8 +151,9 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
           this.vistaEdicion = true;
           this.disableGuardar$.next(false);
           this.spinner.hide();
-          if (salir)
+          if (salir) {
             this.router.navigate(['/admin/documentos']);
+          }
         },
         () => {
           this.spinner.hide();
@@ -127,8 +168,9 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
           this.spinner.hide();
           this.documento = res;
           this.disableGuardar$.next(false);
-          if (salir)
+          if (salir) {
             this.router.navigate(['/admin/documentos']);
+          }
         },
         () => {
           this.spinner.hide();
@@ -146,8 +188,9 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
         this.spinner.hide();
         this.documento = res;
         this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
-        if (salir)
+        if (salir) {
           this.router.navigate(['/admin/documentos']);
+        }
       },
       () => {
         this.spinner.hide();

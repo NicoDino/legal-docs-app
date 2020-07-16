@@ -1,6 +1,8 @@
 <app-loader *ngIf="loading"></app-loader>
 <div id="crear-borrador" *ngIf="showDoc && !loading">
-  <h5><b>{{documento?.nombre}}</b></h5>
+  <h5>
+    <b>{{ documento?.nombre }}</b>
+  </h5>
   <br />
   <div class="row">
     <!-- Columna izquieda, lista de campos -->
@@ -15,9 +17,14 @@
               <p class="card-text">{{ documento.campos[campoIndex].descripcion }}</p>
             </div>
             <div class="col-sm-2" *ngIf="documento.campos[campoIndex].ayuda">
-              <button type="button" data-toggle="modal" data-target="#myModal"
-                style="-webkit-appearance: none;background:white;border: 0px;">
-                <img class="imagen" src="assets/img/question.png" width="30px"></button>
+              <button
+                type="button"
+                data-toggle="modal"
+                data-target="#myModal"
+                style="-webkit-appearance: none; background: white; border: 0px;"
+              >
+                <img class="imagen" src="assets/img/question.png" width="30px" />
+              </button>
             </div>
             <!-- The Modal -->
             <div class="modal" id="myModal">
@@ -28,7 +35,7 @@
                   </div>
                   <!-- Modal body -->
                   <div class="modal-body">
-                    {{documento.campos[campoIndex].ayuda}}
+                    {{ documento.campos[campoIndex].ayuda }}
                     <div class="row">
                       <div class="col-12 text-center">
                         <button type="button" class="btn" data-dismiss="modal"><b>OK</b></button>
@@ -48,8 +55,8 @@
             <div class="col-sm-12">
               <select [formControl]="camposFormArray.controls[campoIndex]" class="form-control" id="tipo">
                 <option *ngFor="let opcion of documento.campos[campoIndex].opciones" [value]="opcion">{{
-                opcion
-              }}</option>
+                  opcion
+                }}</option>
               </select>
             </div>
           </div>
@@ -72,8 +79,12 @@
               </button>
             </div>
             <div class="col-sm-6">
-              <button type="button" class="btn btn-primary" (click)="getCampoSiguiente()"
-                [disabled]="campoIndex >= camposFormArray.length">
+              <button
+                type="button"
+                class="btn btn-primary"
+                (click)="getCampoSiguiente()"
+                [disabled]="campoIndex >= camposFormArray.length"
+              >
                 Paso siguiente
               </button>
             </div>
@@ -83,8 +94,12 @@
     </div>
     <!-- Columna derecha, editor -->
     <div class="col-8" [formGroup]="editorForm">
-      <editor #tinyEditor apiKey="xw7i6xqrjfmfj32n3l20w1lb0mek7bbf4kffwtu7is30t377" formControlName="html"
-        (onInit)="handleEditorInit($event)" [init]="editorInitObject"></editor>
+      <editor
+        apiKey="xw7i6xqrjfmfj32n3l20w1lb0mek7bbf4kffwtu7is30t377"
+        formControlName="html"
+        (onInit)="handleEditorInit($event)"
+        [init]="editorInitObject"
+      ></editor>
     </div>
   </div>
   <!-- </form> -->
@@ -101,12 +116,14 @@
       <div class="mensaje">
         <div class="row">
           <div class="col-9">
-            <h5>{{documento?.nombre}}</h5>
-            <p>Descarga inmediata en formatos Word y PDF<br>
-              Precio en pesos argentinos.</p>
+            <h5>{{ documento?.nombre }}</h5>
+            <p>
+              Descarga inmediata en formatos Word y PDF<br />
+              Precio en pesos argentinos.
+            </p>
           </div>
-          <div class="col-3 d-flex justify-content-end align-items-center ">
-            <h5 class="align-middle">$ {{documento?.precio}}</h5>
+          <div class="col-3 d-flex justify-content-end align-items-center">
+            <h5 class="align-middle">$ {{ documento?.precio }}</h5>
           </div>
         </div>
       </div>
@@ -137,8 +154,12 @@
     <div class="col-sm-3">
       <div id="pago-seguro" class="text-center">
         <h5>PAGO SEGURO</h5>
-        <p class="text-left"><small>Pagá con total seguridad.<br>
-            Nuestro banco asociado garantiza <b>la seguridad de sus operaciones.</b></small></p>
+        <p class="text-left">
+          <small
+            >Pagá con total seguridad.<br />
+            Nuestro banco asociado garantiza <b>la seguridad de sus operaciones.</b></small
+          >
+        </p>
       </div>
     </div>
   </div>

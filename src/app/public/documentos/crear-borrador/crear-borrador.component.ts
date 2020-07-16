@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, HostListener } from '@angular/core';
 import { DocumentosService } from 'src/app/services/documentos.service';
 import { Documento } from 'src/app/models/documento';
 import { takeUntil, distinctUntilChanged } from 'rxjs/operators';
@@ -27,6 +27,7 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
     menubar: false,
     toolbar: false,
     height: 400,
+    branding: false,
   };
   tinyEditorInstance;
   editorForm: FormGroup;
@@ -38,7 +39,7 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
     private docService: DocumentosService,
     private formBuilder: FormBuilder,
     private borradorService: BorradoresService
-  ) { }
+  ) {}
 
   get camposFormArray() {
     return this.borradorForm.get('campos') as FormArray;
@@ -52,6 +53,13 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
   handleEditorInit(event) {
     this.tinyEditorInstance = event.editor;
     this.tinyEditorInstance.setMode('readonly');
+
+    this.tinyEditorInstance.getBody().addEventListener('copy', (e) => {
+      e.preventDefault();
+    });
+    this.tinyEditorInstance.getBody().addEventListener('cut', (e) => {
+      e.preventDefault();
+    });
   }
 
   ngOnInit(): void {
