@@ -21,6 +21,10 @@ export class BorradoresService {
     return this.http.post<string>(`${this.apiUrl}/borradores`, borrador);
   }
 
+  reenviar(borrador: Borrador) {
+    return this.http.post<string>(`${this.apiUrl}/borradores/`, { borrador, reenviar: true });
+  }
+
   delete(id: string) {
     return this.http.delete(`${this.apiUrl}/borradores/${id}`);
   }
