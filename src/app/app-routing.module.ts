@@ -40,7 +40,7 @@ const appRoutes: Routes = [
   { path: 'admin/borradores', component: BorradoresComponent, canActivate: [AuthGuard] },
 
   /*  RUTAS PUBLICAS  */
-  { path: 'admin/login', component: LoginComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'app-reestablecer-pass', component: ReestablecerPassComponent },
   { path: 'preguntas-frecuentes', component: PublicFaqsComponent },
   { path: 'nuevo-borrador/:idDocumento', component: CrearBorradorComponent },

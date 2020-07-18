@@ -4,7 +4,6 @@ import { BehaviorSubject } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { User } from 'src/app/models/user';
-import { AlertService } from 'src/app/services/alert.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -23,7 +22,7 @@ export class ConfiguracionUsuarioComponent implements OnInit {
     private authService: AuthenticationService,
     private userService: UserService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.crearForms();
@@ -95,7 +94,7 @@ export class ConfiguracionUsuarioComponent implements OnInit {
       this.toggleCambiarPass();
     });
   }
-  onCancel(){
+  onCancel() {
     this.router.navigate(['/']);
   }
 }

@@ -6,8 +6,10 @@
         "{{busqueda}}".
     </p>
     <div class="documento" *ngFor="let documento of documentos">
-        <p class="title">{{documento.nombre}}
-        </p>
+        <a class="title" href="/ver-documento/{{documento._id}}">
+            <p>{{documento.nombre}}
+            </p>
+        </a>
         <p class="descripcion">{{documento.descripcion}}
         </p>
     </div>

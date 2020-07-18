@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg ">
-    <a class="navbar-brand" href="/"> <img src="assets/img/logo-color.png"></a>
+<nav class="navbar navbar-public navbar-expand-lg ">
+    <a class="navbar-brand-public" href="/"> <img src="assets/img/logo-color.png"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -12,16 +12,17 @@
                     aria-expanded="false">
                     Documentos
                 </a>
-                <div class="dropdown-menu" aria-labelledby="documentosDropdown">
+                <div class="dropdown-menu dropdown-menu-public" aria-labelledby="documentosDropdown">
                     <a class="dropdown-item" href="/documentos/particular">Particulares</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="/documentos/profesional">Profesionales</a>
                 </div>
             </li>
-            <a class="nav-item nav-link" href="/preguntas-frecuentes">Faq</a>
             <a class="nav-item nav-link"
                 href="https://wa.me/542995238152?text=Me%20interesa%20consultar%20con%20un%20abogado">Consultar a un
                 abogado</a>
+            <a class="nav-item nav-link" *ngIf="currentUser" href="/admin/home"><i
+                    class="material-icons">settings</i></a>
             <div class="searchbar">
                 <form (submit)="buscar()" action="#">
                     <input class="search_input" type="text" [(ngModel)]="busqueda" placeholder="Buscar un documento"
@@ -29,6 +30,7 @@
                     <button class="search_icon" type="submit"><img src="assets/img/lupa.png" width="100%"></button>
                 </form>
             </div>
+
         </div>
     </div>
 </nav>

@@ -31,13 +31,15 @@
 
 ::ng-deep .footer .links{
     padding-right: 95px;
+    color: white !important;
 }
 
 ::ng-deep .footer .link{
     color: white !important;
+    text-decoration: none !important;    
 }
 
-::ng-deep .navbar{
+::ng-deep .navbar-public{
     background-color:transparent;
     padding-left:12%;
     padding-right: 12%;
@@ -59,13 +61,13 @@
     padding-top: 2%;
 }
 
-::ng-deep .dropdown-menu{
+::ng-deep .dropdown-menu-public{
     background-color:rgb(0, 51, 153);
     border: 0px;
     border-radius: 0px;
 }
 
-::ng-deep .dropdown-menu a{
+::ng-deep .dropdown-menu-public a{
     color:white;
 }
 
@@ -75,7 +77,7 @@
     font-weight: bold;
 }
 
-::ng-deep .navbar-brand img{
+::ng-deep .navbar-brand-public img{
     width: 130px;
 }
 
@@ -360,6 +362,8 @@ border: 3px solid
 
 ::ng-deep #busqueda .title{
     font-family: 'titillium-bold', 'arial', sans-serif;
+    color:rgb(51,51,51) !important;
+    text-decoration: none !important;
 }
 
 ::ng-deep #busqueda .descripcion{
