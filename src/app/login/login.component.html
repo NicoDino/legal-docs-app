@@ -1,20 +1,23 @@
-<div class="login-page">
-    <div class="form">
-        <form (ngSubmit)="onSubmit()" ngNativeValidate class="login-form" #formLogin>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" [(ngModel)]="email" name="email" required />
-            </div>
-            <div class="form-group">
-                <label for="password">Contraseña</label>
-                <input type="password" [(ngModel)]="password" name="password" required />
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
-            </div>
-            <div class="form-group">
-                <a  href="app-reestablecer-pass">Reestablecer contraseña</a>
-            </div>
-        </form>
+<div id="login">
+    <div class="login-page">
+        <div class="form">
+            <form (ngSubmit)="onSubmit()" ngNativeValidate class="login-form" #formLogin>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" [(ngModel)]="email" name="email" required />
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" [(ngModel)]="password" name="password" required />
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+                </div>
+                <div class="form-group">
+                    <a href="app-reestablecer-pass">Reestablecer contraseña</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
+<app-public-footer></app-public-footer>

@@ -8,7 +8,7 @@ import { HomeComponent } from '../home/home.component';
 
 @Component({
     templateUrl: 'login.component.html',
-    styleUrls: ['./login.component.css']
+    styleUrls: ['./../public/public.css', './login.component.css']
 })
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;

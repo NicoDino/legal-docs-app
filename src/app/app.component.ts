@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 export class AppComponent implements OnInit {
   currentUser: boolean;
   admin: boolean;
-  constructor(private authenticationService: AuthenticationService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
   ngOnInit(): void {
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((val) => {
