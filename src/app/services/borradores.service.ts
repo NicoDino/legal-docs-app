@@ -18,7 +18,7 @@ export class BorradoresService {
   }
 
   create(borrador: Borrador) {
-    return this.http.post<string>(`${this.apiUrl}/borradores`, borrador);
+    return this.http.post<string>(`${this.apiUrl}/borradores`, { borrador, reenviar: false });
   }
 
   reenviar(borrador: Borrador) {
