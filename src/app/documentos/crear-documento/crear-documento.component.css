@@ -44,3 +44,9 @@
   .step.finish {
     background-color: #4CAF50;
   }
+
+  #campos{
+    max-height: 370px;
+    overflow-y: scroll;
+    margin-bottom: 5px;
+  }

@@ -15,3 +15,14 @@
 .navbar-light .navbar-brand {
     color: white;
 }
+
+.navbar-collapse {
+    background:
+rgb(0, 153, 247) none repeat scroll 0% 0%;
+
+z-index: 100;
+}
+
+.navbar-collapse .show .navbar-nav{
+    float: left !important;
+}

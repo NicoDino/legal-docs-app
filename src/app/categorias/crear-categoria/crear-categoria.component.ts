@@ -19,6 +19,7 @@ export class CrearCategoriaComponent implements OnInit, OnDestroy {
   categoria: Partial<Categoria> = {};
   private idPadre; idCategoria; tipo;
   public loading = true;
+  public viewOnly;
 
   constructor(
     private router: Router,
@@ -42,6 +43,7 @@ export class CrearCategoriaComponent implements OnInit, OnDestroy {
         padre: new FormControl('')
       });
       if (this.idPadre) {
+        this.viewOnly = true;
         this.loadPadre();
       }
       if (this.idCategoria) {
@@ -72,6 +74,7 @@ export class CrearCategoriaComponent implements OnInit, OnDestroy {
         this.categoriaForm.controls.nombre.setValue(rta.nombre);
         this.categoriaForm.controls.tipo.setValue(rta.tipo);
         this.categoriaForm.controls.padre.setValue(rta.padre);
+        this.viewOnly = (this.padre._id || this.categoria.padre || (this.categoria.descendientes && this.categoria.descendientes.length > 0));
         this.loading = false;
       });
     } else {

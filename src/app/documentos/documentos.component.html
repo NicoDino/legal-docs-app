@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row heading">
-        <div class="col-sm-6">
+        <div class="col-6">
             <h2>Documentos<br><small class="subtitle">Listado</small></h2>
         </div>
         <div class="col-6">
@@ -10,13 +10,8 @@
         </div>
     </div>
 
-    <div class="row text-center">
-        <div class="col-sm-12">
-            <app-loader *ngIf="loading"></app-loader>
-        </div>
-    </div>
     <table mdbTable #tableEl="mdbTable" stickyHeader="true" hover="true" striped="true" class="z-depth-1">
-        <thead class="sticky-top" *ngIf="!loading">
+        <thead class="sticky-top">
             <tr>
                 <th *ngFor="let head of headElements; let i = index" [mdbTableSort]="elements"
                     [sortBy]="headElements[i]" scope="col">{{head | titlecase}} <mdb-icon fas icon="sort"></mdb-icon>
@@ -24,6 +19,11 @@
                 <th></th>
             </tr>
         </thead>
+        <div class="row text-center" *ngIf="loading">
+            <div class="col-sm-12">
+                <app-loader></app-loader>
+            </div>
+        </div>
         <tbody #row *ngIf="!loading">
             <tr mdbTableCol *ngFor="let documento of elements; let i = index">
                 <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
