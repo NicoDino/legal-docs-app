@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="row heading">
-    <div class="col-sm-6">
+    <div class="col-6">
       <h2>Borradores<br /><small class="subtitle">Listado</small></h2>
     </div>
   </div>
@@ -19,7 +19,7 @@
       <tr *ngFor="let borrador of $borradores | async">
         <td>{{ borrador.emailCliente }}</td>
         <td>{{ borrador.documento?.nombre }}</td>
-        <td>{{ borrador.createdAt }}</td>
+        <td>{{ borrador.createdAt | date:'dd/MM/yyyy' }}</td>
         <td>{{ borrador.pago }}</td>
         <td>{{ borrador.idPagoMP }}</td>
         <td>

@@ -30,6 +30,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     menubar: false,
     branding: false,
     language: 'es',
+    height: "370",
     style_formats: [
       {
         title: 'No disponible',
@@ -81,7 +82,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     private categoriaService: CategoriasService,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService
-  ) {}
+  ) { }
 
   @ViewChild('tinyEditor') tiny;
   @ViewChild('openModal') openModal: ElementRef;
