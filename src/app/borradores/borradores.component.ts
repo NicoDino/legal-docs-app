@@ -14,8 +14,10 @@ export class BorradoresComponent implements OnInit {
   public desde;
   public hasta;
   public email;
+  public documento;
   public borradores;
   public enviando = false;
+  public borrando = false;
 
   constructor(private borradoresService: BorradoresService) { }
 
@@ -29,14 +31,29 @@ export class BorradoresComponent implements OnInit {
   }
 
   reenviar(borrador) {
-    this.enviando = true;
-    this.borradoresService.reenviar(borrador).subscribe((res) => {
-      alert('Documento reenviado!');
-      this.enviando = false;
-    },
-      () => {
+    if (confirm('¿Está seguro de querer reenviar el borrador?')) {
+      this.enviando = true;
+      this.borradoresService.reenviar(borrador).subscribe((res) => {
+        alert('Documento reenviado!');
         this.enviando = false;
-      });
+      },
+        () => {
+          this.enviando = false;
+        });
+    }
+  }
+
+  eliminar(borrador) {
+    if (confirm('¿Está seguro de querer eliminar el borrador?')) {
+      this.borrando = true;
+      this.borradoresService.delete(borrador._id).subscribe((res) => {
+        this.borrando = false;
+        this.filtrar();
+      },
+        () => {
+          this.borrando = false;
+        });
+    }
   }
 
   filtrar() {
@@ -53,6 +70,11 @@ export class BorradoresComponent implements OnInit {
       if (this.email) {
         this.borradores = this.borradores.filter((element: any) => {
           return element.emailCliente.includes(this.email);
+        });
+      };
+      if (this.documento) {
+        this.borradores = this.borradores.filter((element: any) => {
+          return element.documento?.nombre.toLowerCase().includes(this.documento.toLowerCase());
         });
       };
     });
