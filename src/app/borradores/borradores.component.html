@@ -4,6 +4,36 @@
       <h2>Borradores<br /><small class="subtitle">Listado</small></h2>
     </div>
   </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group">
+        <label for="search-text"><b>Desde</b></label>
+        <input type="date" class="form-control" id="search-desde" [(ngModel)]="desde" aria-describedby="search-desde"
+          (ngModelChange)="filtrar()">
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group">
+        <label for="search-text"><b>Hasta</b></label>
+        <input type="date" class="form-control" id="search-hasta" [(ngModel)]="hasta" aria-describedby="search-hasta"
+          (ngModelChange)="filtrar()">
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group">
+        <label for="search-text"><b>Email</b></label>
+        <input type="text" class="form-control" id="search-email" [(ngModel)]="email" aria-describedby="search-email"
+          placeholder="Busque por email" (ngModelChange)="filtrar()">
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group">
+        <label for="search-text"><b>Documento</b></label>
+        <input type="text" class="form-control" id="search-documento" [(ngModel)]="documento"
+          aria-describedby="search-documento" placeholder="Busque por documento" (ngModelChange)="filtrar()">
+      </div>
+    </div>
+  </div>
   <table class="table">
     <thead>
       <tr>
@@ -16,14 +46,19 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let borrador of $borradores | async">
+      <tr *ngFor="let borrador of borradores">
         <td>{{ borrador.emailCliente }}</td>
         <td>{{ borrador.documento?.nombre }}</td>
         <td>{{ borrador.createdAt | date:'dd/MM/yyyy' }}</td>
         <td>{{ borrador.pago }}</td>
         <td>{{ borrador.idPagoMP }}</td>
         <td>
-          <button type="button" class="btn btn-sm btn-success float-right" (click)="reenviar(borrador)">
+          <button type="button" class="btn btn-sm btn-danger float-right ml-1" (click)="eliminar(borrador)"
+            [disabled]="borrando">
+            Eliminar
+          </button>
+          <button type="button" class="btn btn-sm btn-success float-right" (click)="reenviar(borrador)"
+            [disabled]="enviando">
             Reenviar
           </button>
         </td>
