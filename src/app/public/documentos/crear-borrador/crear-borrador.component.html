@@ -6,7 +6,7 @@
   <br />
   <div class="row">
     <!-- Columna izquieda, lista de campos -->
-    <div class="col-4 pr-4">
+    <div class="col-sm-12 col-md-4 pr-4">
       <div class="card" [formGroup]="borradorForm">
         <div class="card-body">
           <div class="row mb-5">
@@ -69,12 +69,12 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-6">
+            <div class="col-6">
               <button type="button" class="btn btn-warning" (click)="getCampoAnterior()" [disabled]="campoIndex < 1">
                 Paso anterior
               </button>
             </div>
-            <div class="col-sm-6">
+            <div class="col-6">
               <button type="button" class="btn btn-primary" (click)="getCampoSiguiente()"
                 [disabled]="campoIndex >= camposFormArray.length">
                 Paso siguiente
@@ -85,7 +85,7 @@
       </div>
     </div>
     <!-- Columna derecha, editor -->
-    <div class="col-8" [formGroup]="editorForm">
+    <div class="col-sm-12 col-md-8" id="editor" [formGroup]="editorForm">
       <editor apiKey="xw7i6xqrjfmfj32n3l20w1lb0mek7bbf4kffwtu7is30t377" formControlName="html"
         (onInit)="handleEditorInit($event)" [init]="editorInitObject"></editor>
     </div>
@@ -150,3 +150,4 @@
     </div>
   </div>
 </div>
+<app-public-footer></app-public-footer>

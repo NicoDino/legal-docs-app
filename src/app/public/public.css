@@ -526,4 +526,75 @@ line-height: 19px;
     ::ng-deep #portada #imagen {
         margin-top: 40px;
     }
+
+    ::ng-deep #proceso .imagen {
+        padding: 8%;
+    }
+
+    ::ng-deep .navbar-toggler{
+        color:white !important;
+    }
+
+    ::ng-deep #confianza{
+        text-align: center;
+    }
+
+    ::ng-deep #confianza .imagen{
+        margin-bottom: 18px;
+    }
+
+    ::ng-deep .footer .links{
+            padding-right: 15px;
+    }
+
+    ::ng-deep #documentos {
+        padding-top: 12%;
+    }
+
+    ::ng-deep #info-documento{
+        text-align: center;
+    }
+
+    ::ng-deep #info-documento .imagen{
+        margin-bottom: 16px;
+        margin-top: 16px;
+    }
+
+    ::ng-deep #pasos{
+        padding-top: 10%;
+    }
+
+    ::ng-deep #pasos .inciso{
+        margin-bottom: 20px;
+    }
+
+    ::ng-deep #pasos .inciso .imagen{
+        margin-bottom: 10px;
+    }
+
+    ::ng-deep #crear-borrador #editor{
+        margin-top: 20px;
+    }
+
+    ::ng-deep #crear-borrador{
+        padding-top: 5%;
+    }
+
+    ::ng-deep #busqueda{
+        padding-top: 10%;
+    }
+
+    ::ng-deep #navbarNavAltMarkup{
+        background:#f9f9f9;
+        margin-top: 12px;
+        padding: 15px;
+    }
+
+    ::ng-deep #fin-documento .email {
+        width: 100%;
+    }
+
+    ::ng-deep .navbar-toggler-icon {
+        background-image: url('/assets/img/menu.png');
+    }
 }
