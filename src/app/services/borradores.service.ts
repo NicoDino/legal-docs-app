@@ -18,11 +18,11 @@ export class BorradoresService {
   }
 
   create(borrador: Borrador) {
-    return this.http.post<string>(`${this.apiUrl}/borradores`, { borrador, reenviar: false });
+    return this.http.post<string>(`${this.apiUrl}/borradores`, { borrador });
   }
 
   reenviar(borrador: Borrador) {
-    return this.http.post<string>(`${this.apiUrl}/borradores/`, { borrador, reenviar: true });
+    return this.http.post<string>(`${this.apiUrl}/borradores/reenviar`, { borrador });
   }
 
   delete(id: string) {
