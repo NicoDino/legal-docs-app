@@ -26,8 +26,7 @@
                 <div class="card">
                     <div class="card-header" id="headingOne">
                         <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
-                            [attr.data-target]="'#categoria-' + i" aria-expanded="true"
-                            (click)="categoria.active = !categoria.active;">
+                            [attr.data-target]="'#categoria-' + i" aria-expanded="true" (click)="change(categoria)">
                             {{ categoria.nombre | uppercase }}
                         </button>
                     </div>

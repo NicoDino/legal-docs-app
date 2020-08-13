@@ -31,10 +31,12 @@
                   </div>
                   <!-- Modal body -->
                   <div class="modal-body">
-                    {{ documento.campos[campoIndex].ayuda }}
+                    <div [innerHTML]="documento.campos[campoIndex].ayuda">
+                    </div>
                     <div class="row">
                       <div class="col-12 text-center">
-                        <button type="button" class="btn text-center pl-0 pr-0" data-dismiss="modal"><b>OK</b></button>
+                        <button type="button" class="btn text-center pl-0 pr-0 mt-2"
+                          data-dismiss="modal"><b>OK</b></button>
                       </div>
                     </div>
                   </div>
@@ -106,7 +108,7 @@
           <div class="col-9">
             <h5>{{ documento?.nombre }}</h5>
             <p>
-              Descarga inmediata en formatos Word y PDF<br />
+              Descarga inmediata en formato PDF<br />
               Precio en pesos argentinos.
             </p>
           </div>

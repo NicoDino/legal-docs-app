@@ -13,7 +13,7 @@
                 <div class="card">
                     <div class="card-header" id="headingOne">
                         <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
-                            [attr.data-target]="'#preg-' + i" aria-expanded="true" (click)="faq.active = !faq.active;">
+                            [attr.data-target]="'#preg-' + i" aria-expanded="true" (click)="change(faq)">
                             {{ faq.pregunta }}
                         </button>
                     </div>

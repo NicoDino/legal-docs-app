@@ -10,19 +10,21 @@
       <div class="modal-body">
         <div class="container-fluid">
           <form [formGroup]="campoForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group justify-content-start">
+                  <label for="descripcion">Pregunta a mostrar (requerido)</label>
+                  <textarea rows="3" formControlName="descripcion" type="text" class="form-control" id="descripcion"
+                    aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required></textarea>
+                </div>
+              </div>
+            </div>
             <div class="row justify-content-center mt-1">
               <div class="col-6">
                 <div class="form-group">
                   <label for="precio">Nombre (requerido)</label>
-                  <input
-                    formControlName="nombre"
-                    type="text"
-                    class="form-control"
-                    id="nombre"
-                    aria-label="Sizing example input"
-                    aria-describedby="inputGroup-sizing-default"
-                    required
-                  />
+                  <input formControlName="nombre" type="text" class="form-control" id="nombre"
+                    aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required />
                 </div>
               </div>
               <div class="col-6">
@@ -42,52 +44,22 @@
               <div class="row" *ngFor="let opcionControl of opcionesFormArray.controls; let i = index">
                 <div class="col-10">
                   <div class="form-group justify-content-start">
-                    <input
-                      [formControl]="opcionesFormArray.controls[i]"
-                      type="text"
-                      class="form-control"
-                      aria-label="Sizing example input"
-                      aria-describedby="inputGroup-sizing-default"
-                    />
+                    <input [formControl]="opcionesFormArray.controls[i]" type="text" class="form-control"
+                      aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
                   </div>
                 </div>
-                <div
-                  class="col-2"
-                  *ngIf="i === opcionesFormArray.controls.length - 1 && campoForm.controls.tipo.value === 'opciones'"
-                >
-                  <button (click)="agregarOpcion()" type="button">Agregar</button>
+                <div class="col-2"
+                  *ngIf="i === opcionesFormArray.controls.length - 1 && campoForm.controls.tipo.value === 'opciones'">
+                  <button (click)="agregarOpcion()" type="button" class="btn btn-sm btn-success">+</button>
                 </div>
               </div>
             </span>
             <div class="row">
               <div class="col-12">
                 <div class="form-group justify-content-start">
-                  <label for="descripcion">Descripción</label>
-                  <textarea
-                    rows="3"
-                    formControlName="descripcion"
-                    type="text"
-                    class="form-control"
-                    id="descripcion"
-                    aria-label="Sizing example input"
-                    aria-describedby="inputGroup-sizing-default"
-                  ></textarea>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12">
-                <div class="form-group justify-content-start">
-                  <label for="ayuda">Ayuda</label>
-                  <textarea
-                    rows="3"
-                    formControlName="ayuda"
-                    type="text"
-                    class="form-control"
-                    id="ayuda"
-                    aria-label="Sizing example input"
-                    aria-describedby="inputGroup-sizing-default"
-                  ></textarea>
+                  <label for="ayuda">Ayuda extra</label>
+                  <editor #tinyEditor apiKey="xw7i6xqrjfmfj32n3l20w1lb0mek7bbf4kffwtu7is30t377" formControlName="ayuda"
+                    (onInit)="handleEditorInit($event)" [init]="editorInitObject"></editor>
                 </div>
               </div>
             </div>

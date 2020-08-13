@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-reestablecer-pass',
   templateUrl: './reestablecer-pass.component.html',
-  styleUrls: ['./reestablecer-pass.component.css'],
+  styleUrls: ['./../public/public.css', './reestablecer-pass.component.css'],
 })
 export class ReestablecerPassComponent implements OnInit {
   resetView = false;
@@ -19,7 +19,7 @@ export class ReestablecerPassComponent implements OnInit {
     private fb: FormBuilder,
     private alertService: AlertService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.emailForm = this.fb.group({

@@ -30,4 +30,13 @@ export class PublicDocumentosComponent {
         });
     }
 
+    change(categoria) {
+        this.categorias.forEach(cat => {
+            if (cat._id !== categoria._id) {
+                cat.active = false;
+            }
+        });
+        categoria.active = !categoria.active;
+    }
+
 }
