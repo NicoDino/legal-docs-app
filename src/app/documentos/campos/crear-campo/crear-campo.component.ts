@@ -19,7 +19,15 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
   @Output() campoCreado: EventEmitter<any> = new EventEmitter<any>();
   @Output() modalCerrado: EventEmitter<any> = new EventEmitter<any>();
   @Input() campo: Partial<Campo>;
-  constructor(private formBuilder: FormBuilder) {}
+  editorInitObject = {
+    menubar: true,
+    toolbar: true,
+    height: 200,
+    branding: false,
+  };
+  tinyEditorInstance;
+
+  constructor(private formBuilder: FormBuilder) { }
 
   get opcionesFormArray() {
     return this.campoForm.get('opciones') as FormArray;
@@ -102,5 +110,9 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
 
   agregarOpcion() {
     this.opcionesFormArray.push(new FormControl(''));
+  }
+
+  handleEditorInit(event) {
+    this.tinyEditorInstance = event.editor;
   }
 }

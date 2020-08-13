@@ -27,4 +27,13 @@ export class PublicFaqsComponent {
         });
     }
 
+    change(faq) {
+        this.faqs.forEach(preg => {
+            if (faq._id !== preg._id) {
+                preg.active = false;
+            }
+        });
+        faq.active = !faq.active;
+    }
+
 }
