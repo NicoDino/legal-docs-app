@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Borrador } from 'src/app/models/borrador';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { BorradoresService } from 'src/app/services/borradores.service';
+import * as moment from 'moment';
 import { CheckoutService } from 'src/app/services/checkout.service';
 
 @Component({
@@ -39,7 +40,7 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
     private docService: DocumentosService,
     private formBuilder: FormBuilder,
     private borradorService: BorradoresService
-  ) {}
+  ) { }
 
   get camposFormArray() {
     return this.borradorForm.get('campos') as FormArray;
@@ -105,9 +106,15 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
 
   private initInputWatcher() {
     this.camposFormArray.valueChanges.pipe(distinctUntilChanged(), takeUntil(this.unsubscribe$)).subscribe((value) => {
+      let valor;
+      if (this.documento.campos[this.campoIndex].tipo === 'date') {
+        valor = moment(value[this.campoIndex]).format('DD/MM/YYYY');
+      } else {
+        valor = value[this.campoIndex];
+      }
       this.tinyEditorInstance.dom.setHTML(
         this.tinyEditorInstance.dom.select(this.getCampoTagId(this.campoIndex)),
-        value[this.campoIndex] || '__________'
+        valor || '__________'
       );
     });
   }
