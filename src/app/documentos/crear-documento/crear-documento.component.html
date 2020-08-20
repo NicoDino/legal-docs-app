@@ -85,22 +85,29 @@ Ingrese la descripción del documento</textarea>
     <form [formGroup]="documentoForm">
       <div class="row">
         <!-- Columna izquieda, lista de campos -->
-        <div class="col-md-3" id="campos">
+        <div class="col-md-4" id="campos">
+          <div class="form-row">
+            <div class="col">
+              <input class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="buscadorCampo" type="text"
+                (ngModelChange)="filtrar()"><br>
+            </div>
+          </div>
           <p class="text-center mt-2">
             <small *ngIf="documento?.campos?.length < 1" class="float-center">Aún no se han cargado campos al
               documento</small>
           </p>
-          <ul class="list-group">
-            <li class="list-group-item" *ngFor="let campo of documento?.campos; let i = index"
+          <div class="row">
+            <div class="col-md-6 col-sm-12" *ngFor="let campo of camposFiltrados; let i = index"
               (click)="campoSelected(i)">
-              <app-campo-item [campo]="campo" (campoEliminado)="handleCampoEliminado(i)"
-                (editarCampo)="editarCampo($event)">
+              <app-campo-item [campo]="campo" (click)="resaltarEnDocumento(campo)"
+                (campoEliminado)="handleCampoEliminado(i)" (editarCampo)="editarCampo($event)">
               </app-campo-item>
-            </li>
-          </ul>
+
+            </div>
+          </div>
         </div>
         <!-- Columna derecha, editor -->
-        <div class="col-md-9">
+        <div class="col-md-8">
           <div class="form-group">
             <editor #tinyEditor apiKey="xw7i6xqrjfmfj32n3l20w1lb0mek7bbf4kffwtu7is30t377" formControlName="html"
               (onInit)="handleEditorInit($event)" [init]="editorInitObject"></editor>
