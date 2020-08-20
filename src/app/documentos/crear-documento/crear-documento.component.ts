@@ -292,15 +292,10 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     }, 500);
   }
 
-  handleCampoEliminado(index) {
-    this.tinyBookmark = this.tinyEditorInstance.selection.getBookmark(2, true);
-    const contenido: string = this.documentoForm.controls.html.value;
-    const campo = this.documento.campos[index];
-    const posicionIdentificador = contenido.indexOf(campo.identificador);
-    const posicionInicial = posicionIdentificador - 10;
-    const posicionFinal = contenido.indexOf('</span>', posicionIdentificador) + 7;
-    const resultado = contenido.substring(0, posicionInicial) + contenido.substring(posicionFinal);
-    this.documentoForm.controls.html.setValue(resultado);
+  handleEliminar(campo) {
+    const newNode = this.tinyEditorInstance.dom.select('#' + campo.identificador);
+    this.tinyEditorInstance.selection.select(newNode[0]);
+    this.tinyEditorInstance.selection.getNode().remove();
     this.spinner.show();
     this.documentosService.update({ _id: this.documento._id, html: this.documentoForm.controls.html.value }).subscribe(
       (documentoActualizado: Partial<Documento>) => {

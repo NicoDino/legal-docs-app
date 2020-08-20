@@ -142,7 +142,7 @@ Ingrese la descripción del documento</textarea
               <app-campo-item
                 [campo]="campo"
                 (click)="resaltarEnDocumento(campo)"
-                (campoEliminado)="handleCampoEliminado(i)"
+                (campoEliminado)="handleEliminar(campo)"
                 (editarCampo)="editarCampo($event)"
               >
               </app-campo-item>
