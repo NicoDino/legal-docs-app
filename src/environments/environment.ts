@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
 
-  apiUrl: 'http://localhost:3000/v1',
+  apiUrl: 'http://localhost:3000/api/v1',
   /** Server digital ocean */
   // apiUrl: 'http://159.89.85.19:3000/',
 };

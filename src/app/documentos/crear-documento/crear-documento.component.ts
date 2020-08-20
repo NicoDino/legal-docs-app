@@ -10,7 +10,7 @@ import { CrearCampoComponent } from '../campos/crear-campo/crear-campo.component
 import { CategoriasService } from 'src/app/services/categorias.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { takeUntil } from 'rxjs/operators';
-
+import { CampoItemComponent } from '../campos/campo-item/campo-item.component';
 @Component({
   selector: 'app-crear-documento',
   templateUrl: './crear-documento.component.html',
@@ -33,7 +33,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     menubar: false,
     branding: false,
     language: 'es',
-    height: "370",
+    height: '600',
     style_formats: [
       {
         title: 'No disponible',
@@ -77,6 +77,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   showModal = false;
   step = '1';
   tinyBookmark;
+  idCampoSeleccionado = '';
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -85,7 +86,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     private categoriaService: CategoriasService,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService
-  ) { }
+  ) {}
 
   @ViewChild('tinyEditor') tiny;
   @ViewChild('openModal') openModal: ElementRef;
@@ -279,7 +280,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   }
 
   resaltarEnDocumento(campo) {
-    var newNode = this.tinyEditorInstance.dom.select('#' + campo.identificador);
+    const newNode = this.tinyEditorInstance.dom.select('#' + campo.identificador);
     this.tinyEditorInstance.selection.select(newNode[0]);
   }
 
@@ -289,11 +290,6 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.tinyEditorInstance.focus();
     }, 500);
-  }
-
-  campoSelected(i) {
-    // TODO: ver si se puede resaltar sobre el campo seleccionado usando su index en el string
-    // const contenido: string = this.documentoForm.controls.html.value;
   }
 
   handleCampoEliminado(index) {
@@ -343,6 +339,10 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   }
 
   filtrar() {
-    this.camposFiltrados = this.documento.campos.filter(element => element.nombre.search(this.buscadorCampo) != -1)
+    this.camposFiltrados = this.documento.campos.filter((element) => element.nombre.search(this.buscadorCampo) !== -1);
+  }
+
+  handleSelection(event) {
+    this.idCampoSeleccionado = event.editor.selection.getNode().id;
   }
 }
