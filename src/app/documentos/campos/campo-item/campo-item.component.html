@@ -1,19 +1,16 @@
-<div class="row justify-content-start pb-3">
-  <div class="col-8 justify-content-center">
-    <span class="align-bottom text-overflow">{{ campo?.nombre }} </span>
+<button type="button" class="btn btn-primary mb-2 btn-block">
+  <span style="white-space: normal;">{{ campo?.nombre }}</span><br>
+  <div class="btn-group">
+    <button type="button" class="btn btn-warning btn-xs">
+      <i class="material-icons small float-left" style="font-size: 16px;"
+        (click)="onEditarCampo();$event.stopPropagation()">
+        edit
+      </i>
+    </button> <button type="button" class="btn btn-danger btn-xs">
+      <i class="material-icons small float-left" style="font-size: 16px;"
+        (click)="borrarCampo(campo?._id);$event.stopPropagation()">
+        delete
+      </i>
+    </button>
   </div>
-  <div class="col-4 justify-content-center">
-    <div class="btn-group float-right">
-      <button type="button" class="btn btn-xs btn-link">
-        <i class="material-icons small float-left" (click)="onEditarCampo()">
-          edit
-        </i>
-      </button>
-      <button type="button" class="btn btn-xs btn-link">
-        <i class="material-icons small float-left" (click)="borrarCampo(campo?._id)">
-          delete
-        </i>
-      </button>
-    </div>
-  </div>
-</div>
+</button>

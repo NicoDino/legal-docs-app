@@ -17,14 +17,14 @@ export class CampoItemComponent implements OnInit, OnDestroy {
   collapsed = false;
   unsubscribe$ = new Subject<void>();
 
-  constructor(private campoService: CamposService, private eventos: EventsDocumentosService) {}
+  constructor(private campoService: CamposService, private eventos: EventsDocumentosService) { }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   borrarCampo(idCampo: string) {
     if (confirm('¿Está seguro de querer eliminar el campo?')) {

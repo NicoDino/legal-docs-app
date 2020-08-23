@@ -3,13 +3,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { DocumentosService } from 'src/app/services/documentos.service';
-import { takeUntil } from 'rxjs/operators';
 import { Documento } from 'src/app/models/documento';
 import { CamposService } from 'src/app/services/campos.service';
 import { Campo } from 'src/app/models/campo';
 import { CrearCampoComponent } from '../campos/crear-campo/crear-campo.component';
 import { CategoriasService } from 'src/app/services/categorias.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { takeUntil } from 'rxjs/operators';
+import { CampoItemComponent } from '../campos/campo-item/campo-item.component';
 @Component({
   selector: 'app-crear-documento',
   templateUrl: './crear-documento.component.html',
@@ -24,13 +25,15 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   documento: Partial<Documento> = {};
   vistaEdicion = false;
   loading = true;
+  camposFiltrados = [];
+  buscadorCampo = '';
   /** utilizado para edicion de campo */
   campoEditado: Partial<Campo>;
   editorInitObject = {
     menubar: false,
     branding: false,
     language: 'es',
-    height: "370",
+    height: '600',
     style_formats: [
       {
         title: 'No disponible',
@@ -74,6 +77,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   showModal = false;
   step = '1';
   tinyBookmark;
+  idCampoSeleccionado = '';
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -82,7 +86,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     private categoriaService: CategoriasService,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService
-  ) { }
+  ) {}
 
   @ViewChild('tinyEditor') tiny;
   @ViewChild('openModal') openModal: ElementRef;
@@ -124,6 +128,8 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
           this.documentoForm.controls.categoria.setValue(rta.categoria ? rta.categoria._id : '');
           this.documentoForm.controls.html.setValue(rta.html);
           this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
+          this.camposFiltrados = this.documento.campos;
+          this.buscadorCampo = '';
           this.vistaEdicion = this.step !== '1';
           this.loading = false;
         });
@@ -238,7 +244,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     this.tiny.editor.execCommand(
       'mceInsertContent',
       false,
-      `<span contenteditable="false"  id=${identificador}>__________</span>\uFEFF`
+      `<span contenteditable="false" id=${identificador}>__________</span>\uFEFF`
     );
     const contenido: string = this.tiny.editor.getContent();
     nuevoCampo.posicion = contenido.indexOf(identificador);
@@ -262,6 +268,8 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
       (rta: Partial<Documento>) => {
         this.documento = rta;
         this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
+        this.camposFiltrados = this.documento.campos;
+        this.buscadorCampo = '';
         this.spinner.hide();
         this.tinyEditorInstance.focus();
       },
@@ -269,6 +277,11 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
         this.spinner.hide();
       }
     );
+  }
+
+  resaltarEnDocumento(campo) {
+    const newNode = this.tinyEditorInstance.dom.select('#' + campo.identificador);
+    this.tinyEditorInstance.selection.select(newNode[0]);
   }
 
   onModalCerrado() {
@@ -279,26 +292,17 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     }, 500);
   }
 
-  campoSelected(i) {
-    // TODO: ver si se puede resaltar sobre el campo seleccionado usando su index en el string
-    // const contenido: string = this.documentoForm.controls.html.value;
-  }
-
-  handleCampoEliminado(index) {
-    this.tinyBookmark = this.tinyEditorInstance.selection.getBookmark(2, true);
-
-    const contenido: string = this.documentoForm.controls.html.value;
-    const campo = this.documento.campos[index];
-    const posicionIdentificador = contenido.indexOf(campo.identificador);
-    const posicionInicial = posicionIdentificador - 10;
-    const posicionFinal = contenido.indexOf('</span>', posicionIdentificador) + 7;
-    const resultado = contenido.substring(0, posicionInicial) + contenido.substring(posicionFinal);
-    this.documentoForm.controls.html.setValue(resultado);
+  handleEliminar(campo) {
+    const newNode = this.tinyEditorInstance.dom.select('#' + campo.identificador);
+    this.tinyEditorInstance.selection.select(newNode[0]);
+    this.tinyEditorInstance.selection.getNode().remove();
     this.spinner.show();
     this.documentosService.update({ _id: this.documento._id, html: this.documentoForm.controls.html.value }).subscribe(
       (documentoActualizado: Partial<Documento>) => {
         this.documento = documentoActualizado;
         this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
+        this.camposFiltrados = this.documento.campos;
+        this.buscadorCampo = '';
         this.spinner.hide();
         this.tinyEditorInstance.focus();
         this.tinyEditorInstance.selection.moveToBookmark(this.tinyBookmark);
@@ -327,5 +331,13 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     this.categoriaService.getAll().subscribe((resultado) => {
       this.categorias = resultado;
     });
+  }
+
+  filtrar() {
+    this.camposFiltrados = this.documento.campos.filter((element) => element.nombre.search(this.buscadorCampo) !== -1);
+  }
+
+  handleSelection(event) {
+    this.idCampoSeleccionado = event.editor.selection.getNode().id;
   }
 }
