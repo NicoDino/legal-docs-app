@@ -10,11 +10,20 @@
       </h2>
     </div>
     <div class="col-6">
-      <button type="button" class="btn btn-sm btn-link float-right" (click)="onCancel()">
-        <i class="material-icons float-left">
-          arrow_back
-        </i>
-      </button>
+      <div class="form-inline d-flex justify-content-end " *ngIf="vistaEdicion">
+        <select class="form-control float-left" id="search-documento" [(ngModel)]="selectedDocument"
+          (ngModelChange)="handleDocumentChange($event)">
+          <option [ngValue]="null">Documento principal</option>
+          <option *ngFor="let doc of subdocumentos" [ngValue]="doc">{{
+          doc.nombre
+        }}</option>
+        </select>
+        <button type="button" class="btn btn-sm btn-link" (click)="onCancel()">
+          <i class="material-icons float-left">
+            arrow_back
+          </i>
+        </button>
+      </div>
     </div>
   </div>
 </div>
@@ -25,14 +34,8 @@
         <div class="col-6">
           <div class="form-group">
             <label for="nombre">Nombre</label>
-            <input
-              formControlName="nombre"
-              type="text"
-              class="form-control"
-              id="nombre"
-              aria-label="Sizing example input"
-              aria-describedby="inputGroup-sizing-default"
-            />
+            <input formControlName="nombre" type="text" class="form-control" id="nombre"
+              aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
           </div>
         </div>
 
@@ -49,53 +52,28 @@
           <div class="form-group">
             <label for="nombre">Descripción</label>
             <textarea name="descripcion" required class="form-control" rows="4" formControlName="descripcion">
-Ingrese la descripción del documento</textarea
-            >
+Ingrese la descripción del documento</textarea>
           </div>
         </div>
         <div class="col-4">
           <div class="form-group">
             <label for="precio">Precio</label>
-            <input
-              formControlName="precio"
-              type="number"
-              class="form-control"
-              id="precio"
-              aria-label="Sizing example input"
-              aria-describedby="inputGroup-sizing-default"
-              min="1"
-              maxlength="4"
-            />
+            <input formControlName="precio" type="number" class="form-control" id="precio"
+              aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" min="1" maxlength="4" />
           </div>
         </div>
         <div class="col-4">
           <div class="form-group">
             <label for="hojasDesde">Hojas desde</label>
-            <input
-              formControlName="hojasDesde"
-              type="number"
-              class="form-control"
-              id="hojasDesde"
-              aria-label="Sizing example input"
-              aria-describedby="inputGroup-sizing-default"
-              min="1"
-              max="100"
-            />
+            <input formControlName="hojasDesde" type="number" class="form-control" id="hojasDesde"
+              aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" min="1" max="100" />
           </div>
         </div>
         <div class="col-4">
           <div class="form-group">
             <label for="hojasHasta">Hojas hasta</label>
-            <input
-              formControlName="hojasHasta"
-              type="number"
-              class="form-control"
-              id="hojasHasta"
-              aria-label="Sizing example input"
-              aria-describedby="inputGroup-sizing-default"
-              min="1"
-              max="100"
-            />
+            <input formControlName="hojasHasta" type="number" class="form-control" id="hojasHasta"
+              aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" min="1" max="100" />
           </div>
         </div>
       </div>
@@ -119,59 +97,46 @@ Ingrese la descripción del documento</textarea
         <div class="col-md-4" id="campos">
           <div class="form-row">
             <div class="col">
-              <input
-                class="form-control"
-                [ngModelOptions]="{ standalone: true }"
-                [(ngModel)]="buscadorCampo"
-                type="text"
-                (ngModelChange)="filtrar()"
-              /><br />
+              <input class="form-control" [ngModelOptions]="{ standalone: true }" [(ngModel)]="buscadorCampo"
+                type="text" (ngModelChange)="filtrar()" /><br />
             </div>
           </div>
           <p class="text-center mt-2">
-            <small *ngIf="documento?.campos?.length < 1" class="float-center"
-              >Aún no se han cargado campos al documento</small
-            >
+            <small *ngIf="documento?.campos?.length < 1" class="float-center">Aún no se han cargado campos al
+              documento</small>
           </p>
-          <div class="row">
-            <div
-              class="col-md-6 col-sm-12"
-              *ngFor="let campo of camposFiltrados; let i = index"
-              [ngClass]="{ 'campo-seleccionado': campo.identificador == idCampoSeleccionado }"
-            >
-              <app-campo-item
-                [campo]="campo"
-                (click)="resaltarEnDocumento(campo)"
-                (campoEliminado)="handleEliminar(campo)"
-                (editarCampo)="editarCampo($event)"
-              >
-              </app-campo-item>
+          <div class="container">
+            <div class="row mb-1" style="background:#f2f2f2;padding: 2%;"
+              *ngFor="let campo of camposFiltrados; let i = index">
+              <div class="col-sm-8 d-flex justify-content-start align-items-center" (click)="resaltarEnDocumento(campo)"
+                [ngClass]="{ 'campo-seleccionado': campo.identificador == idCampoSeleccionado }">
+                <span class="align-middle">{{campo.nombre}}</span>
+              </div>
+              <div class="col-sm-4">
+                <app-campo-item [campo]="campo" (campoEliminado)="handleEliminar(campo)"
+                  (editarCampo)="editarCampo($event)">
+                </app-campo-item>
+              </div>
             </div>
           </div>
         </div>
         <!-- Columna derecha, editor -->
         <div class="col-md-8">
           <div class="form-group">
-            <editor
-              #tinyEditor
-              apiKey="xw7i6xqrjfmfj32n3l20w1lb0mek7bbf4kffwtu7is30t377"
-              formControlName="html"
-              (onInit)="handleEditorInit($event)"
-              (onSelectionChange)="handleSelection($event)"
-              [init]="editorInitObject"
-            ></editor>
+            <editor #tinyEditor apiKey="xw7i6xqrjfmfj32n3l20w1lb0mek7bbf4kffwtu7is30t377" formControlName="html"
+              (onInit)="handleEditorInit($event)" (onSelectionChange)="handleSelection($event)"
+              [init]="editorInitObject">
+            </editor>
           </div>
           <div class="row">
             <div class="col-sm-12 d-flex justify-content-around">
-              <button
-                type="button"
-                class="btn btn-info btn-sm"
-                data-toggle="modal"
-                data-target="#myModal"
-                (click)="onAgregarCampo()"
-                #openModal
-              >
+              <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal"
+                (click)="onAgregarCampo()" #openModal>
                 Agregar campo
+              </button>
+              <button type="button" class="btn btn-grey btn-sm" data-toggle="modal" data-target="#modalSubdocumento"
+                *ngIf="!this.selectedDocument" (click)="onAgregarParte()" #openModalSubdocumento>
+                Sumar subdocumento
               </button>
               <button type="button" id="guardarHtml" class="btn btn-sm btn-success" (click)="guardarHtml(false)">
                 Guardar
@@ -188,12 +153,11 @@ Ingrese la descripción del documento</textarea
 
   <br />
 
-  <app-crear-campo
-    *ngIf="showModal"
-    [campo]="campoEditado"
-    (campoCreado)="onModalSubmit($event)"
-    (modalCerrado)="onModalCerrado()"
-    #campoModal
-  >
+  <app-crear-campo *ngIf="showModal" [campo]="campoEditado" (campoCreado)="onModalSubmit($event)"
+    (modalCerrado)="onModalCerrado()" [subdocumentos]="subdocumentos" #campoModal>
   </app-crear-campo>
+
+  <app-crear-subdocumento *ngIf="showModalSubdocumento" [documento]="documento"
+    (subdocumentoCreado)="onModalSubdocumentoSubmit($event)" (modalCerrado)="onModalCerrado()" #subdocumentoModal>
+  </app-crear-subdocumento>
 </div>

@@ -22,12 +22,15 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   unsubscribe$ = new Subject<void>();
   currentTab = 0;
   categorias: any[] = [];
+  subdocumentos: any[] = [];
   documento: Partial<Documento> = {};
+  selectedDocument: any = null;
   vistaEdicion = false;
   loading = true;
   camposFiltrados = [];
   buscadorCampo = '';
   /** utilizado para edicion de campo */
+  subdocumentoEditado: Partial<Documento>;
   campoEditado: Partial<Campo>;
   editorInitObject = {
     menubar: false,
@@ -74,7 +77,8 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     ],
   };
   tinyEditorInstance;
-  showModal = false;
+  showModal = true;
+  showModalSubdocumento = true;
   step = '1';
   tinyBookmark;
   idCampoSeleccionado = '';
@@ -86,7 +90,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     private categoriaService: CategoriasService,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService
-  ) {}
+  ) { }
 
   @ViewChild('tinyEditor') tiny;
   @ViewChild('openModal') openModal: ElementRef;
@@ -113,9 +117,8 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   }
 
   private loadDocumento() {
-    this.route.paramMap.pipe(takeUntil(this.unsubscribe$)).subscribe((params) => {
-      this.documento._id = params.get('idDocumento');
-      this.step = params.get('step');
+    if (this.selectedDocument) {
+      this.documento._id = this.selectedDocument._id
       if (this.documento._id) {
         this.documentosService.getById(this.documento._id).subscribe((rta: any) => {
           this.spinner.hide();
@@ -137,6 +140,39 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
         this.spinner.hide();
         this.loading = false;
       }
+    } else {
+      this.route.paramMap.pipe(takeUntil(this.unsubscribe$)).subscribe((params) => {
+        this.documento._id = params.get('idDocumento');
+        this.step = params.get('step');
+        if (this.documento._id) {
+          this.documentosService.getById(this.documento._id).subscribe((rta: any) => {
+            this.spinner.hide();
+            this.documento = rta;
+            this.documentoForm.controls.nombre.setValue(rta.nombre);
+            this.documentoForm.controls.precio.setValue(rta.precio);
+            this.documentoForm.controls.hojasDesde.setValue(rta.hojasDesde);
+            this.documentoForm.controls.hojasHasta.setValue(rta.hojasHasta);
+            this.documentoForm.controls.descripcion.setValue(rta.descripcion);
+            this.documentoForm.controls.categoria.setValue(rta.categoria ? rta.categoria._id : '');
+            this.documentoForm.controls.html.setValue(rta.html);
+            this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
+            this.camposFiltrados = this.documento.campos;
+            this.buscadorCampo = '';
+            this.vistaEdicion = this.step !== '1';
+            this.loadSubdocumentos();
+            this.loading = false;
+          });
+        } else {
+          this.spinner.hide();
+          this.loading = false;
+        }
+      });
+    }
+  }
+
+  private loadSubdocumentos() {
+    this.documentosService.getAllSubdocumentos(this.documento._id).subscribe((rta: any) => {
+      this.subdocumentos = rta;
     });
   }
 
@@ -210,7 +246,6 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   }
 
   onModalSubmit(evento): void {
-    this.showModal = false;
     const nuevoCampo = evento.campo;
     const esEdicion = evento.esEdicion;
     nuevoCampo.documento = this.documento._id;
@@ -220,6 +255,16 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
       this.crearCampo(nuevoCampo);
     }
     this.campoEditado = null;
+    this.showModal = false;
+  }
+
+  onModalSubdocumentoSubmit(evento): void {
+    this.documentosService.create(evento.subdocumento).subscribe(
+      (res: any) => {
+        this.loadSubdocumentos();
+      }
+    );
+    this.showModalSubdocumento = false;
   }
 
   private modificarCampo(nuevoCampo: any) {
@@ -286,7 +331,9 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
 
   onModalCerrado() {
     this.showModal = false;
+    this.showModalSubdocumento = false;
     this.campoEditado = null;
+    this.subdocumentoEditado = null;
     setTimeout(() => {
       this.tinyEditorInstance.focus();
     }, 500);
@@ -318,13 +365,20 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
       alert('Error: campo no encontrado ');
       return;
     }
-    this.campoEditado = campo;
-    this.showModal = true;
-    this.openModal.nativeElement.click();
+    this.showModal = false;
+    if (!this.showModal) {
+      this.showModal = true;
+      this.campoEditado = campo;
+      this.openModal.nativeElement.click();
+    }
   }
 
   onAgregarCampo() {
     this.showModal = true;
+  }
+
+  onAgregarParte() {
+    this.showModalSubdocumento = true;
   }
 
   private getCategorias() {
@@ -339,5 +393,9 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
 
   handleSelection(event) {
     this.idCampoSeleccionado = event.editor.selection.getNode().id;
+  }
+
+  handleDocumentChange(event) {
+    this.loadDocumento();
   }
 }

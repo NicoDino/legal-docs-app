@@ -40,6 +40,7 @@ import { LoaderComponent } from './public/partials/loader/loader.component';
 import { FinOperacionComponent } from './public/documentos/fin-operacion/fin-operacion.component';
 import { PublicItemArbolComponent } from './public/documentos/public-items-arbol/public-item-arbol.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { CrearSubdocumentoComponent } from './documentos/campos/crear-subdocumento/crear-subdocumento.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -67,6 +68,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ReestablecerPassComponent,
     DocumentosComponent,
     CrearDocumentoComponent,
+    CrearSubdocumentoComponent,
     CrearCampoComponent,
     CampoItemComponent,
     BorradoresComponent,
@@ -91,4 +93,4 @@ import { NgxSpinnerModule } from 'ngx-spinner';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
