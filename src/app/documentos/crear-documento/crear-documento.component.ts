@@ -77,8 +77,8 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     ],
   };
   tinyEditorInstance;
-  showModal = true;
-  showModalSubdocumento = true;
+  showModal = false;
+  showModalSubdocumento = false;
   step = '1';
   tinyBookmark;
   idCampoSeleccionado = '';

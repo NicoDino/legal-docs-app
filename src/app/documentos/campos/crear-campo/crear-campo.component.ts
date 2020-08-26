@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, FormControl, Validators, FormArray } from '@ang
 import { Subject, BehaviorSubject } from 'rxjs';
 import { Campo } from 'src/app/models/campo';
 import { takeUntil } from 'rxjs/operators';
-import { ModalDirective } from 'ng-uikit-pro-standard';
 
 @Component({
   selector: 'app-crear-campo',

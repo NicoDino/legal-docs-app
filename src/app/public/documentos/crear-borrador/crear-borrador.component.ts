@@ -23,7 +23,9 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
   campoIndex = 0;
   borrador: Partial<Borrador> = {};
   documento: Partial<Documento>;
+  subdocumentos: any[] = [];
   borradorForm: FormGroup;
+  subdocumentosForm: any[] = [];
   editorInitObject = {
     menubar: false,
     toolbar: false,
@@ -95,6 +97,18 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
         this.initInputWatcher();
         this.loading = false;
       });
+    this.docService.getAllSubdocumentos(idDoc).pipe(takeUntil(this.unsubscribe$))
+      .subscribe((subdocs) => {
+        this.subdocumentos = subdocs;
+        this.subdocumentos.forEach(sub => {
+          let camposSubdoc = this.formBuilder.array([])
+          sub.campos.forEach((campo) => {
+            (camposSubdoc as FormArray).push(new FormControl(''));
+          });
+          this.borradorForm.controls[sub._id] = camposSubdoc;
+        });
+        console.log(this.borradorForm);
+      });
   }
 
   private crearBorrador(doc: Documento) {
@@ -110,7 +124,14 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
       if (this.documento.campos[this.campoIndex].tipo === 'date') {
         valor = moment(value[this.campoIndex]).format('DD/MM/YYYY');
       } else {
-        valor = value[this.campoIndex];
+        if (this.documento.campos[this.campoIndex].tipo === 'subdocumento') {
+          valor = ' ';
+          let subdoc = this.subdocumentos.find(e => e._id === value[this.campoIndex].subdocumento);
+          if (subdoc.html)
+            valor = subdoc.html;
+        } else {
+          valor = value[this.campoIndex];
+        }
       }
       this.tinyEditorInstance.dom.setHTML(
         this.tinyEditorInstance.dom.select(this.getCampoTagId(this.campoIndex)),

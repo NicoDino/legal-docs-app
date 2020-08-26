@@ -58,6 +58,15 @@
               </select>
             </div>
           </div>
+          <div class="row mb-5" *ngIf="documento.campos[campoIndex].tipo === 'subdocumento'">
+            <div class="col-sm-12">
+              <select [formControl]="camposFormArray.controls[campoIndex]" class="form-control" id="tipo">
+                <option *ngFor="let opcion of documento.campos[campoIndex].opcionesSubdocumento" [ngValue]="opcion">{{
+                  opcion.value
+                }}</option>
+              </select>
+            </div>
+          </div>
           <div class="row mb-5" *ngIf="documento.campos[campoIndex].tipo === 'boolean'">
             <select [formControl]="camposFormArray.controls[campoIndex]" class="form-control" id="tipo">
               <option *ngFor="let opcion of documento.campos[campoIndex].opciones" [value]="opcion">{{
