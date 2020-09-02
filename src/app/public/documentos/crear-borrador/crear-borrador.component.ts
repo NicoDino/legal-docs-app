@@ -24,6 +24,7 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
   borrador: Partial<Borrador> = {};
   documento: Partial<Documento>;
   borradorForm: FormGroup;
+  enviando = false;
   editorInitObject = {
     menubar: false,
     toolbar: false,
@@ -144,9 +145,12 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
   }
 
   enviarDocumento() {
+    this.enviando = true;
     this.borradorService.create(this.borradorForm.value).subscribe((res) => {
-      alert('Una vez recibido el pago, enviaremos el archivo a su correo');
-      window.location.href = res;
+      setTimeout(() => {
+        this.enviando = false;
+        window.location.href = res;
+      }, 4000);  // 4s
     });
   }
 }
