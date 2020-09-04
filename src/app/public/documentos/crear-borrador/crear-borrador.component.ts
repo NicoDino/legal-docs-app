@@ -37,15 +37,21 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
   showMailForm = false;
   public loading = true;
 
+  subdocumentoActivo = false;
+  subdocumentoElegido: Partial<Documento>;
+  subcampoIndex = 0;
   constructor(
     private route: ActivatedRoute,
     private docService: DocumentosService,
     private formBuilder: FormBuilder,
     private borradorService: BorradoresService
-  ) { }
+  ) {}
 
   get camposFormArray() {
     return this.borradorForm.get('campos') as FormArray;
+  }
+  get subCamposFormArray() {
+    return this.borradorForm.get('subcampos') as FormArray;
   }
 
   ngOnDestroy(): void {
@@ -71,6 +77,7 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
       documento: '',
       createdAt: new Date(),
       campos: this.formBuilder.array([]),
+      subcampos: this.formBuilder.array([]),
     });
     this.editorForm = this.formBuilder.group({
       html: this.formBuilder.control(''),
@@ -97,17 +104,21 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
         this.initInputWatcher();
         this.loading = false;
       });
-    this.docService.getAllSubdocumentos(idDoc).pipe(takeUntil(this.unsubscribe$))
+
+    this.docService
+      .getAllSubdocumentos(idDoc)
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((subdocs) => {
         this.subdocumentos = subdocs;
-        this.subdocumentos.forEach(sub => {
-          let camposSubdoc = this.formBuilder.array([])
-          sub.campos.forEach((campo) => {
-            (camposSubdoc as FormArray).push(new FormControl(''));
-          });
-          this.borradorForm.controls[sub._id] = camposSubdoc;
-        });
-        console.log(this.borradorForm);
+        // this.subdocumentos.forEach((sub) => {
+        //   this.cargarSubCampos(sub);
+        //   // const camposSubdoc = this.formBuilder.array([]);
+        //   // sub.campos.forEach((campo) => {
+        //   //   (camposSubdoc as FormArray).push(new FormControl(''));
+        //   // });
+        //   // this.borradorForm.controls[sub._id] = camposSubdoc;
+        // });
+        // console.log(this.borradorForm);
       });
   }
 
@@ -115,6 +126,12 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
     this.borradorForm.get('documento').setValue(doc._id);
     doc.campos.forEach((campo) => {
       this.camposFormArray.push(new FormControl(''));
+    });
+  }
+
+  private cargarSubCampos(subdoc) {
+    subdoc.campos.forEach((campo) => {
+      this.subCamposFormArray.push(new FormControl(''));
     });
   }
 
@@ -126,9 +143,16 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
       } else {
         if (this.documento.campos[this.campoIndex].tipo === 'subdocumento') {
           valor = ' ';
-          let subdoc = this.subdocumentos.find(e => e._id === value[this.campoIndex].subdocumento);
-          if (subdoc.html)
+          const subdoc = this.subdocumentos.find((e) => e._id === value[this.campoIndex].subdocumento);
+          if (subdoc.html) {
             valor = subdoc.html;
+          }
+          if (subdoc.campos && subdoc.campos.length) {
+            this.subdocumentoElegido = subdoc;
+            this.subcampoIndex = -1;
+            this.cargarSubCampos(subdoc);
+          }
+          console.log(subdoc);
         } else {
           valor = value[this.campoIndex];
         }
@@ -138,19 +162,48 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
         valor || '__________'
       );
     });
+
+    this.subCamposFormArray.valueChanges
+      .pipe(distinctUntilChanged(), takeUntil(this.unsubscribe$))
+      .subscribe((value) => {
+        if (!this.subdocumentoActivo) {
+          return;
+        }
+        let valor;
+        if (this.subdocumentoElegido.campos[this.subcampoIndex].tipo === 'date') {
+          valor = moment(value[this.subcampoIndex]).format('DD/MM/YYYY');
+        } else {
+          valor = value[this.subcampoIndex];
+        }
+        this.tinyEditorInstance.dom.setHTML(
+          this.tinyEditorInstance.dom.select(this.getSubCampoTagId(this.subcampoIndex)),
+          valor || '__________'
+        );
+      });
   }
 
+  private getSubCampoTagId(index) {
+    const idCampo = this.subdocumentoElegido.campos[index].identificador;
+    return `#${idCampo}`;
+  }
   private getCampoTagId(index) {
     const idCampo = this.documento.campos[index].identificador;
     return `#${idCampo}`;
   }
 
   getCampoSiguiente() {
-    if (this.campoIndex < this.camposFormArray.length - 1) {
-      this.campoIndex++;
+    if (this.subdocumentoElegido && this.subcampoIndex < this.subCamposFormArray.length - 1) {
+      this.subdocumentoActivo = true;
+      this.subcampoIndex++;
     } else {
-      this.showDoc = false;
-      this.showMailForm = true;
+      this.subdocumentoActivo = false;
+      this.subdocumentoElegido = null;
+      if (this.campoIndex < this.camposFormArray.length - 1) {
+        this.campoIndex++;
+      } else {
+        this.showDoc = false;
+        this.showMailForm = true;
+      }
     }
   }
 

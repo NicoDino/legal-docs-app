@@ -90,7 +90,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     private categoriaService: CategoriasService,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService
-  ) { }
+  ) {}
 
   @ViewChild('tinyEditor') tiny;
   @ViewChild('openModal') openModal: ElementRef;
@@ -118,7 +118,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
 
   private loadDocumento() {
     if (this.selectedDocument) {
-      this.documento._id = this.selectedDocument._id
+      this.documento._id = this.selectedDocument._id;
       if (this.documento._id) {
         this.documentosService.getById(this.documento._id).subscribe((rta: any) => {
           this.spinner.hide();
@@ -259,11 +259,9 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   }
 
   onModalSubdocumentoSubmit(evento): void {
-    this.documentosService.create(evento.subdocumento).subscribe(
-      (res: any) => {
-        this.loadSubdocumentos();
-      }
-    );
+    this.documentosService.create(evento.subdocumento).subscribe((res: any) => {
+      this.loadSubdocumentos();
+    });
     this.showModalSubdocumento = false;
   }
 
@@ -284,7 +282,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
 
   private crearCampo(nuevoCampo: any) {
     const numeroCampo = this.documento.camposInsertados ? this.documento.camposInsertados + 1 : 1;
-    const identificador = `campo_${numeroCampo}`;
+    const identificador = `campo_${numeroCampo}_${this.documento._id}`;
     // // insertar el codigo \uFEFF evita que el tag agregado encierre todo el texto a continuacion
     this.tiny.editor.execCommand(
       'mceInsertContent',

@@ -17,8 +17,12 @@
               <p class="card-text">{{ documento.campos[campoIndex].descripcion }}</p>
             </div>
             <div class="col-sm-2" *ngIf="documento.campos[campoIndex].ayuda">
-              <button type="button" data-toggle="modal" data-target="#myModal"
-                style="-webkit-appearance: none; background: white; border: 0px;">
+              <button
+                type="button"
+                data-toggle="modal"
+                data-target="#myModal"
+                style="-webkit-appearance: none; background: white; border: 0px"
+              >
                 <img class="imagen" src="assets/img/question.png" width="30px" />
               </button>
             </div>
@@ -31,12 +35,12 @@
                   </div>
                   <!-- Modal body -->
                   <div class="modal-body">
-                    <div [innerHTML]="documento.campos[campoIndex].ayuda">
-                    </div>
+                    <div [innerHTML]="documento.campos[campoIndex].ayuda"></div>
                     <div class="row">
                       <div class="col-12 text-center">
-                        <button type="button" class="btn text-center pl-0 pr-0 mt-2"
-                          data-dismiss="modal"><b>OK</b></button>
+                        <button type="button" class="btn text-center pl-0 pr-0 mt-2" data-dismiss="modal">
+                          <b>OK</b>
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -44,62 +48,137 @@
               </div>
             </div>
           </div>
-          <div class="row mb-5" *ngIf="documento.campos[campoIndex].tipo === 'input'">
-            <div class="col-sm-12">
-              <input type="text" class="form-control btn-block" [formControl]="camposFormArray.controls[campoIndex]" />
+          <span *ngIf="!subdocumentoActivo">
+            <div class="row mb-5" *ngIf="documento.campos[campoIndex].tipo === 'input'">
+              <div class="col-sm-12">
+                <input
+                  type="text"
+                  class="form-control btn-block"
+                  [formControl]="camposFormArray.controls[campoIndex]"
+                />
+              </div>
             </div>
-          </div>
-          <div class="row mb-5" *ngIf="documento.campos[campoIndex].tipo === 'opciones'">
-            <div class="col-sm-12">
+            <div class="row mb-5" *ngIf="documento.campos[campoIndex].tipo === 'opciones'">
+              <div class="col-sm-12">
+                <select [formControl]="camposFormArray.controls[campoIndex]" class="form-control" id="tipo">
+                  <option *ngFor="let opcion of documento.campos[campoIndex].opciones" [value]="opcion">
+                    {{ opcion }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="row mb-5" *ngIf="documento.campos[campoIndex].tipo === 'subdocumento'">
+              <div class="col-sm-12">
+                <select [formControl]="camposFormArray.controls[campoIndex]" class="form-control" id="tipo">
+                  <option *ngFor="let opcion of documento.campos[campoIndex].opcionesSubdocumento" [ngValue]="opcion">
+                    {{ opcion.value }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="row mb-5" *ngIf="documento.campos[campoIndex].tipo === 'boolean'">
               <select [formControl]="camposFormArray.controls[campoIndex]" class="form-control" id="tipo">
-                <option *ngFor="let opcion of documento.campos[campoIndex].opciones" [value]="opcion">{{
-                  opcion
-                }}</option>
+                <option *ngFor="let opcion of documento.campos[campoIndex].opciones" [value]="opcion">
+                  {{ opcion }}
+                </option>
               </select>
             </div>
-          </div>
-          <div class="row mb-5" *ngIf="documento.campos[campoIndex].tipo === 'subdocumento'">
-            <div class="col-sm-12">
-              <select [formControl]="camposFormArray.controls[campoIndex]" class="form-control" id="tipo">
-                <option *ngFor="let opcion of documento.campos[campoIndex].opcionesSubdocumento" [ngValue]="opcion">{{
-                  opcion.value
-                }}</option>
+            <div class="row mb-5" *ngIf="documento.campos[campoIndex].tipo === 'date'">
+              <div class="col-sm-12">
+                <input
+                  placeholder="dd/mm/aaaa"
+                  type="date"
+                  class="form-control btn-block"
+                  [formControl]="camposFormArray.controls[campoIndex]"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <button type="button" class="btn btn-warning" (click)="getCampoAnterior()" [disabled]="campoIndex < 1">
+                  Paso anterior
+                </button>
+              </div>
+              <div class="col-6">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  (click)="getCampoSiguiente()"
+                  [disabled]="campoIndex >= camposFormArray.length"
+                >
+                  Paso siguiente
+                </button>
+              </div>
+            </div>
+          </span>
+
+          <!-- 
+            OJOO
+            SUBDOCUMENTOOO
+           -->
+          <span *ngIf="subdocumentoActivo">
+            <div class="row mb-5" *ngIf="subdocumentoElegido.campos[subcampoIndex].tipo === 'input'">
+              <div class="col-sm-12">
+                <input
+                  type="text"
+                  class="form-control btn-block"
+                  [formControl]="subCamposFormArray.controls[subcampoIndex]"
+                />
+              </div>
+            </div>
+            <div class="row mb-5" *ngIf="subdocumentoElegido.campos[subcampoIndex].tipo === 'opciones'">
+              <div class="col-sm-12">
+                <select [formControl]="subCamposFormArray.controls[subcampoIndex]" class="form-control" id="tipo">
+                  <option *ngFor="let opcion of subdocumentoElegido.campos[subcampoIndex].opciones" [value]="opcion">
+                    {{ opcion }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="row mb-5" *ngIf="subdocumentoElegido.campos[subcampoIndex].tipo === 'boolean'">
+              <select [formControl]="subCamposFormArray.controls[subcampoIndex]" class="form-control" id="tipo">
+                <option *ngFor="let opcion of subdocumentoElegido.campos[subcampoIndex].opciones" [value]="opcion">
+                  {{ opcion }}
+                </option>
               </select>
             </div>
-          </div>
-          <div class="row mb-5" *ngIf="documento.campos[campoIndex].tipo === 'boolean'">
-            <select [formControl]="camposFormArray.controls[campoIndex]" class="form-control" id="tipo">
-              <option *ngFor="let opcion of documento.campos[campoIndex].opciones" [value]="opcion">{{
-                opcion
-              }}</option>
-            </select>
-          </div>
-          <div class="row mb-5" *ngIf="documento.campos[campoIndex].tipo === 'date'">
-            <div class="col-sm-12">
-              <input placeholder="dd/mm/aaaa" type="date" class="form-control btn-block"
-                [formControl]="camposFormArray.controls[campoIndex]" />
+            <div class="row mb-5" *ngIf="subdocumentoElegido.campos[subcampoIndex].tipo === 'date'">
+              <div class="col-sm-12">
+                <input
+                  placeholder="dd/mm/aaaa"
+                  type="date"
+                  class="form-control btn-block"
+                  [formControl]="subCamposFormArray.controls[subcampoIndex]"
+                />
+              </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-6">
-              <button type="button" class="btn btn-warning" (click)="getCampoAnterior()" [disabled]="campoIndex < 1">
-                Paso anterior
-              </button>
+            <div class="row">
+              <div class="col-6">
+                <button type="button" class="btn btn-warning" (click)="getCampoAnterior()">subdoc Paso anterior</button>
+              </div>
+              <div class="col-6">
+                <button type="button" class="btn btn-primary" (click)="getCampoSiguiente()">
+                  subdoc Paso siguiente
+                </button>
+              </div>
             </div>
-            <div class="col-6">
-              <button type="button" class="btn btn-primary" (click)="getCampoSiguiente()"
-                [disabled]="campoIndex >= camposFormArray.length">
-                Paso siguiente
-              </button>
-            </div>
-          </div>
+          </span>
+
+          <!-- 
+              FIN
+            SUBDOCUMENTOOO
+           -->
         </div>
       </div>
     </div>
     <!-- Columna derecha, editor -->
     <div class="col-sm-12 col-md-8" id="editor" [formGroup]="editorForm">
-      <editor apiKey="xw7i6xqrjfmfj32n3l20w1lb0mek7bbf4kffwtu7is30t377" formControlName="html"
-        (onInit)="handleEditorInit($event)" [init]="editorInitObject"></editor>
+      <editor
+        apiKey="xw7i6xqrjfmfj32n3l20w1lb0mek7bbf4kffwtu7is30t377"
+        formControlName="html"
+        (onInit)="handleEditorInit($event)"
+        [init]="editorInitObject"
+      ></editor>
     </div>
   </div>
   <!-- </form> -->
@@ -155,8 +234,10 @@
       <div id="pago-seguro" class="text-center">
         <h5>PAGO SEGURO</h5>
         <p class="text-left">
-          <small>Pagá con total seguridad.<br />
-            Nuestro banco asociado garantiza <b>la seguridad de sus operaciones.</b></small>
+          <small
+            >Pagá con total seguridad.<br />
+            Nuestro banco asociado garantiza <b>la seguridad de sus operaciones.</b></small
+          >
         </p>
       </div>
     </div>
