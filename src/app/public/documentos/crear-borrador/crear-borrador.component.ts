@@ -40,6 +40,7 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
   subdocumentoActivo = false;
   subdocumentoElegido: Partial<Documento>;
   subcampoIndex = 0;
+  ignorarSubdocumento = false;
   constructor(
     private route: ActivatedRoute,
     private docService: DocumentosService,
@@ -192,12 +193,54 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
   }
 
   getCampoSiguiente() {
-    if (this.subdocumentoElegido && this.subcampoIndex < this.subCamposFormArray.length - 1) {
-      this.subdocumentoActivo = true;
+    // Si el campo actual contiene un subdocumento y no está indicado ignorarlo, intentamos ingresar a los sub-campos
+    if (this.documento.campos[this.campoIndex].tipo === 'subdocumento') {
+      if (!this.subdocumentoElegido) {
+        // Este caso se da cuando avanzamos sin elegir ningun subdocumento
+        alert('Debe elegir una opción para avanzar');
+      } else {
+        this.subdocumentoActivo = true;
+        this.getSubCampoSiguiente();
+      }
+    } else {
+      if (this.campoIndex < this.camposFormArray.length - 1) {
+        this.campoIndex++;
+      } else {
+        this.showDoc = false;
+        this.showMailForm = true;
+      }
+    }
+    // }
+  }
+
+  getCampoAnterior() {
+    if (this.campoIndex > 0) {
+      this.campoIndex--;
+      // si retrocediendo un paso encontramos un campo con subdocumento, nos movemos al último campo del subdocumento
+      if (this.documento.campos[this.campoIndex].tipo === 'subdocumento' && !this.ignorarSubdocumento) {
+        const subdoc = this.subdocumentos.find(
+          (e) => e._id === this.camposFormArray.controls[this.campoIndex].value.subdocumento
+        );
+        if (subdoc && subdoc.campos && subdoc.campos.length) {
+          this.subdocumentoElegido = subdoc;
+          this.subcampoIndex = subdoc.campos.length;
+          this.subdocumentoActivo = true;
+          this.getSubCampoAnterior();
+        }
+      } else {
+        // Es necesario desactivar el flag por si estamos retrocediendo a otros subdocumentos
+        this.ignorarSubdocumento = false;
+      }
+    }
+  }
+
+  getSubCampoSiguiente() {
+    if (this.subdocumentoElegido && this.subcampoIndex < this.subdocumentoElegido.campos.length - 1) {
       this.subcampoIndex++;
     } else {
       this.subdocumentoActivo = false;
       this.subdocumentoElegido = null;
+      // En caso de que sea un subcampo el ultimo campo a elegir del documento
       if (this.campoIndex < this.camposFormArray.length - 1) {
         this.campoIndex++;
       } else {
@@ -207,9 +250,14 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
     }
   }
 
-  getCampoAnterior() {
-    if (this.campoIndex > 0) {
-      this.campoIndex--;
+  getSubCampoAnterior() {
+    if (this.subcampoIndex > 0) {
+      this.subcampoIndex--;
+    } else {
+      this.subdocumentoActivo = false;
+      this.subcampoIndex = -1;
+      // this.ignorarSubdocumento = true;
+      // this.getCampoAnterior();
     }
   }
 
