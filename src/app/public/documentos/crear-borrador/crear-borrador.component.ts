@@ -103,23 +103,12 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
         this.editorForm.get('html').setValue(doc.html);
         this.showDoc = true;
         this.initInputWatcher();
+        for (const campo of doc.campos) {
+          if (campo.opcionesSubdocumento && campo.opcionesSubdocumento.length) {
+            this.subdocumentos = [...this.subdocumentos, ...campo.opcionesSubdocumento];
+          }
+        }
         this.loading = false;
-      });
-
-    this.docService
-      .getAllSubdocumentos(idDoc)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((subdocs) => {
-        this.subdocumentos = subdocs;
-        // this.subdocumentos.forEach((sub) => {
-        //   this.cargarSubCampos(sub);
-        //   // const camposSubdoc = this.formBuilder.array([]);
-        //   // sub.campos.forEach((campo) => {
-        //   //   (camposSubdoc as FormArray).push(new FormControl(''));
-        //   // });
-        //   // this.borradorForm.controls[sub._id] = camposSubdoc;
-        // });
-        // console.log(this.borradorForm);
       });
   }
 
@@ -144,7 +133,8 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
       } else {
         if (this.documento.campos[this.campoIndex].tipo === 'subdocumento') {
           valor = ' ';
-          const subdoc = this.subdocumentos.find((e) => e._id === value[this.campoIndex].subdocumento);
+          // TODO: creo que esta linea de abajo puede simplificarse
+          const subdoc = this.subdocumentos.find((e) => e._id === value[this.campoIndex]._id);
           if (subdoc.html) {
             valor = subdoc.html;
           }
@@ -153,7 +143,6 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
             this.subcampoIndex = -1;
             this.cargarSubCampos(subdoc);
           }
-          console.log(subdoc);
         } else {
           valor = value[this.campoIndex];
         }
