@@ -8,6 +8,7 @@ export interface Campo {
   ayuda: string;
   tipo: string;
   opciones: any;
+  opcionesSubdocumento: any;
   min: number;
   max: number;
 }

@@ -1,4 +1,4 @@
-<div id="myModal" class="modal fade" role="dialog" #modal data-backdrop="static">
+<div id="myModal" class="modal fade" role="dialog" #myModal data-backdrop="static">
   <div class="modal-dialog">
     <!-- Modal content-->
     <div class="modal-content">
@@ -35,6 +35,7 @@
                     <option value="boolean">Binario</option>
                     <option value="opciones">Selección</option>
                     <option value="date">Fecha</option>
+                    <option value="subdocumento">Selección con subdocumento</option>
                   </select>
                 </div>
               </div>
@@ -51,6 +52,25 @@
                 <div class="col-2"
                   *ngIf="i === opcionesFormArray.controls.length - 1 && campoForm.controls.tipo.value === 'opciones'">
                   <button (click)="agregarOpcion()" type="button" class="btn btn-sm btn-success">+</button>
+                </div>
+              </div>
+            </span>
+            <span *ngIf="showOpcionesSubdocumento$ | async">
+              <label>Opciones</label>
+              <div class="row" *ngFor="let opcionControl of opcionesFormArraySubdocumento.controls; let i = index">
+                <div class="col-5" *ngIf="i % 2 === 0">
+                  <div class="form-group justify-content-start">
+                    <input [formControl]="opcionesFormArraySubdocumento.controls[i]" type="text" class="form-control"
+                      aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
+                  </div>
+                </div>
+                <div class="col-5" *ngIf="i % 2 === 0">
+                  <select class="form-control float-left" [formControl]="opcionesFormArraySubdocumento.controls[i+1]">
+                    <option *ngFor="let doc of subdocumentos" [ngValue]="doc._id">{{doc.nombre}}</option>
+                  </select>
+                </div>
+                <div class="col-2" *ngIf="i % 2 === 0 && i === opcionesFormArraySubdocumento.controls.length - 2">
+                  <button (click)="agregarOpcionSubdocumento()" type="button" class="btn btn-sm btn-success">+</button>
                 </div>
               </div>
             </span>

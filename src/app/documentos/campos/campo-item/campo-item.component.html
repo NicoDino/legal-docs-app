@@ -1,16 +1,12 @@
-<button type="button" class="btn btn-primary mb-2 btn-block">
-  <span style="white-space: normal;">{{ campo?.nombre }}</span><br>
-  <div class="btn-group">
-    <button type="button" class="btn btn-warning btn-xs">
-      <i class="material-icons small float-left" style="font-size: 16px;"
-        (click)="onEditarCampo();$event.stopPropagation()">
-        edit
-      </i>
-    </button> <button type="button" class="btn btn-danger btn-xs">
-      <i class="material-icons small float-left" style="font-size: 16px;"
-        (click)="borrarCampo(campo?._id);$event.stopPropagation()">
-        delete
-      </i>
-    </button>
-  </div>
-</button>
+<div class="btn-group">
+  <button type="button" class="btn btn-link btn-xs" (click)="onEditarCampo();">
+    <i class="material-icons small float-left" style="font-size: 16px;">
+      edit
+    </i>
+  </button>
+  <button type="button" class="btn btn-link" (click)="borrarCampo(campo?._id);">
+    <i class="material-icons small float-left" style="font-size: 16px;">
+      delete
+    </i>
+  </button>
+</div>

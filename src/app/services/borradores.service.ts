@@ -17,7 +17,7 @@ export class BorradoresService {
     return this.http.get<Borrador[]>(`${this.apiUrl}/borradores`);
   }
 
-  create(borrador: Borrador) {
+  create(borrador: any) {
     return this.http.post<string>(`${this.apiUrl}/borradores`, { borrador });
   }
 

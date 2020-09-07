@@ -17,6 +17,10 @@ export class DocumentosService {
     return this.http.get<Documento[]>(`${this.apiUrl}/documentos/search/${busqueda}`);
   }
 
+  getAllSubdocumentos(padre) {
+    return this.http.get<Documento[]>(`${this.apiUrl}/documentos/subdocumentos/${padre}`);
+  }
+
   getAll() {
     return this.http.get<Documento[]>(`${this.apiUrl}/documentos`);
   }
