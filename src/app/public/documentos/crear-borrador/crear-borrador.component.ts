@@ -51,7 +51,7 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
     private docService: DocumentosService,
     private formBuilder: FormBuilder,
     private borradorService: BorradoresService
-  ) {}
+  ) { }
 
   get camposFormArray() {
     return this.borradorForm.get('campos') as FormArray;
@@ -292,10 +292,14 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
       campos: this.valoresCamposArray,
       subcampos: this.valoresSubcamposArray,
     };
+    this.enviando = true;
     this.borradorService.create(DTO).subscribe(
       (res) => {
-        alert('Una vez recibido el pago, enviaremos el archivo a su correo');
-        window.location.href = res;
+        setTimeout(() => {
+          window.location.href = res;
+          this.enviando = false;
+          window.location.href = res;
+        }, 1000);  // 4s
       },
       (error) => {
         // TODO: loguear errores

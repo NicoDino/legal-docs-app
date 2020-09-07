@@ -90,7 +90,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     private categoriaService: CategoriasService,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService
-  ) {}
+  ) { }
 
   @ViewChild('tinyEditor') tiny;
   @ViewChild('openModal') openModal: ElementRef;
@@ -386,7 +386,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   }
 
   filtrar() {
-    this.camposFiltrados = this.documento.campos.filter((element) => element.nombre.search(this.buscadorCampo) !== -1);
+    this.camposFiltrados = this.documento.campos.filter((element) => element.nombre.toUpperCase().search(this.buscadorCampo.toUpperCase()) !== -1);
   }
 
   handleSelection(event) {
@@ -394,6 +394,8 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   }
 
   handleDocumentChange(event) {
-    this.loadDocumento();
+    if (confirm("Recuerde hacer click en GUARDAR antes de moverse de subdocumento.")) {
+      this.loadDocumento();
+    }
   }
 }
