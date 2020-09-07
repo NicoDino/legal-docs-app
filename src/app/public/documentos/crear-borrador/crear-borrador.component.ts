@@ -23,7 +23,7 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
   campoIndex = 0;
   borrador: Partial<Borrador> = {};
   documento: Partial<Documento>;
-  subdocumentos: any[] = [];
+  opcionesSubdocumentos: any[] = [];
   borradorForm: FormGroup;
   subdocumentosForm: any[] = [];
   editorInitObject = {
@@ -41,6 +41,10 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
   subdocumentoElegido: Partial<Documento>;
   subcampoIndex = 0;
   ignorarSubdocumento = false;
+
+  // arrays key-value con los valores de los campos
+  valoresCamposArray = [];
+  valoresSubcamposArray = [];
   constructor(
     private route: ActivatedRoute,
     private docService: DocumentosService,
@@ -105,8 +109,11 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
         this.initInputWatcher();
         for (const campo of doc.campos) {
           if (campo.opcionesSubdocumento && campo.opcionesSubdocumento.length) {
-            this.subdocumentos = [...this.subdocumentos, ...campo.opcionesSubdocumento];
+            this.opcionesSubdocumentos = [...this.opcionesSubdocumentos, ...campo.opcionesSubdocumento];
           }
+        }
+        for (const opcion of this.opcionesSubdocumentos) {
+          this.cargarSubCampos(opcion.subdocumento);
         }
         this.loading = false;
       });
@@ -134,22 +141,30 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
         if (this.documento.campos[this.campoIndex].tipo === 'subdocumento') {
           valor = ' ';
           // TODO: creo que esta linea de abajo puede simplificarse
-          const subdoc = this.subdocumentos.find((e) => e._id === value[this.campoIndex]._id);
+          let subdoc = this.opcionesSubdocumentos.find((e) => e._id === value[this.campoIndex]._id);
+          subdoc = subdoc.subdocumento;
           if (subdoc.html) {
             valor = subdoc.html;
           }
           if (subdoc.campos && subdoc.campos.length) {
             this.subdocumentoElegido = subdoc;
             this.subcampoIndex = -1;
-            this.cargarSubCampos(subdoc);
+            // this.cargarSubCampos(subdoc);
           }
         } else {
           valor = value[this.campoIndex];
         }
       }
+
       this.tinyEditorInstance.dom.setHTML(
         this.tinyEditorInstance.dom.select(this.getCampoTagId(this.campoIndex)),
         valor || '__________'
+      );
+
+      this.updateArrayValores(
+        this.getCampoTagId(this.campoIndex),
+        valor,
+        this.documento.campos[this.campoIndex].tipo === 'subdocumento'
       );
     });
 
@@ -169,7 +184,25 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
           this.tinyEditorInstance.dom.select(this.getSubCampoTagId(this.subcampoIndex)),
           valor || '__________'
         );
+        this.updateArrayValoresSubcampos(this.getSubCampoTagId(this.subcampoIndex), valor);
       });
+  }
+
+  private updateArrayValores(id, valor, isSubdocumento) {
+    const foundIndex = this.valoresCamposArray.findIndex((campo) => campo.id === id);
+    if (foundIndex > -1) {
+      this.valoresCamposArray[foundIndex] = { id, valor, isSubdocumento };
+    } else {
+      this.valoresCamposArray.push({ id, valor, isSubdocumento });
+    }
+  }
+  private updateArrayValoresSubcampos(id, valor) {
+    const foundIndex = this.valoresSubcamposArray.findIndex((campo) => campo.id === id);
+    if (foundIndex > -1) {
+      this.valoresSubcamposArray[foundIndex] = { id, valor };
+    } else {
+      this.valoresSubcamposArray.push({ id, valor });
+    }
   }
 
   private getSubCampoTagId(index) {
@@ -199,7 +232,6 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
         this.showMailForm = true;
       }
     }
-    // }
   }
 
   getCampoAnterior() {
@@ -207,7 +239,7 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
       this.campoIndex--;
       // si retrocediendo un paso encontramos un campo con subdocumento, nos movemos al último campo del subdocumento
       if (this.documento.campos[this.campoIndex].tipo === 'subdocumento' && !this.ignorarSubdocumento) {
-        const subdoc = this.subdocumentos.find(
+        const subdoc = this.opcionesSubdocumentos.find(
           (e) => e._id === this.camposFormArray.controls[this.campoIndex].value.subdocumento
         );
         if (subdoc && subdoc.campos && subdoc.campos.length) {
@@ -245,8 +277,6 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
     } else {
       this.subdocumentoActivo = false;
       this.subcampoIndex = -1;
-      // this.ignorarSubdocumento = true;
-      // this.getCampoAnterior();
     }
   }
 
@@ -255,9 +285,21 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
   }
 
   enviarDocumento() {
-    this.borradorService.create(this.borradorForm.value).subscribe((res) => {
-      alert('Una vez recibido el pago, enviaremos el archivo a su correo');
-      window.location.href = res;
-    });
+    const DTO = {
+      emailCliente: this.borradorForm.value.emailCliente,
+      documento: this.borradorForm.value.documento,
+      createdAt: this.borradorForm.value.createdAt,
+      campos: this.valoresCamposArray,
+      subcampos: this.valoresSubcamposArray,
+    };
+    this.borradorService.create(DTO).subscribe(
+      (res) => {
+        alert('Una vez recibido el pago, enviaremos el archivo a su correo');
+        window.location.href = res;
+      },
+      (error) => {
+        // TODO: loguear errores
+      }
+    );
   }
 }
