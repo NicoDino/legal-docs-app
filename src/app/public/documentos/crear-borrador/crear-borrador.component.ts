@@ -144,11 +144,11 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
           // TODO: creo que esta linea de abajo puede simplificarse
           let subdoc = this.opcionesSubdocumentos.find((e) => e._id === value[this.campoIndex]._id);
           subdoc = subdoc.subdocumento;
+          this.subdocumentoElegido = subdoc;
           if (subdoc.html) {
             valor = subdoc.html;
           }
           if (subdoc.campos && subdoc.campos.length) {
-            this.subdocumentoElegido = subdoc;
             this.subcampoIndex = -1;
           }
         } else {
