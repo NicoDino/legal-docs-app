@@ -26,6 +26,7 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
   opcionesSubdocumentos: any[] = [];
   borradorForm: FormGroup;
   subdocumentosForm: any[] = [];
+  enviando = false;
   editorInitObject = {
     menubar: false,
     toolbar: false,
@@ -149,7 +150,6 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
           if (subdoc.campos && subdoc.campos.length) {
             this.subdocumentoElegido = subdoc;
             this.subcampoIndex = -1;
-            // this.cargarSubCampos(subdoc);
           }
         } else {
           valor = value[this.campoIndex];

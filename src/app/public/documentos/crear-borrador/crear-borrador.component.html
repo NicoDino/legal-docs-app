@@ -188,6 +188,9 @@
       <h1>Tu documento está listo</h1>
     </div>
   </div>
+  <div class="alert alert-danger" *ngIf="enviando" role="alert">
+    Una vez recibido el pago, enviaremos el archivo a su correo
+  </div>
   <div class="row" [formGroup]="borradorForm">
     <div class="col-sm-9">
       <div class="mensaje">
@@ -220,7 +223,8 @@
             <div class="col-12">
               <input type="checkbox" class="mr-1" (click)="aceptarCondiciones()" />
               <label> Acepto las condiciones generales de venta <a href="">(leer las CGV)</a></label>
-              <button type="button" class="btn btn-warning" (click)="enviarDocumento()" [disabled]="!aceptoTerminos">
+              <button type="button" class="btn btn-warning" (click)="enviarDocumento()"
+                [disabled]="!aceptoTerminos || enviando">
                 HACER EL PEDIDO (servidor seguro)
               </button>
             </div>
