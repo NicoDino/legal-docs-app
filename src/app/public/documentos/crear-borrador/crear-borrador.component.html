@@ -17,12 +17,8 @@
               <p class="card-text">{{ documento.campos[campoIndex].descripcion }}</p>
             </div>
             <div class="col-sm-2" *ngIf="documento.campos[campoIndex].ayuda">
-              <button
-                type="button"
-                data-toggle="modal"
-                data-target="#myModal"
-                style="-webkit-appearance: none; background: white; border: 0px"
-              >
+              <button type="button" data-toggle="modal" data-target="#myModal"
+                style="-webkit-appearance: none; background: white; border: 0px">
                 <img class="imagen" src="assets/img/question.png" width="30px" />
               </button>
             </div>
@@ -56,12 +52,8 @@
               <p class="card-text">{{ subdocumentoElegido.campos[subcampoIndex].descripcion }}</p>
             </div>
             <div class="col-sm-2" *ngIf="subdocumentoElegido.campos[subcampoIndex].ayuda">
-              <button
-                type="button"
-                data-toggle="modal"
-                data-target="#myModal"
-                style="-webkit-appearance: none; background: white; border: 0px"
-              >
+              <button type="button" data-toggle="modal" data-target="#myModal"
+                style="-webkit-appearance: none; background: white; border: 0px">
                 <img class="imagen" src="assets/img/question.png" width="30px" />
               </button>
             </div>
@@ -90,11 +82,8 @@
           <span *ngIf="!subdocumentoActivo">
             <div class="row mb-5" *ngIf="documento.campos[campoIndex].tipo === 'input'">
               <div class="col-sm-12">
-                <input
-                  type="text"
-                  class="form-control btn-block"
-                  [formControl]="camposFormArray.controls[campoIndex]"
-                />
+                <input type="text" class="form-control btn-block"
+                  [formControl]="camposFormArray.controls[campoIndex]" />
               </div>
             </div>
             <div class="row mb-5" *ngIf="documento.campos[campoIndex].tipo === 'opciones'">
@@ -124,12 +113,10 @@
             </div>
             <div class="row mb-5" *ngIf="documento.campos[campoIndex].tipo === 'date'">
               <div class="col-sm-12">
-                <input
-                  placeholder="dd/mm/aaaa"
-                  type="date"
-                  class="form-control btn-block"
-                  [formControl]="camposFormArray.controls[campoIndex]"
-                />
+                <input type="text" placeholder="Datepicker" class="form-control btn-block"
+                  [formControl]="camposFormArray.controls[campoIndex]" class="form-control" bsDatepicker
+                  [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD/MM/YYYY',containerClass: 'theme-default' }">
+
               </div>
             </div>
             <div class="row">
@@ -139,12 +126,8 @@
                 </button>
               </div>
               <div class="col-6">
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  (click)="getCampoSiguiente()"
-                  [disabled]="campoIndex >= camposFormArray.length"
-                >
+                <button type="button" class="btn btn-primary" (click)="getCampoSiguiente()"
+                  [disabled]="campoIndex >= camposFormArray.length">
                   Paso siguiente
                 </button>
               </div>
@@ -158,11 +141,8 @@
           <span *ngIf="subdocumentoActivo">
             <div class="row mb-5" *ngIf="subdocumentoElegido.campos[subcampoIndex].tipo === 'input'">
               <div class="col-sm-12">
-                <input
-                  type="text"
-                  class="form-control btn-block"
-                  [formControl]="subCamposFormArray.controls[subcampoIndex]"
-                />
+                <input type="text" class="form-control btn-block"
+                  [formControl]="subCamposFormArray.controls[subcampoIndex]" />
               </div>
             </div>
             <div class="row mb-5" *ngIf="subdocumentoElegido.campos[subcampoIndex].tipo === 'opciones'">
@@ -183,12 +163,9 @@
             </div>
             <div class="row mb-5" *ngIf="subdocumentoElegido.campos[subcampoIndex].tipo === 'date'">
               <div class="col-sm-12">
-                <input
-                  placeholder="dd/mm/aaaa"
-                  type="date"
-                  class="form-control btn-block"
-                  [formControl]="subCamposFormArray.controls[subcampoIndex]"
-                />
+                <input type="text" placeholder="Datepicker" class="form-control btn-block"
+                  [formControl]="subCamposFormArray.controls[subcampoIndex]" class="form-control" bsDatepicker
+                  [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD/MM/YYYY',containerClass: 'theme-default' }">
               </div>
             </div>
             <div class="row">
@@ -210,12 +187,8 @@
     </div>
     <!-- Columna derecha, editor -->
     <div class="col-sm-12 col-md-8" id="editor" [formGroup]="editorForm">
-      <editor
-        apiKey="xw7i6xqrjfmfj32n3l20w1lb0mek7bbf4kffwtu7is30t377"
-        formControlName="html"
-        (onInit)="handleEditorInit($event)"
-        [init]="editorInitObject"
-      ></editor>
+      <editor apiKey="xw7i6xqrjfmfj32n3l20w1lb0mek7bbf4kffwtu7is30t377" formControlName="html"
+        (onInit)="handleEditorInit($event)" [init]="editorInitObject"></editor>
     </div>
   </div>
   <!-- </form> -->
@@ -262,12 +235,8 @@
             <div class="col-12">
               <input type="checkbox" class="mr-1" (click)="aceptarCondiciones()" />
               <label> Acepto las condiciones generales de venta <a href="">(leer las CGV)</a></label>
-              <button
-                type="button"
-                class="btn btn-warning"
-                (click)="enviarDocumento()"
-                [disabled]="!aceptoTerminos || enviando"
-              >
+              <button type="button" class="btn btn-warning" (click)="enviarDocumento()"
+                [disabled]="!aceptoTerminos || enviando">
                 HACER EL PEDIDO (servidor seguro)
               </button>
             </div>
@@ -279,10 +248,8 @@
       <div id="pago-seguro" class="text-center">
         <h5>PAGO SEGURO</h5>
         <p class="text-left">
-          <small
-            >Pagá con total seguridad.<br />
-            Nuestro banco asociado garantiza <b>la seguridad de sus operaciones.</b></small
-          >
+          <small>Pagá con total seguridad.<br />
+            Nuestro banco asociado garantiza <b>la seguridad de sus operaciones.</b></small>
         </p>
       </div>
     </div>
