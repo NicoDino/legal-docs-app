@@ -6,10 +6,10 @@ import { takeUntil } from 'rxjs/operators';
 import { Campo } from 'src/app/models/campo';
 
 @Component({
-  selector: 'app-modal-component',
-  templateUrl: 'modal.component.html',
+  selector: 'app-crear-campo-component',
+  templateUrl: 'crear-campo.component.html',
 })
-export class ModalComponent implements OnInit, OnDestroy {
+export class CrearCampoComponent implements OnInit, OnDestroy {
   campoForm: FormGroup;
   isEdicion = false;
   tinyEditorInstance;

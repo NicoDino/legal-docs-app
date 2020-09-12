@@ -41,7 +41,7 @@ import { PublicItemArbolComponent } from './public/documentos/public-items-arbol
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { CrearSubdocumentoComponent } from './documentos/campos/crear-subdocumento/crear-subdocumento.component';
 import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
-import { ModalComponent } from './documentos/campos/modal/modal.component';
+import { CrearCampoComponent } from './documentos/campos/crear-campo/crear-campo.component';
 
 @NgModule({
   imports: [
@@ -86,7 +86,7 @@ import { ModalComponent } from './documentos/campos/modal/modal.component';
     LoaderComponent,
     FinOperacionComponent,
     PublicItemArbolComponent,
-    ModalComponent
+    CrearCampoComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
@@ -96,7 +96,7 @@ import { ModalComponent } from './documentos/campos/modal/modal.component';
     BsModalRef
   ],
   entryComponents: [
-    ModalComponent,
+    CrearCampoComponent,
   ],
   bootstrap: [AppComponent],
 })

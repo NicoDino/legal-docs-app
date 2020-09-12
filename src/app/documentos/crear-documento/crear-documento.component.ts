@@ -10,7 +10,7 @@ import { CategoriasService } from 'src/app/services/categorias.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { takeUntil } from 'rxjs/operators';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { ModalComponent } from '../campos/modal/modal.component';
+import { CrearCampoComponent } from '../campos/crear-campo/crear-campo.component';
 @Component({
   selector: 'app-crear-documento',
   templateUrl: './crear-documento.component.html',
@@ -333,7 +333,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
       subdocumentos: this.subdocumentos,
     };
 
-    this.bsModalRef = this.modalService.show(ModalComponent, {initialState});
+    this.bsModalRef = this.modalService.show(CrearCampoComponent, {initialState});
 
     this.bsModalRef.content.campoCreado.pipe(takeUntil(this.unsubscribe$)).subscribe((res) => {
       this.onModalSubmit(res);
@@ -355,7 +355,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
       campo,
     };
 
-    this.bsModalRef = this.modalService.show(ModalComponent, { initialState });
+    this.bsModalRef = this.modalService.show(CrearCampoComponent, { initialState });
 
     this.bsModalRef.content.campoCreado.pipe(takeUntil(this.unsubscribe$)).subscribe((res) => {
       this.onModalSubmit(res);
