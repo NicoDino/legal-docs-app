@@ -6,7 +6,6 @@ import { DocumentosService } from 'src/app/services/documentos.service';
 import { Documento } from 'src/app/models/documento';
 import { CamposService } from 'src/app/services/campos.service';
 import { Campo } from 'src/app/models/campo';
-import { CrearCampoComponent } from '../campos/crear-campo/crear-campo.component';
 import { CategoriasService } from 'src/app/services/categorias.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { takeUntil } from 'rxjs/operators';
@@ -96,7 +95,6 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
 
   @ViewChild('tinyEditor') tiny;
   @ViewChild('openModal') openModal: ElementRef;
-  @ViewChild('campoModal') campoModal: CrearCampoComponent;
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
@@ -331,10 +329,18 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   }
 
   agregarCampo() {
-    this.bsModalRef = this.modalService.show(ModalComponent);
+    const initialState = {
+      subdocumentos: this.subdocumentos,
+    };
+
+    this.bsModalRef = this.modalService.show(ModalComponent, {initialState});
 
     this.bsModalRef.content.campoCreado.pipe(takeUntil(this.unsubscribe$)).subscribe((res) => {
       this.onModalSubmit(res);
+    });
+
+    this.bsModalRef.content.modalCerrado.pipe(takeUntil(this.unsubscribe$)).subscribe((res) => {
+      this.onModalCerrado();
     });
   }
 

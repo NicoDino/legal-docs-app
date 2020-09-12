@@ -22,7 +22,6 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { ReestablecerPassComponent } from './reestablecer-pass/reestablecer-pass.component';
 import { DocumentosComponent } from './documentos/documentos.component';
 import { CrearDocumentoComponent } from './documentos/crear-documento/crear-documento.component';
-import { CrearCampoComponent } from './documentos/campos/crear-campo/crear-campo.component';
 import { CampoItemComponent } from './documentos/campos/campo-item/campo-item.component';
 
 import { BorradoresComponent } from './borradores/borradores.component';
@@ -73,7 +72,6 @@ import { ModalComponent } from './documentos/campos/modal/modal.component';
     DocumentosComponent,
     CrearDocumentoComponent,
     CrearSubdocumentoComponent,
-    CrearCampoComponent,
     CampoItemComponent,
     BorradoresComponent,
     InicioComponent,

@@ -10,7 +10,6 @@ import { ConfiguracionUsuarioComponent } from './usuarios/configuracion-usuario/
 import { NgModule } from '@angular/core';
 import { ReestablecerPassComponent } from './reestablecer-pass/reestablecer-pass.component';
 import { DocumentosComponent } from './documentos/documentos.component';
-import { CrearCampoComponent } from './documentos/campos/crear-campo/crear-campo.component';
 import { CrearDocumentoComponent } from './documentos/crear-documento/crear-documento.component';
 import { BorradoresComponent } from './borradores/borradores.component';
 import { InicioComponent } from './public/inicio/inicio.component';
@@ -34,7 +33,6 @@ const appRoutes: Routes = [
   { path: 'admin/crear-faq', component: CrearFaqComponent, canActivate: [AuthGuard] },
   { path: 'admin/app-configuracion-usuario', component: ConfiguracionUsuarioComponent, canActivate: [AuthGuard] },
   { path: 'admin/documentos', component: DocumentosComponent, canActivate: [AuthGuard] },
-  { path: 'admin/crear-campo/:idDocumento', component: CrearCampoComponent, canActivate: [AuthGuard] },
   { path: 'admin/crear-documento/:step/:idDocumento', component: CrearDocumentoComponent, canActivate: [AuthGuard] },
   { path: 'admin/crear-documento', component: CrearDocumentoComponent, canActivate: [AuthGuard] },
   { path: 'admin/borradores', component: BorradoresComponent, canActivate: [AuthGuard] },
