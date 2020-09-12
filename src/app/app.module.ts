@@ -41,6 +41,9 @@ import { FinOperacionComponent } from './public/documentos/fin-operacion/fin-ope
 import { PublicItemArbolComponent } from './public/documentos/public-items-arbol/public-item-arbol.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { CrearSubdocumentoComponent } from './documentos/campos/crear-subdocumento/crear-subdocumento.component';
+import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
+import { ModalComponent } from './documentos/campos/modal/modal.component';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -52,6 +55,7 @@ import { CrearSubdocumentoComponent } from './documentos/campos/crear-subdocumen
     AppRoutingModule,
     MDBBootstrapModulesPro,
     NgxSpinnerModule,
+    ModalModule.forRoot(),
   ],
   declarations: [
     AppComponent,
@@ -84,13 +88,18 @@ import { CrearSubdocumentoComponent } from './documentos/campos/crear-subdocumen
     LoaderComponent,
     FinOperacionComponent,
     PublicItemArbolComponent,
+    ModalComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService,
+    BsModalRef
+  ],
+  entryComponents: [
+    ModalComponent,
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
