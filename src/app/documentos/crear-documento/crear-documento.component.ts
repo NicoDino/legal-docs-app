@@ -10,7 +10,8 @@ import { CrearCampoComponent } from '../campos/crear-campo/crear-campo.component
 import { CategoriasService } from 'src/app/services/categorias.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { takeUntil } from 'rxjs/operators';
-import { CampoItemComponent } from '../campos/campo-item/campo-item.component';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ModalComponent } from '../campos/modal/modal.component';
 @Component({
   selector: 'app-crear-documento',
   templateUrl: './crear-documento.component.html',
@@ -31,7 +32,6 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   buscadorCampo = '';
   /** utilizado para edicion de campo */
   subdocumentoEditado: Partial<Documento>;
-  campoEditado: Partial<Campo>;
   editorInitObject = {
     menubar: false,
     branding: false,
@@ -77,11 +77,12 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     ],
   };
   tinyEditorInstance;
-  showModal = false;
   showModalSubdocumento = false;
   step = '1';
   tinyBookmark;
   idCampoSeleccionado = '';
+  bsModalRef: BsModalRef;
+
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -89,8 +90,9 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     private camposService: CamposService,
     private categoriaService: CategoriasService,
     private route: ActivatedRoute,
-    private spinner: NgxSpinnerService
-  ) { }
+    private spinner: NgxSpinnerService,
+    private modalService: BsModalService
+  ) {}
 
   @ViewChild('tinyEditor') tiny;
   @ViewChild('openModal') openModal: ElementRef;
@@ -245,30 +247,10 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('admin/documentos');
   }
 
-  onModalSubmit(evento): void {
-    const nuevoCampo = evento.campo;
-    const esEdicion = evento.esEdicion;
-    nuevoCampo.documento = this.documento._id;
-    if (esEdicion) {
-      this.modificarCampo(nuevoCampo);
-    } else {
-      this.crearCampo(nuevoCampo);
-    }
-    this.campoEditado = null;
-    this.showModal = false;
-  }
-
-  onModalSubdocumentoSubmit(evento): void {
-    this.documentosService.create(evento.subdocumento).subscribe((res: any) => {
-      this.loadSubdocumentos();
-    });
-    this.showModalSubdocumento = false;
-  }
-
   private modificarCampo(nuevoCampo: any) {
     this.spinner.show();
 
-    nuevoCampo._id = this.campoEditado._id;
+    // nuevoCampo._id = this.campoEditado._id;
     this.camposService.update(nuevoCampo).subscribe(
       (res) => {
         this.spinner.hide();
@@ -327,16 +309,6 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     this.tinyEditorInstance.selection.select(newNode[0]);
   }
 
-  onModalCerrado() {
-    this.showModal = false;
-    this.showModalSubdocumento = false;
-    this.campoEditado = null;
-    this.subdocumentoEditado = null;
-    setTimeout(() => {
-      this.tinyEditorInstance.focus();
-    }, 500);
-  }
-
   handleEliminar(campo) {
     const newNode = this.tinyEditorInstance.dom.select('#' + campo.identificador);
     this.tinyEditorInstance.selection.select(newNode[0]);
@@ -358,24 +330,62 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     );
   }
 
+  agregarCampo() {
+    this.bsModalRef = this.modalService.show(ModalComponent);
+
+    this.bsModalRef.content.campoCreado.pipe(takeUntil(this.unsubscribe$)).subscribe((res) => {
+      this.onModalSubmit(res);
+    });
+  }
+
   editarCampo(campo) {
     if (!campo) {
       alert('Error: campo no encontrado ');
       return;
     }
-    this.showModal = false;
-    if (!this.showModal) {
-      this.showModal = true;
-      this.campoEditado = campo;
-      this.openModal.nativeElement.click();
+
+    const initialState = {
+      subdocumentos: this.subdocumentos,
+      campo,
+    };
+
+    this.bsModalRef = this.modalService.show(ModalComponent, { initialState });
+
+    this.bsModalRef.content.campoCreado.pipe(takeUntil(this.unsubscribe$)).subscribe((res) => {
+      this.onModalSubmit(res);
+    });
+    this.bsModalRef.content.modalCerrado.pipe(takeUntil(this.unsubscribe$)).subscribe((res) => {
+      this.onModalCerrado();
+    });
+  }
+
+  onModalSubmit(evento): void {
+    const nuevoCampo = evento.campo;
+    const esEdicion = evento.esEdicion;
+    nuevoCampo.documento = this.documento._id;
+    if (esEdicion) {
+      this.modificarCampo(nuevoCampo);
+    } else {
+      this.crearCampo(nuevoCampo);
     }
   }
 
-  onAgregarCampo() {
-    this.showModal = true;
+  onModalSubdocumentoSubmit(evento): void {
+    this.documentosService.create(evento.subdocumento).subscribe((res: any) => {
+      this.loadSubdocumentos();
+    });
+    this.showModalSubdocumento = false;
   }
 
-  onAgregarParte() {
+  onModalCerrado() {
+    this.showModalSubdocumento = false;
+    this.subdocumentoEditado = null;
+    setTimeout(() => {
+      this.tinyEditorInstance.focus();
+    }, 500);
+  }
+
+  onAgregarSubdocumento() {
     this.showModalSubdocumento = true;
   }
 
@@ -386,7 +396,9 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   }
 
   filtrar() {
-    this.camposFiltrados = this.documento.campos.filter((element) => element.nombre.toUpperCase().search(this.buscadorCampo.toUpperCase()) !== -1);
+    this.camposFiltrados = this.documento.campos.filter(
+      (element) => element.nombre.toUpperCase().search(this.buscadorCampo.toUpperCase()) !== -1
+    );
   }
 
   handleSelection(event) {
@@ -394,7 +406,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   }
 
   handleDocumentChange(event) {
-    if (confirm("Recuerde hacer click en GUARDAR antes de moverse de subdocumento.")) {
+    if (confirm('Recuerde hacer click en GUARDAR antes de moverse de subdocumento.')) {
       this.loadDocumento();
     }
   }
