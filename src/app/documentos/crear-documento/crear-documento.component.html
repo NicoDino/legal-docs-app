@@ -131,11 +131,11 @@ Ingrese la descripción del documento</textarea>
           <div class="row">
             <div class="col-sm-12 d-flex justify-content-around">
               <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal"
-                (click)="onAgregarCampo()" #openModal>
+                (click)="agregarCampo()" >
                 Agregar campo
               </button>
               <button type="button" class="btn btn-grey btn-sm" data-toggle="modal" data-target="#modalSubdocumento"
-                *ngIf="!this.selectedDocument" (click)="onAgregarParte()" #openModalSubdocumento>
+                *ngIf="!this.selectedDocument" (click)="onAgregarSubdocumento()" #openModalSubdocumento>
                 Sumar subdocumento
               </button>
               <button type="button" id="guardarHtml" class="btn btn-sm btn-success" (click)="guardarHtml(false)">
@@ -150,13 +150,8 @@ Ingrese la descripción del documento</textarea>
       </div>
     </form>
   </div>
-
   <br />
-
-  <app-crear-campo *ngIf="showModal" [campo]="campoEditado" (campoCreado)="onModalSubmit($event)"
-    (modalCerrado)="onModalCerrado()" [subdocumentos]="subdocumentos" #campoModal>
-  </app-crear-campo>
-
+  
   <app-crear-subdocumento *ngIf="showModalSubdocumento" [documento]="documento"
     (subdocumentoCreado)="onModalSubdocumentoSubmit($event)" (modalCerrado)="onModalCerrado()" #subdocumentoModal>
   </app-crear-subdocumento>

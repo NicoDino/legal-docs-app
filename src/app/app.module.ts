@@ -22,7 +22,6 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { ReestablecerPassComponent } from './reestablecer-pass/reestablecer-pass.component';
 import { DocumentosComponent } from './documentos/documentos.component';
 import { CrearDocumentoComponent } from './documentos/crear-documento/crear-documento.component';
-import { CrearCampoComponent } from './documentos/campos/crear-campo/crear-campo.component';
 import { CampoItemComponent } from './documentos/campos/campo-item/campo-item.component';
 
 import { BorradoresComponent } from './borradores/borradores.component';
@@ -41,6 +40,9 @@ import { FinOperacionComponent } from './public/documentos/fin-operacion/fin-ope
 import { PublicItemArbolComponent } from './public/documentos/public-items-arbol/public-item-arbol.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { CrearSubdocumentoComponent } from './documentos/campos/crear-subdocumento/crear-subdocumento.component';
+import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
+import { CrearCampoComponent } from './documentos/campos/crear-campo/crear-campo.component';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -52,6 +54,7 @@ import { CrearSubdocumentoComponent } from './documentos/campos/crear-subdocumen
     AppRoutingModule,
     MDBBootstrapModulesPro,
     NgxSpinnerModule,
+    ModalModule.forRoot(),
   ],
   declarations: [
     AppComponent,
@@ -69,7 +72,6 @@ import { CrearSubdocumentoComponent } from './documentos/campos/crear-subdocumen
     DocumentosComponent,
     CrearDocumentoComponent,
     CrearSubdocumentoComponent,
-    CrearCampoComponent,
     CampoItemComponent,
     BorradoresComponent,
     InicioComponent,
@@ -84,13 +86,18 @@ import { CrearSubdocumentoComponent } from './documentos/campos/crear-subdocumen
     LoaderComponent,
     FinOperacionComponent,
     PublicItemArbolComponent,
+    CrearCampoComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService,
+    BsModalRef
+  ],
+  entryComponents: [
+    CrearCampoComponent,
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

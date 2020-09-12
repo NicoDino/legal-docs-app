@@ -1,35 +1,40 @@
-import { Component, OnInit, OnDestroy, EventEmitter, Output, ElementRef, ViewChild, Input } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
-import { Subject, BehaviorSubject } from 'rxjs';
-import { Campo } from 'src/app/models/campo';
+import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Campo } from 'src/app/models/campo';
 
 @Component({
-  selector: 'app-crear-campo',
-  templateUrl: './crear-campo.component.html',
+  selector: 'app-crear-campo-component',
+  templateUrl: 'crear-campo.component.html',
 })
 export class CrearCampoComponent implements OnInit, OnDestroy {
-  @ViewChild('closeModal') buttonClose: ElementRef;
   campoForm: FormGroup;
-  identificadorControl: FormControl;
-  disableGuardar$ = new BehaviorSubject<boolean>(false);
-  showOpcionesSubdocumento$ = new BehaviorSubject<boolean>(false);
-  showOpciones$ = new BehaviorSubject<boolean>(false);
-  unsubscribe$ = new Subject<void>();
   isEdicion = false;
-  @Output() campoCreado: EventEmitter<any> = new EventEmitter<any>();
-  @Output() modalCerrado: EventEmitter<any> = new EventEmitter<any>();
-  @Input() campo: Partial<Campo>;
-  @Input() subdocumentos: any;
+  tinyEditorInstance;
   editorInitObject = {
     menubar: true,
     toolbar: true,
     height: 200,
     branding: false,
   };
-  tinyEditorInstance;
 
-  constructor(private formBuilder: FormBuilder) { }
+  /* Inputs si es edicion, variables sino*/
+  subdocumentos: any[];
+  campo: Partial<Campo>;
+
+  /* Modal events */
+  public modalCerrado: EventEmitter<any> = new EventEmitter<any>();
+  public campoCreado: EventEmitter<any> = new EventEmitter<any>();
+
+  /* Observables */
+  showOpciones$ = new BehaviorSubject<boolean>(false);
+  showOpcionesSubdocumento$ = new BehaviorSubject<boolean>(false);
+  disableGuardar$ = new BehaviorSubject<boolean>(false);
+  unsubscribe$ = new Subject<void>();
+
+  constructor(private bsModalRef: BsModalRef, private formBuilder: FormBuilder) {}
 
   get opcionesFormArraySubdocumento() {
     return this.campoForm.get('opcionesSubdocumento') as FormArray;
@@ -50,12 +55,12 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
     this.showOpciones$.next(
       this.campoForm.get('tipo').value === 'opciones' || this.campoForm.get('tipo').value === 'boolean'
     );
-    this.showOpcionesSubdocumento$.next(
-      this.campoForm.get('tipo').value === 'subdocumento');
+    this.showOpcionesSubdocumento$.next(this.campoForm.get('tipo').value === 'subdocumento');
   }
 
   private createForm() {
     this.campoForm = this.formBuilder.group({
+      _id: new FormControl(this.campo ? this.campo._id : ''),
       nombre: new FormControl(this.campo ? this.campo.nombre : '', [Validators.required]),
       descripcion: new FormControl(this.campo ? this.campo.descripcion : ''),
       ayuda: new FormControl(this.campo ? this.campo.ayuda : ''),
@@ -117,36 +122,13 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
     this.showOpcionesSubdocumento$.next(value === 'subdocumento');
   }
 
-  // TODO agregar validación para que el identificador no se repita dentro del mismo documento
-  onSubmit() {
-    if (!this.campoForm.valid) {
-      alert('Datos incompletos, complete el formulario');
-      return;
-    }
-    /** Limpiamos las opciones vacías, si existen */
-    if (this.campoForm.value.tipo === 'opciones' && this.campoForm.value.opciones) {
-      this.campoForm.value.opciones = this.campoForm.value.opciones.filter((opcion) => !!opcion);
-    }
-    if (this.campoForm.value.tipo === 'subdocumento' && this.campoForm.value.opcionesSubdocumento) {
-      this.campoForm.value.opcionesSubdocumento = this.campoForm.value.opcionesSubdocumento.map((element, index) => {
-        if (index % 2 === 0) {
-          if (this.campoForm.value.opcionesSubdocumento[index] && this.campoForm.value.opcionesSubdocumento[index + 1]) {
-            return {
-              value: element,
-              subdocumento: this.campoForm.value.opcionesSubdocumento[index + 1]
-            }
-          }
-        }
-      });
-      this.campoForm.value.opcionesSubdocumento = this.campoForm.value.opcionesSubdocumento.filter((opcion) => !!opcion);
-    }
-    this.campoCreado.emit({ campo: this.campoForm.value, esEdicion: this.isEdicion });
-    this.buttonClose.nativeElement.click();
+  handleEditorInit(event) {
+    this.tinyEditorInstance = event.editor;
   }
 
-  cleanForm() {
-    this.modalCerrado.emit();
-    this.buttonClose.nativeElement.click();
+  confirm() {
+    // do stuff
+    this.close();
   }
 
   agregarOpcion() {
@@ -158,7 +140,41 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
     this.opcionesFormArraySubdocumento.push(new FormControl(''));
   }
 
-  handleEditorInit(event) {
-    this.tinyEditorInstance = event.editor;
+  close() {
+    this.modalCerrado.emit();
+    this.bsModalRef.hide();
+  }
+
+  onSubmit() {
+    if (!this.campoForm.valid) {
+      alert('Datos incompletos, complete el formulario');
+      return;
+    }
+    /* Limpiamos las opciones vacías, si existen */
+    if (this.campoForm.value.tipo === 'opciones' && this.campoForm.value.opciones) {
+      this.campoForm.value.opciones = this.campoForm.value.opciones.filter((opcion) => !!opcion);
+    }
+
+    if (this.campoForm.value.tipo === 'subdocumento' && this.campoForm.value.opcionesSubdocumento) {
+      this.campoForm.value.opcionesSubdocumento = this.campoForm.value.opcionesSubdocumento.map((element, index) => {
+        if (index % 2 === 0) {
+          if (
+            this.campoForm.value.opcionesSubdocumento[index] &&
+            this.campoForm.value.opcionesSubdocumento[index + 1]
+          ) {
+            return {
+              value: element,
+              subdocumento: this.campoForm.value.opcionesSubdocumento[index + 1],
+            };
+          }
+        }
+      });
+      this.campoForm.value.opcionesSubdocumento = this.campoForm.value.opcionesSubdocumento.filter(
+        (opcion) => !!opcion
+      );
+    }
+
+    this.campoCreado.emit({ campo: this.campoForm.value, esEdicion: this.isEdicion });
+    this.bsModalRef.hide();
   }
 }
