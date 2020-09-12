@@ -41,6 +41,7 @@ import { PublicItemArbolComponent } from './public/documentos/public-items-arbol
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { CrearSubdocumentoComponent } from './documentos/campos/crear-subdocumento/crear-subdocumento.component';
 import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { CrearCampoComponent } from './documentos/campos/crear-campo/crear-campo.component';
 
 @NgModule({
@@ -55,6 +56,7 @@ import { CrearCampoComponent } from './documentos/campos/crear-campo/crear-campo
     MDBBootstrapModulesPro,
     NgxSpinnerModule,
     ModalModule.forRoot(),
+    BsDatepickerModule.forRoot()
   ],
   declarations: [
     AppComponent,
@@ -100,4 +102,4 @@ import { CrearCampoComponent } from './documentos/campos/crear-campo/crear-campo
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
