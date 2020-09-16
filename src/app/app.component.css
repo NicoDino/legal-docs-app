@@ -73,6 +73,7 @@ menu {
 ::ng-deep .error-label {
   color: red;
 }
+
 ::ng-deep .text-overflow {
   overflow-x: hidden;
   text-overflow: ellipsis;
@@ -80,9 +81,14 @@ menu {
   display: block;
 }
 
-::ng-deep .btn{
+::ng-deep .btn {
   border-radius: 20px;
   font-family: 'titillium-bold', 'arial', sans-serif;
   padding-left: 20px;
   padding-right: 20px;
+}
+
+::ng-deep .modal-dialog {
+  max-width: 800px;
+  margin: 1.75rem auto;
 }

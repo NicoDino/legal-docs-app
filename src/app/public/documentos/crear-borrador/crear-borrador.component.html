@@ -105,15 +105,17 @@
               </div>
             </div>
             <div class="row mb-5" *ngIf="documento.campos[campoIndex].tipo === 'boolean'">
-              <select [formControl]="camposFormArray.controls[campoIndex]" class="form-control" id="tipo">
-                <option *ngFor="let opcion of documento.campos[campoIndex].opciones" [value]="opcion">
-                  {{ opcion }}
-                </option>
-              </select>
+              <div class="col-sm-12">
+                <select [formControl]="camposFormArray.controls[campoIndex]" class="form-control" id="tipo">
+                  <option *ngFor="let opcion of documento.campos[campoIndex].opciones" [value]="opcion">
+                    {{ opcion }}
+                  </option>
+                </select>
+              </div>
             </div>
             <div class="row mb-5" *ngIf="documento.campos[campoIndex].tipo === 'date'">
               <div class="col-sm-12">
-                <input type="text" placeholder="Datepicker" class="form-control btn-block"
+                <input type="text" placeholder="" class="form-control btn-block"
                   [formControl]="camposFormArray.controls[campoIndex]" class="form-control" bsDatepicker
                   [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD/MM/YYYY',containerClass: 'theme-default' }">
 
@@ -155,15 +157,17 @@
               </div>
             </div>
             <div class="row mb-5" *ngIf="subdocumentoElegido.campos[subcampoIndex].tipo === 'boolean'">
-              <select [formControl]="subCamposFormArray.controls[subcampoIndex]" class="form-control" id="tipo">
-                <option *ngFor="let opcion of subdocumentoElegido.campos[subcampoIndex].opciones" [value]="opcion">
-                  {{ opcion }}
-                </option>
-              </select>
+              <div class="col-sm-12">
+                <select [formControl]="subCamposFormArray.controls[subcampoIndex]" class="form-control" id="tipo">
+                  <option *ngFor="let opcion of subdocumentoElegido.campos[subcampoIndex].opciones" [value]="opcion">
+                    {{ opcion }}
+                  </option>
+                </select>
+              </div>
             </div>
             <div class="row mb-5" *ngIf="subdocumentoElegido.campos[subcampoIndex].tipo === 'date'">
               <div class="col-sm-12">
-                <input type="text" placeholder="Datepicker" class="form-control btn-block"
+                <input type="text" placeholder="" class="form-control btn-block"
                   [formControl]="subCamposFormArray.controls[subcampoIndex]" class="form-control" bsDatepicker
                   [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD/MM/YYYY',containerClass: 'theme-default' }">
               </div>

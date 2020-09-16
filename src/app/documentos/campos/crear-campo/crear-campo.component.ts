@@ -34,7 +34,7 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
   disableGuardar$ = new BehaviorSubject<boolean>(false);
   unsubscribe$ = new Subject<void>();
 
-  constructor(private bsModalRef: BsModalRef, private formBuilder: FormBuilder) {}
+  constructor(private bsModalRef: BsModalRef, private formBuilder: FormBuilder) { }
 
   get opcionesFormArraySubdocumento() {
     return this.campoForm.get('opcionesSubdocumento') as FormArray;

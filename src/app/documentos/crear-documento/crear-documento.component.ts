@@ -24,6 +24,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   categorias: any[] = [];
   subdocumentos: any[] = [];
   documento: Partial<Documento> = {};
+  documentoPrincipal: Partial<Documento> = {};
   selectedDocument: any = null;
   vistaEdicion = false;
   loading = true;
@@ -91,7 +92,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private modalService: BsModalService
-  ) {}
+  ) { }
 
   @ViewChild('tinyEditor') tiny;
   @ViewChild('openModal') openModal: ElementRef;
@@ -148,6 +149,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
           this.documentosService.getById(this.documento._id).subscribe((rta: any) => {
             this.spinner.hide();
             this.documento = rta;
+            this.documentoPrincipal = this.documento;
             this.documentoForm.controls.nombre.setValue(rta.nombre);
             this.documentoForm.controls.precio.setValue(rta.precio);
             this.documentoForm.controls.hojasDesde.setValue(rta.hojasDesde);
@@ -333,7 +335,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
       subdocumentos: this.subdocumentos,
     };
 
-    this.bsModalRef = this.modalService.show(CrearCampoComponent, {initialState});
+    this.bsModalRef = this.modalService.show(CrearCampoComponent, { initialState });
 
     this.bsModalRef.content.campoCreado.pipe(takeUntil(this.unsubscribe$)).subscribe((res) => {
       this.onModalSubmit(res);
