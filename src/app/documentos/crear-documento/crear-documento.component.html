@@ -1,10 +1,10 @@
 <ngx-spinner></ngx-spinner>
-
 <div class="container-fluid">
   <div class="row heading">
     <div class="col-6">
       <h2>
-        Documentos<br />
+        <b *ngIf="vistaEdicion">Editando {{documentoPrincipal.nombre}}</b>
+        <b *ngIf="!vistaEdicion">Documento {{documentoPrincipal.nombre}}</b><br />
         <small class="subtitle" *ngIf="!vistaEdicion">Crear nuevo</small>
         <small class="subtitle" *ngIf="vistaEdicion">Cargar campos</small>
       </h2>
@@ -131,11 +131,12 @@ Ingrese la descripción del documento</textarea>
           <div class="row">
             <div class="col-sm-12 d-flex justify-content-around">
               <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal"
-                (click)="agregarCampo()" >
+                (click)="agregarCampo()">
                 Agregar campo
               </button>
               <button type="button" class="btn btn-grey btn-sm" data-toggle="modal" data-target="#modalSubdocumento"
-                *ngIf="!this.selectedDocument" (click)="onAgregarSubdocumento()" #openModalSubdocumento>
+                *ngIf="!this.selectedDocument && this.documentoPrincipal._id === this.documento._id"
+                (click)="onAgregarSubdocumento()" #openModalSubdocumento>
                 Sumar subdocumento
               </button>
               <button type="button" id="guardarHtml" class="btn btn-sm btn-success" (click)="guardarHtml(false)">
@@ -151,7 +152,7 @@ Ingrese la descripción del documento</textarea>
     </form>
   </div>
   <br />
-  
+
   <app-crear-subdocumento *ngIf="showModalSubdocumento" [documento]="documento"
     (subdocumentoCreado)="onModalSubdocumentoSubmit($event)" (modalCerrado)="onModalCerrado()" #subdocumentoModal>
   </app-crear-subdocumento>
