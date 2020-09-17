@@ -34,14 +34,21 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
   disableGuardar$ = new BehaviorSubject<boolean>(false);
   unsubscribe$ = new Subject<void>();
 
-  constructor(private bsModalRef: BsModalRef, private formBuilder: FormBuilder) {}
+  constructor(private bsModalRef: BsModalRef, private formBuilder: FormBuilder) { }
 
-  get opcionesFormArraySubdocumento() {
+  get opcionesSubdocumento(): FormArray {
     return this.campoForm.get('opcionesSubdocumento') as FormArray;
   }
 
-  get opcionesFormArray() {
+  get opciones() {
     return this.campoForm.get('opciones') as FormArray;
+  }
+
+  get subdocumentoForm() {
+    return this.formBuilder.group({
+      value: [''],
+      opcionSubocumento: [''],
+    });
   }
 
   ngOnDestroy(): void {
@@ -60,11 +67,11 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
 
   private createForm() {
     this.campoForm = this.formBuilder.group({
-      _id: new FormControl(this.campo ? this.campo._id : ''),
-      nombre: new FormControl(this.campo ? this.campo.nombre : '', [Validators.required]),
-      descripcion: new FormControl(this.campo ? this.campo.descripcion : ''),
-      ayuda: new FormControl(this.campo ? this.campo.ayuda : ''),
-      tipo: new FormControl(this.campo ? this.campo.tipo : '', [Validators.required]),
+      _id: [this.campo ? this.campo._id : ''],
+      nombre: [this.campo ? this.campo.nombre : '', [Validators.required]],
+      descripcion: [this.campo ? this.campo.descripcion : ''],
+      ayuda: [this.campo ? this.campo.ayuda : ''],
+      tipo: [this.campo ? this.campo.tipo : '', [Validators.required]],
       opciones: this.formBuilder.array(this.addOpciones()),
       opcionesSubdocumento: this.formBuilder.array(this.addOpcionesSubdocumento()),
     });
@@ -77,7 +84,7 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
     const array = [];
     if (this.campo && this.campo.opciones && this.campo.opciones.length) {
       this.campo.opciones.forEach((opcion) => {
-        array.push(new FormControl(opcion));
+        array.push([opcion]);
       });
       return array;
     } else {
@@ -89,8 +96,11 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
     const array = [];
     if (this.campo && this.campo.opcionesSubdocumento && this.campo.opcionesSubdocumento.length) {
       this.campo.opcionesSubdocumento.forEach((opcion) => {
-        array.push(new FormControl(opcion.value));
-        array.push(new FormControl(opcion.subdocumento));
+        const newGroup = this.formBuilder.group({
+          value: [opcion.value],
+          opcionSubocumento: [opcion.subdocumento._id],
+        });
+        array.push(newGroup);
       });
       return array;
     } else {
@@ -108,15 +118,18 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
     if (!value) {
       return;
     }
-    this.opcionesFormArray.clear();
+    this.opciones.clear();
 
-    this.opcionesFormArray.push(new FormControl(''));
+    this.opciones.push(new FormControl(''));
     if (value === 'boolean') {
-      this.opcionesFormArray.push(new FormControl(''));
+      this.opciones.push(new FormControl(''));
     }
     if (value === 'subdocumento') {
-      this.opcionesFormArraySubdocumento.push(new FormControl(''));
-      this.opcionesFormArraySubdocumento.push(new FormControl(''));
+      const newGroup = this.formBuilder.group({
+        value: [''],
+        opcion: [''],
+      });
+      this.opcionesSubdocumento.push(newGroup);
     }
     this.showOpciones$.next(value === 'opciones' || value === 'boolean');
     this.showOpcionesSubdocumento$.next(value === 'subdocumento');
@@ -126,18 +139,16 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
     this.tinyEditorInstance = event.editor;
   }
 
-  confirm() {
-    // do stuff
-    this.close();
-  }
-
   agregarOpcion() {
-    this.opcionesFormArray.push(new FormControl(''));
+    this.opciones.push(new FormControl(''));
   }
 
   agregarOpcionSubdocumento() {
-    this.opcionesFormArraySubdocumento.push(new FormControl(''));
-    this.opcionesFormArraySubdocumento.push(new FormControl(''));
+    this.opcionesSubdocumento.push(this.subdocumentoForm);
+  }
+
+  quitarOpcionSubdocumento(event) {
+
   }
 
   close() {

@@ -43,6 +43,7 @@ import { CrearSubdocumentoComponent } from './documentos/campos/crear-subdocumen
 import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { CrearCampoComponent } from './documentos/campos/crear-campo/crear-campo.component';
+import { SubdocumentoComponent } from './documentos/campos/crear-campo/subdocumento/subdocumento.component';
 
 @NgModule({
   imports: [
@@ -56,7 +57,7 @@ import { CrearCampoComponent } from './documentos/campos/crear-campo/crear-campo
     MDBBootstrapModulesPro,
     NgxSpinnerModule,
     ModalModule.forRoot(),
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
   ],
   declarations: [
     AppComponent,
@@ -88,18 +89,17 @@ import { CrearCampoComponent } from './documentos/campos/crear-campo/crear-campo
     LoaderComponent,
     FinOperacionComponent,
     PublicItemArbolComponent,
-    CrearCampoComponent
+    CrearCampoComponent,
+    SubdocumentoComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService,
-    BsModalRef
+    BsModalRef,
   ],
-  entryComponents: [
-    CrearCampoComponent,
-  ],
+  entryComponents: [CrearCampoComponent],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

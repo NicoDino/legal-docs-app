@@ -55,11 +55,11 @@
         </div>
         <span *ngIf="showOpciones$ | async">
           <label>Opciones</label>
-          <div class="row" *ngFor="let opcionControl of opcionesFormArray.controls; let i = index">
+          <div class="row" *ngFor="let opcionControl of opciones.controls; let i = index">
             <div class="col-10">
               <div class="form-group justify-content-start">
                 <input
-                  [formControl]="opcionesFormArray.controls[i]"
+                  [formControl]="opciones.controls[i]"
                   type="text"
                   class="form-control"
                   aria-label="Sizing example input"
@@ -69,19 +69,50 @@
             </div>
             <div
               class="col-2"
-              *ngIf="i === opcionesFormArray.controls.length - 1 && campoForm.controls.tipo.value === 'opciones'"
+              *ngIf="i === opciones.controls.length - 1 && campoForm.controls.tipo.value === 'opciones'"
             >
               <button (click)="agregarOpcion()" type="button" class="btn btn-sm btn-success">+</button>
             </div>
           </div>
         </span>
         <span *ngIf="showOpcionesSubdocumento$ | async">
-          <label>Opciones</label>
-          <div class="row" *ngFor="let opcionControl of opcionesFormArraySubdocumento.controls; let i = index">
-            <div class="col-5" *ngIf="i % 2 === 0">
+          <div formArrayName="opcionesSubdocumento">
+            <label>Opciones</label>
+            <div  *ngFor="let opcion of opcionesSubdocumento.controls; let i = index">
+              <div [formGroupName]="i" class="row">
+                <div class="col-5" *ngIf="i % 2 === 0">
+                  <div class="form-group justify-content-start">
+                    <input
+                      formControlName="value"
+                      type="text"
+                      class="form-control"
+                      aria-label="Sizing example input"
+                      aria-describedby="inputGroup-sizing-default"
+                    />
+                  </div>
+                </div>
+                <div class="col-5" *ngIf="i % 2 === 0">
+                  <select class="form-control float-left" formControlName="opcionSubocumento">
+                    <option *ngFor="let doc of subdocumentos" [ngValue]="doc._id">{{ doc.nombre }}</option>
+                  </select>
+                </div>
+                <div class="col-2" *ngIf="i === opcionesSubdocumento.controls.length - 2">
+                  <button (click)="agregarOpcionSubdocumento()" type="button" class="btn btn-sm btn-success">+</button>
+                </div> 
+              </div>
+
+              <!-- <app-subdocumento
+              [formGroupName]="i"
+              [opcionForm]="opcion"
+              [idx]="i"
+              [disableRemove]="opcionesSubdocumento.length < 2"
+              (idxToRemove)="quitarOpcionSubdocumento($event)"
+            >
+            </app-subdocumento> -->
+              <!--   <div class="col-5" *ngIf="i % 2 === 0">
               <div class="form-group justify-content-start">
                 <input
-                  [formControl]="opcionesFormArraySubdocumento.controls[i]"
+                  [formControl]="opcionesSubdocumento.controls[i].value"
                   type="text"
                   class="form-control"
                   aria-label="Sizing example input"
@@ -90,12 +121,13 @@
               </div>
             </div>
             <div class="col-5" *ngIf="i % 2 === 0">
-              <select class="form-control float-left" [formControl]="opcionesFormArraySubdocumento.controls[i + 1]">
+              <select class="form-control float-left" [formControl]="opcionesSubdocumento.controls[i + 1]">
                 <option *ngFor="let doc of subdocumentos" [ngValue]="doc._id">{{ doc.nombre }}</option>
               </select>
-            </div>
-            <div class="col-2" *ngIf="i % 2 === 0 && i === opcionesFormArraySubdocumento.controls.length - 2">
+            </div> -->
+              <!-- <div class="col-2" *ngIf="i === opcionesSubdocumento.controls.length - 2">
               <button (click)="agregarOpcionSubdocumento()" type="button" class="btn btn-sm btn-success">+</button>
+            </div> -->
             </div>
           </div>
         </span>
