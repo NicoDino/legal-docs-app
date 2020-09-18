@@ -82,8 +82,8 @@
           <span *ngIf="!subdocumentoActivo">
             <div class="row mb-5" *ngIf="documento.campos[campoIndex].tipo === 'input'">
               <div class="col-sm-12">
-                <input type="text" class="form-control btn-block"
-                  [formControl]="camposFormArray.controls[campoIndex]" />
+                <input type="text" class="form-control btn-block " [formControl]="camposFormArray.controls[campoIndex]"
+                  (keydown)="charControl($event)" />
               </div>
             </div>
             <div class="row mb-5" *ngIf="documento.campos[campoIndex].tipo === 'opciones'">
@@ -144,7 +144,7 @@
             <div class="row mb-5" *ngIf="subdocumentoElegido.campos[subcampoIndex].tipo === 'input'">
               <div class="col-sm-12">
                 <input type="text" class="form-control btn-block"
-                  [formControl]="subCamposFormArray.controls[subcampoIndex]" />
+                  [formControl]="subCamposFormArray.controls[subcampoIndex]" (keydown)="charControl($event)" />
               </div>
             </div>
             <div class="row mb-5" *ngIf="subdocumentoElegido.campos[subcampoIndex].tipo === 'opciones'">

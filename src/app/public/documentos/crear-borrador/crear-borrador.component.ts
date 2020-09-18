@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DocumentosService } from 'src/app/services/documentos.service';
 import { Documento } from 'src/app/models/documento';
 import { takeUntil, distinctUntilChanged } from 'rxjs/operators';
@@ -8,13 +8,13 @@ import { Borrador } from 'src/app/models/borrador';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { BorradoresService } from 'src/app/services/borradores.service';
 import * as moment from 'moment';
-import { CheckoutService } from 'src/app/services/checkout.service';
 
 @Component({
   selector: 'app-crear-borrador',
   templateUrl: './crear-borrador.component.html',
   styleUrls: ['./../../public.css'],
 })
+
 export class CrearBorradorComponent implements OnInit, OnDestroy {
   unsubscribe$ = new Subject<void>();
   idDocumento: string;
@@ -52,6 +52,13 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private borradorService: BorradoresService
   ) { }
+
+  charControl(event) {
+    var disabledCodes = [220];
+    if (disabledCodes.indexOf(event.keyCode) != -1) {
+      event.preventDefault();
+    }
+  }
 
   get camposFormArray() {
     return this.borradorForm.get('campos') as FormArray;
