@@ -6,7 +6,7 @@
   <br />
   <div class="row">
     <!-- Columna izquieda, lista de campos -->
-    <div class="col-sm-12 col-md-4 pr-4">
+    <div class="col-sm-12 col-md-4 pr-4" *ngIf="editorLoaded">
       <div class="card" [formGroup]="borradorForm">
         <div class="card-body">
           <div *ngIf="!subdocumentoActivo" class="row mb-5">

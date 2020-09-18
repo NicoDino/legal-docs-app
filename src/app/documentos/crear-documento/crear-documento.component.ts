@@ -27,7 +27,6 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   documentoPrincipal: Partial<Documento> = {};
   selectedDocument: any = null;
   vistaEdicion = false;
-  loading = true;
   camposFiltrados = [];
   buscadorCampo = '';
   /** utilizado para edicion de campo */
@@ -82,6 +81,10 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   tinyBookmark;
   idCampoSeleccionado = '';
   bsModalRef: BsModalRef;
+
+  // loading flags
+  public loading = true;
+  public editorLoaded = false;
 
   constructor(
     private router: Router,
@@ -180,6 +183,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
 
   handleEditorInit(event) {
     this.tinyEditorInstance = event.editor;
+    this.editorLoaded = true;
   }
 
   onSubmit(salir) {

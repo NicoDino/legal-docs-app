@@ -94,7 +94,7 @@ Ingrese la descripción del documento</textarea>
     <form [formGroup]="documentoForm">
       <div class="row">
         <!-- Columna izquieda, lista de campos -->
-        <div class="col-md-4" id="campos">
+        <div class="col-md-4" id="campos" *ngIf="editorLoaded">
           <div class="form-row">
             <div class="col">
               <input class="form-control" [ngModelOptions]="{ standalone: true }" [(ngModel)]="buscadorCampo"

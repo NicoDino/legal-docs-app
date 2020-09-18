@@ -36,8 +36,9 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
   tinyEditorInstance;
   editorForm: FormGroup;
   showMailForm = false;
+  // loading flags
   public loading = true;
-
+  public editorLoaded = false;
   subdocumentoActivo = false;
   subdocumentoElegido: Partial<Documento>;
   subcampoIndex = 0;
@@ -75,13 +76,13 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
   handleEditorInit(event) {
     this.tinyEditorInstance = event.editor;
     this.tinyEditorInstance.setMode('readonly');
-
     this.tinyEditorInstance.getBody().addEventListener('copy', (e) => {
       e.preventDefault();
     });
     this.tinyEditorInstance.getBody().addEventListener('cut', (e) => {
       e.preventDefault();
     });
+    this.editorLoaded = true;
   }
 
   ngOnInit(): void {
