@@ -57,6 +57,7 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log(this.subdocumentos)
     this.createForm();
     this.tipoWatcher();
     this.showOpciones$.next(
@@ -167,19 +168,19 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
     }
 
     if (this.campoForm.value.tipo === 'subdocumento' && this.campoForm.value.opcionesSubdocumento) {
-      this.campoForm.value.opcionesSubdocumento = this.campoForm.value.opcionesSubdocumento.map((element, index) => {
-        if (index % 2 === 0) {
-          if (
-            this.campoForm.value.opcionesSubdocumento[index] &&
-            this.campoForm.value.opcionesSubdocumento[index + 1]
-          ) {
-            return {
-              value: element,
-              subdocumento: this.campoForm.value.opcionesSubdocumento[index + 1],
-            };
-          }
-        }
-      });
+      // this.campoForm.value.opcionesSubdocumento = this.campoForm.value.opcionesSubdocumento.map((element, index) => {
+      //   if (index % 2 === 0) {
+      //     if (
+      //       this.campoForm.value.opcionesSubdocumento[index] &&
+      //       this.campoForm.value.opcionesSubdocumento[index + 1]
+      //     ) {
+      //       return {
+      //         value: element,
+      //         subdocumento: this.campoForm.value.opcionesSubdocumento[index + 1],
+      //       };
+      //     }
+      //   }
+      // });
       this.campoForm.value.opcionesSubdocumento = this.campoForm.value.opcionesSubdocumento.filter(
         (opcion) => !!opcion
       );
