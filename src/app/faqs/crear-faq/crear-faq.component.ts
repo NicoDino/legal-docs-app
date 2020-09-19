@@ -5,6 +5,7 @@ import { FaqsService } from 'src/app/services/faqs.service';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Faq } from 'src/app/models/faq';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-crear-faq',
@@ -21,7 +22,8 @@ export class CrearFaqComponent implements OnInit, OnDestroy {
         private router: Router,
         private formBuilder: FormBuilder,
         private faqService: FaqsService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private toastr: ToastrService
     ) { }
 
     ngOnDestroy(): void {
@@ -55,7 +57,7 @@ export class CrearFaqComponent implements OnInit, OnDestroy {
 
     onSubmit() {
         if (this.faqForm.invalid) {
-            alert('Debe completar todos los campos');
+            this.toastr.error('Error', 'Debe completar todos los campos');
             return;
         }
         this.disableGuardar$.next(true);

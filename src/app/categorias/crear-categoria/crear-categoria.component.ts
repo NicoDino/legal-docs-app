@@ -5,6 +5,7 @@ import { CategoriasService } from 'src/app/services/categorias.service';
 import { BehaviorSubject, Subscription, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Categoria } from 'src/app/models/categoria';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-crear-categoria',
@@ -25,7 +26,8 @@ export class CrearCategoriaComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private categoriaService: CategoriasService
+    private categoriaService: CategoriasService,
+    private toastr: ToastrService
   ) { }
 
   ngOnDestroy(): void {
@@ -84,7 +86,7 @@ export class CrearCategoriaComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     if (this.categoriaForm.invalid) {
-      alert('Debe completar todos los campos');
+      this.toastr.error('Error', 'Debe completar todos los campos.');
       return;
     }
     this.disableGuardar$.next(true);

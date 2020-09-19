@@ -3,11 +3,11 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/c
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthenticationService } from '../services/authentication.service';
-import { AlertService } from '../services/alert.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor(private authenticationService: AuthenticationService, private alertService: AlertService) {}
+  constructor(private authenticationService: AuthenticationService, private toastr: ToastrService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
@@ -17,7 +17,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           this.authenticationService.logout();
         }
         const error = (err.error && err.error.message) || err.statusText;
-        alert(error);
+        this.toastr.error('Error', error);
         return throwError(error);
       })
     );
