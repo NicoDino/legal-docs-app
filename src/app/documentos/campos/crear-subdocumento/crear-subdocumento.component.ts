@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, EventEmitter, Output, ElementRef, ViewChi
 import { FormBuilder, FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { Documento } from 'src/app/models/documento';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-crear-subdocumento',
@@ -19,7 +20,7 @@ export class CrearSubdocumentoComponent implements OnInit, OnDestroy {
   @Output() modalCerrado: EventEmitter<any> = new EventEmitter<any>();
   @Input() documento: Documento;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private toastr: ToastrService) { }
 
   get opcionesFormArray() {
     return this.subdocumentoForm.get('opciones') as FormArray;
@@ -44,7 +45,7 @@ export class CrearSubdocumentoComponent implements OnInit, OnDestroy {
   // TODO agregar validación para que el identificador no se repita dentro del mismo documento
   onSubmit() {
     if (!this.subdocumentoForm.valid) {
-      alert('Datos incompletos, complete el formulario');
+      this.toastr.error('Error', 'Complete todos los campos');
       return;
     }
     this.subdocumentoCreado.emit({ subdocumento: this.subdocumentoForm.value });

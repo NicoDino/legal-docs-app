@@ -11,6 +11,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { takeUntil } from 'rxjs/operators';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CrearCampoComponent } from '../campos/crear-campo/crear-campo.component';
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-crear-documento',
   templateUrl: './crear-documento.component.html',
@@ -94,7 +96,8 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     private categoriaService: CategoriasService,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private toastr: ToastrService
   ) { }
 
   @ViewChild('tinyEditor') tiny;
@@ -188,7 +191,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
 
   onSubmit(salir) {
     if (this.documentoForm.invalid) {
-      alert('Debe completar todos los campos');
+      this.toastr.error('Error', 'Complete todos los campos');
       return;
     }
     this.spinner.show();
@@ -352,7 +355,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
 
   editarCampo(campo) {
     if (!campo) {
-      alert('Error: campo no encontrado ');
+      this.toastr.error('Error', 'Campo no encontrado');
       return;
     }
 

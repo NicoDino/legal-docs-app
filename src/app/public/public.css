@@ -7,7 +7,7 @@
     font-family: titillium-bold;
     src: url('/assets/fonts/Titillium-Bold.otf') format("opentype");
 }
-  
+
 ::ng-deep body {
     font-family: 'titillium', 'arial', sans-serif;
 }
@@ -18,129 +18,128 @@
     padding: 12%;
     padding-bottom: 2%;
     padding-top: 4%;
-    background-color:rgb(51,51,51);
-    color:white;
-    line-height: 45px;;
+    background-color: rgb(51, 51, 51);
+    color: white;
+    line-height: 45px;
 }
 
 ::ng-deep .footer hr {
     margin-bottom: 0px;
-    margin-top: 0px; 
-    border-color:white;
+    margin-top: 0px;
+    border-color: white;
 }
 
-::ng-deep .footer .links{
+::ng-deep .footer .links {
     padding-right: 95px;
     color: white !important;
 }
 
-::ng-deep .footer .link{
+::ng-deep .footer .link {
     color: white !important;
-    text-decoration: none !important;    
+    text-decoration: none !important;
 }
 
-::ng-deep .navbar-public{
-    background-color:transparent;
-    padding-left:12%;
+::ng-deep .navbar-public {
+    background-color: transparent;
+    padding-left: 12%;
     padding-right: 12%;
     padding-top: 20px;
     text-transform: uppercase;
 }
 
-::ng-deep .nav-link a{
-    color:rgb(51,51,51);
+::ng-deep .nav-link a {
+    color: rgb(51, 51, 51);
     font-size: 15px;
     padding-top: 2%;
     text-decoration: none;
 }
 
-::ng-deep .nav-link{
-    color:rgb(51,51,51);
+::ng-deep .nav-link {
+    color: rgb(51, 51, 51);
     margin-right: 28px;
     font-size: 15px;
     padding-top: 2%;
 }
 
-::ng-deep .dropdown-menu-public{
-    background-color:rgb(0, 51, 153);
+::ng-deep .dropdown-menu-public {
+    background-color: rgb(0, 51, 153);
     border: 0px;
     border-radius: 0px;
 }
 
-::ng-deep .dropdown-menu-public a{
-    color:white;
+::ng-deep .dropdown-menu-public a {
+    color: white;
 }
 
 ::ng-deep .dropdown-item:hover {
-    background-color:rgb(0, 51, 153);
-    color:white;
+    background-color: rgb(0, 51, 153);
+    color: white;
     font-weight: bold;
 }
 
-::ng-deep .navbar-brand-public img{
+::ng-deep .navbar-brand-public img {
     width: 130px;
 }
 
-::ng-deep #portada{
-    padding:12%;
-    padding-top:6%;
-    padding-bottom:6%;
+::ng-deep #portada {
+    padding: 12%;
+    padding-top: 6%;
+    padding-bottom: 6%;
 }
 
-::ng-deep #portada .titulo{
+::ng-deep #portada .titulo {
     font-size: 45px;
-    color:rgb(51,51,51);
+    color: rgb(51, 51, 51);
     line-height: 55px;
     font-family: 'titillium-bold', 'arial', sans-serif;
 }
 
-::ng-deep #portada .subtitulo{
+::ng-deep #portada .subtitulo {
     font-size: 20px;
-    color:#919191;
+    color: #919191;
 }
 
-::ng-deep #portada .title{
-    padding-top:10%;
-    padding-bottom:10%;
+::ng-deep #portada .title {
+    padding-top: 10%;
+    padding-bottom: 10%;
 }
 
-::ng-deep .btn-warning{
+::ng-deep .btn-warning {
     background-color:
-rgb(245,208,18);
-width: 180px;
-font-family: 'titillium-bold', 'arial', sans-serif;
-border-radius: 30px;
-text-transform: uppercase;
-font-size: 15px;
-padding-top: 8px;
-padding-bottom: 7px;
+        rgb(245, 208, 18);
+    width: 180px;
+    font-family: 'titillium-bold', 'arial', sans-serif;
+    border-radius: 30px;
+    text-transform: uppercase;
+    font-size: 15px;
+    padding-top: 8px;
+    padding-bottom: 7px;
 }
 
-::ng-deep .btn-primary{
+::ng-deep .btn-primary {
     background-color:
-rgb(0,153,274);
-width: 180px;
-font-family: 'titillium-bold', 'arial', sans-serif;
-border-radius: 30px;
-text-transform: uppercase;
-font-size: 15px;
-padding-top: 8px;
-padding-bottom: 7px;
+        rgb(0, 153, 274);
+    width: 180px;
+    font-family: 'titillium-bold', 'arial', sans-serif;
+    border-radius: 30px;
+    text-transform: uppercase;
+    font-size: 15px;
+    padding-top: 8px;
+    padding-bottom: 7px;
 }
 
-::ng-deep .searchbar{
+::ng-deep .searchbar {
     margin-bottom: auto;
-margin-top: auto;
-background-color:
-#fff;
-border-radius: 30px;
-padding-left: 10px;
-border: 3px solid
-    #0099f7;
+    margin-top: auto;
+    background-color:
+        #fff;
+    border-radius: 30px;
+    padding-left: 10px;
+    border: 3px solid #0099f7;
     width: 220px;
 }
 
-    ::ng-deep .search_input{
+::ng-deep .search_input {
     color: black;
     border: 0;
     outline: 0;
@@ -149,9 +148,9 @@ border: 3px solid
     transition: width 0.4s linear;
     width: 160px;
     line-height: 35px;
-    }
+}
 
-::ng-deep .search_icon{
+::ng-deep .search_icon {
     height: 35px;
     width: 35px;
     float: right;
@@ -160,36 +159,36 @@ border: 3px solid
     padding: 10px;
     align-items: center;
     border-radius: 50%;
-    color:rgb(51,51,51);
-    text-decoration:none;
-    background:white;
+    color: rgb(51, 51, 51);
+    text-decoration: none;
+    background: white;
     box-shadow: 0px 0px 0px transparent;
     border: 0px solid transparent;
     text-shadow: 0px 0px 0px transparent;
-    cursor:pointer;
-    }
+    cursor: pointer;
+}
 
-    ::ng-deep #proceso{
-        padding:12%;
-        padding-top:3%;
-        padding-bottom:6%;
-    }
+::ng-deep #proceso {
+    padding: 12%;
+    padding-top: 3%;
+    padding-bottom: 6%;
+}
 
-    ::ng-deep #proceso .container-imagen{
-        height: 120px;
-    }
+::ng-deep #proceso .container-imagen {
+    height: 120px;
+}
 
-    ::ng-deep #proceso .imagen{
-        padding:12%;
-    }
+::ng-deep #proceso .imagen {
+    padding: 12%;
+}
 
-    ::ng-deep #proceso span{
-        font-weight: bold;
-        color: rgb(102,102,102);
-    }
+::ng-deep #proceso span {
+    font-weight: bold;
+    color: rgb(102, 102, 102);
+}
 
-::ng-deep #confianza{
-    padding:12%;
+::ng-deep #confianza {
+    padding: 12%;
     padding-top: 6%;
     padding-bottom: 6%;
     background-image: url('/assets/img/gradient.png');
@@ -197,326 +196,326 @@ border: 3px solid
     background-size: cover;
 }
 
-::ng-deep #confianza .text{
-    color:white;
-    padding:3%;
+::ng-deep #confianza .text {
+    color: white;
+    padding: 3%;
 }
 
-::ng-deep #about{
-    padding:12%;
+::ng-deep #about {
+    padding: 12%;
     padding-top: 6%;
     padding-bottom: 6%;
 }
 
-::ng-deep #about h1{
+::ng-deep #about h1 {
     font-family: 'titillium-bold', 'arial', sans-serif;
 }
 
-::ng-deep #about p{
-    color: rgb(102,102,102);
+::ng-deep #about p {
+    color: rgb(102, 102, 102);
 }
 
-::ng-deep #about .title-tipo{
+::ng-deep #about .title-tipo {
     text-transform: uppercase;
     margin-top: 13%;
-    margin-bottom:25px;
-    color: rgb(0,51,153);
+    margin-bottom: 25px;
+    color: rgb(0, 51, 153);
 }
 
-::ng-deep #faqs{
-    padding:12%;
+::ng-deep #faqs {
+    padding: 12%;
     padding-top: 3%;
     padding-bottom: 6%;
 }
 
-::ng-deep #faqs h1{
+::ng-deep #faqs h1 {
     font-family: 'titillium-bold', 'arial', sans-serif;
 }
-::ng-deep #faqs .card{
-    border:0px;
-    border-bottom: 1px solid rgb(176,176,176);
+
+::ng-deep #faqs .card {
+    border: 0px;
+    border-bottom: 1px solid rgb(176, 176, 176);
 }
 
-::ng-deep #faqs .card-body{
+::ng-deep #faqs .card-body {
     padding: 0px;
     font-weight: lighter;
-    color:rgb(102,102,102);
+    color: rgb(102, 102, 102);
 }
 
-::ng-deep #faqs .card-header{
-    background:white;
+::ng-deep #faqs .card-header {
+    background: white;
     padding: 0px;
     border: 0px;
 }
 
-::ng-deep #documentos{
-    padding:12%;
+::ng-deep #documentos {
+    padding: 12%;
     padding-top: 3%;
     padding-bottom: 6%;
 }
 
-::ng-deep #faqs .card-header .btn-link{
+::ng-deep #faqs .card-header .btn-link {
     padding-left: 0px;
-    color:rgb(51,51,51);
+    color: rgb(51, 51, 51);
     text-decoration: none !important;
 }
 
-::ng-deep #documentos h1{
+::ng-deep #documentos h1 {
     font-family: 'titillium-bold', 'arial', sans-serif;
 }
-::ng-deep #documentos .card{
-    border:0px;
-    border-bottom: 1px solid rgb(176,176,176);
+
+::ng-deep #documentos .card {
+    border: 0px;
+    border-bottom: 1px solid rgb(176, 176, 176);
 }
 
-::ng-deep #documentos .card-body{
+::ng-deep #documentos .card-body {
     padding: 0px;
     font-weight: lighter;
-    color:rgb(102,102,102);
+    color: rgb(102, 102, 102);
 }
 
-::ng-deep #documentos .card-header{
-    background:white;
+::ng-deep #documentos .card-header {
+    background: white;
     padding: 0px;
     border: 0px;
 }
 
-::ng-deep #documentos .subcategoria{
+::ng-deep #documentos .subcategoria {
     font-weight: bold;
     text-transform: uppercase;
 }
 
-::ng-deep #documentos .listado-documentos{
+::ng-deep #documentos .listado-documentos {
     line-height: 30px;
 }
 
-::ng-deep #documentos .listado-documentos a{
-    color:rgb(51,51,51);
+::ng-deep #documentos .listado-documentos a {
+    color: rgb(51, 51, 51);
     text-decoration: none;
 }
 
-::ng-deep #documentos .card-header .btn-link{
+::ng-deep #documentos .card-header .btn-link {
     padding-left: 0px;
-    color:rgb(51,51,51);
+    color: rgb(51, 51, 51);
     text-decoration: none !important;
 }
 
-::ng-deep #documentos .mensaje{
+::ng-deep #documentos .mensaje {
     padding: 6%;
     padding-top: 2%;
     padding-bottom: 1%;
-    background:rgb(245,208,18);
+    background: rgb(245, 208, 18);
     font-family: 'titillium-bold', 'arial', sans-serif;
 }
 
 
-::ng-deep #info-documento{
-    padding:12%;
+::ng-deep #info-documento {
+    padding: 12%;
     padding-top: 3%;
     padding-bottom: 3%;
     background-color: rgb(247, 247, 247);
     margin-top: 20px;
 }
 
-::ng-deep #info-documento h5{
-    color:rgb(51,51,51);
+::ng-deep #info-documento h5 {
+    color: rgb(51, 51, 51);
 }
 
-::ng-deep #info-documento .caracteristicas{
+::ng-deep #info-documento .caracteristicas {
     min-height: 90px;
 }
 
-::ng-deep #info-documento .caracteristicas h5{
-    color:rgb(51,51,51);
+::ng-deep #info-documento .caracteristicas h5 {
+    color: rgb(51, 51, 51);
     font-weight: bolder;
     line-height: 12px;
     font-size: 18px;
 }
 
-::ng-deep #info-documento .caracteristicas .grey{
-    color: rgb(102,102,102);
+::ng-deep #info-documento .caracteristicas .grey {
+    color: rgb(102, 102, 102);
 }
 
-::ng-deep #pasos{
-    padding:12%;
+::ng-deep #pasos {
+    padding: 12%;
     padding-top: 2%;
     padding-bottom: 3%;
-    background-color: rgb(0,153,274);
-    color:white;
+    background-color: rgb(0, 153, 274);
+    color: white;
 }
 
-::ng-deep #pasos h5{
+::ng-deep #pasos h5 {
     font-family: 'titillium-bold', 'arial', sans-serif;
 }
 
-::ng-deep #busqueda{
-    padding:12%;
+::ng-deep #busqueda {
+    padding: 12%;
     padding-top: 3%;
     padding-bottom: 6%;
 }
 
-::ng-deep #busqueda h1{
+::ng-deep #busqueda h1 {
     font-family: 'titillium-bold', 'arial', sans-serif;
     margin-bottom: 40px;
 }
 
-::ng-deep #busqueda .title{
+::ng-deep #busqueda .title {
     font-family: 'titillium-bold', 'arial', sans-serif;
-    color:rgb(51,51,51) !important;
+    color: rgb(51, 51, 51) !important;
     text-decoration: none !important;
 }
 
-::ng-deep #busqueda .descripcion{
-    color: rgb(102,102,102);
+::ng-deep #busqueda .descripcion {
+    color: rgb(102, 102, 102);
 }
 
-::ng-deep #busqueda .documento{
+::ng-deep #busqueda .documento {
     margin-top: 30px;
-    border:0px;
-    border-bottom: 1px solid rgb(176,176,176);
+    border: 0px;
+    border-bottom: 1px solid rgb(176, 176, 176);
 }
 
-::ng-deep #crear-borrador{
-    padding:12%;
+::ng-deep #crear-borrador {
+    padding: 12%;
     padding-top: 3%;
     padding-bottom: 6%;
 }
 
-::ng-deep #crear-borrador .modal{
+::ng-deep #crear-borrador .modal {
     background: rgba(0, 0, 0, 0.55);
 }
 
-::ng-deep #crear-borrador .modal-content{
+::ng-deep #crear-borrador .modal-content {
     border-radius: 0px;
     padding-left: 6%;
     padding-right: 6%;
     padding-bottom: 2%;
-    background: rgb(245,208,18);
+    background: rgb(245, 208, 18);
 }
 
-::ng-deep #crear-borrador .modal-header{
+::ng-deep #crear-borrador .modal-header {
     border: 0px;
     padding: 0;
     padding-top: 10px;
 }
 
-::ng-deep #crear-borrador .modal-body{
+::ng-deep #crear-borrador .modal-body {
     padding-top: 0px;
 }
 
-::ng-deep #crear-borrador .modal-body .btn{
-    background:black;
-    color:white;
+::ng-deep #crear-borrador .modal-body .btn {
+    background: black;
+    color: white;
     font-weight: bold;
     border-radius: 23px;
     font-size: 14px;
     width: 44px;
 }
-::ng-deep #crear-borrador .modal-backdrop
-{
-    opacity:0.5 !important;
+
+::ng-deep #crear-borrador .modal-backdrop {
+    opacity: 0.5 !important;
 }
 
-::ng-deep #crear-borrador .modal-dialog{
+::ng-deep #crear-borrador .modal-dialog {
     padding-top: 6%;
 }
 
-::ng-deep #crear-borrador .card{
+::ng-deep #crear-borrador .card {
     border: 0px;
 }
 
-::ng-deep #crear-borrador .card-body{
+::ng-deep #crear-borrador .card-body {
     padding: 0px;
 }
 
-::ng-deep #crear-borrador .btn-warning{
+::ng-deep #crear-borrador .btn-warning {
     width: 145px;
 }
 
-::ng-deep #crear-borrador .btn-primary{
+::ng-deep #crear-borrador .btn-primary {
     width: 145px;
 }
 
-::ng-deep #crear-borrador select{
--moz-appearance: none;
--webkit-appearance: none;
-appearance: none;
-background: url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") white no-repeat 98.5% !important;
-background: url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png")
-white no-repeat calc(100% - 10px) !important;
+::ng-deep #crear-borrador select {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background: url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") white no-repeat 98.5% !important;
+    background: url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") white no-repeat calc(100% - 10px) !important;
 }
 
-::ng-deep #fin-documento{
-    padding:12%;
+::ng-deep #fin-documento {
+    padding: 12%;
     padding-top: 3%;
     padding-bottom: 6%;
 }
 
-::ng-deep #fin-documento h1{
+::ng-deep #fin-documento h1 {
     font-family: 'titillium-bold', 'arial', sans-serif;
     margin-bottom: 25px;
 }
 
-::ng-deep #fin-documento #pago-seguro{
+::ng-deep #fin-documento #pago-seguro {
     height: 250px;
     background:
-    rgb(230,230,230);
+        rgb(230, 230, 230);
     padding: 26px;
     border-radius: 20px;
     padding-top: 18px;
 }
 
-::ng-deep #fin-documento .mensaje{
+::ng-deep #fin-documento .mensaje {
     padding: 2%;
     padding-top: 2%;
     padding-bottom: 2%;
-padding-top: 1%;
-padding-bottom: 1%;
-background:
-rgb(245,208,18);
-font-family: 'titillium-bold', 'arial', sans-serif;
-margin-bottom: 20px;
-line-height: 19px;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    background:
+        rgb(245, 208, 18);
+    font-family: 'titillium-bold', 'arial', sans-serif;
+    margin-bottom: 20px;
+    line-height: 19px;
 }
 
-::ng-deep #fin-documento .card{
+::ng-deep #fin-documento .card {
     border: 0px;
 }
 
-::ng-deep #fin-documento .btn-warning{
+::ng-deep #fin-documento .btn-warning {
     width: 100%;
     text-transform: capitalize;
 }
 
-::ng-deep #fin-documento .email{
+::ng-deep #fin-documento .email {
     width: 400px;
     border-radius: 20px;
-    border: 1px solid
-    black;
+    border: 1px solid black;
     padding: 1%;
-        padding-left: 1%;
+    padding-left: 1%;
     color:
-    rgb(153,153,153);
+        rgb(153, 153, 153);
     padding-left: 3%;
     margin-top: 5px;
 }
 
-::ng-deep #fin-documento #pago-seguro h5{
+::ng-deep #fin-documento #pago-seguro h5 {
     font-family: 'titillium-bold', 'arial', sans-serif;
     margin-bottom: 18px;
 }
 
-::ng-deep #fin-operacion{
-    padding:12%;
+::ng-deep #fin-operacion {
+    padding: 12%;
     padding-top: 3%;
     padding-bottom: 6%;
 }
 
-::ng-deep #fin-operacion h2{
+::ng-deep #fin-operacion h2 {
     margin-top: 15px;
 }
 
-::ng-deep #fin-operacion .card{
+::ng-deep #fin-operacion .card {
     border: 0px;
 }
 
@@ -531,61 +530,61 @@ line-height: 19px;
         padding: 8%;
     }
 
-    ::ng-deep .navbar-toggler{
-        color:white !important;
+    ::ng-deep .navbar-toggler {
+        color: white !important;
     }
 
-    ::ng-deep #confianza{
+    ::ng-deep #confianza {
         text-align: center;
     }
 
-    ::ng-deep #confianza .imagen{
+    ::ng-deep #confianza .imagen {
         margin-bottom: 18px;
     }
 
-    ::ng-deep .footer .links{
-            padding-right: 15px;
+    ::ng-deep .footer .links {
+        padding-right: 15px;
     }
 
     ::ng-deep #documentos {
         padding-top: 12%;
     }
 
-    ::ng-deep #info-documento{
+    ::ng-deep #info-documento {
         text-align: center;
     }
 
-    ::ng-deep #info-documento .imagen{
+    ::ng-deep #info-documento .imagen {
         margin-bottom: 16px;
         margin-top: 16px;
     }
 
-    ::ng-deep #pasos{
+    ::ng-deep #pasos {
         padding-top: 10%;
     }
 
-    ::ng-deep #pasos .inciso{
+    ::ng-deep #pasos .inciso {
         margin-bottom: 20px;
     }
 
-    ::ng-deep #pasos .inciso .imagen{
+    ::ng-deep #pasos .inciso .imagen {
         margin-bottom: 10px;
     }
 
-    ::ng-deep #crear-borrador #editor{
+    ::ng-deep #crear-borrador #editor {
         margin-top: 20px;
     }
 
-    ::ng-deep #crear-borrador{
+    ::ng-deep #crear-borrador {
         padding-top: 5%;
     }
 
-    ::ng-deep #busqueda{
+    ::ng-deep #busqueda {
         padding-top: 10%;
     }
 
-    ::ng-deep #navbarNavAltMarkup{
-        background:#f9f9f9;
+    ::ng-deep #navbarNavAltMarkup {
+        background: #f9f9f9;
         margin-top: 12px;
         padding: 15px;
     }

@@ -43,6 +43,7 @@ import { CrearSubdocumentoComponent } from './documentos/campos/crear-subdocumen
 import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { CrearCampoComponent } from './documentos/campos/crear-campo/crear-campo.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   imports: [
@@ -56,7 +57,9 @@ import { CrearCampoComponent } from './documentos/campos/crear-campo/crear-campo
     MDBBootstrapModulesPro,
     NgxSpinnerModule,
     ModalModule.forRoot(),
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   declarations: [
     AppComponent,

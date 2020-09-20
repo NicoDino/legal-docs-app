@@ -5,6 +5,7 @@ import { UserService } from 'src/app/services/user.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { User } from 'src/app/models/user';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-configuracion-usuario',
@@ -21,7 +22,8 @@ export class ConfiguracionUsuarioComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthenticationService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -87,10 +89,9 @@ export class ConfiguracionUsuarioComponent implements OnInit {
   }
   onSubmitPass() {
     if (!(this.cambiarPassForm.controls.nuevaPass.value === this.cambiarPassForm.controls.confirmaNuevaPass.value)) {
-      return alert('Las nueva contraseña y su confirmación no coinciden');
     }
     this.userService.changePass(this.usuarioOriginal.id, this.cambiarPassForm.value).subscribe(res => {
-      alert('Contraseña actualizada');
+      this.toastr.success('¡Éxito!', 'La contraseña ha sido actualizada');
       this.toggleCambiarPass();
     });
   }

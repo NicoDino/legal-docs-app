@@ -8,6 +8,7 @@ import { Borrador } from 'src/app/models/borrador';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { BorradoresService } from 'src/app/services/borradores.service';
 import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-crear-borrador',
@@ -51,7 +52,8 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private docService: DocumentosService,
     private formBuilder: FormBuilder,
-    private borradorService: BorradoresService
+    private borradorService: BorradoresService,
+    private toastr: ToastrService
   ) { }
 
   charControl(event) {
@@ -227,7 +229,7 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
     if (this.documento.campos[this.campoIndex].tipo === 'subdocumento') {
       if (!this.subdocumentoElegido) {
         // Este caso se da cuando avanzamos sin elegir ningun subdocumento
-        alert('Debe elegir una opción para avanzar');
+        this.toastr.warning('Aviso', 'Debe seleccionar una opción para poder continuar');
       } else {
         this.subdocumentoActivo = true;
         this.getSubCampoSiguiente();

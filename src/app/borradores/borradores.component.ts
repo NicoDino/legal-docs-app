@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { BorradoresService } from '../services/borradores.service';
 import { Borrador } from '../models/borrador';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-borradores',
@@ -19,7 +20,7 @@ export class BorradoresComponent implements OnInit {
   public enviando = false;
   public borrando = false;
 
-  constructor(private borradoresService: BorradoresService) { }
+  constructor(private borradoresService: BorradoresService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.getBorradores();
@@ -34,7 +35,7 @@ export class BorradoresComponent implements OnInit {
     if (confirm('¿Está seguro de querer reenviar el borrador?')) {
       this.enviando = true;
       this.borradoresService.reenviar(borrador).subscribe((res) => {
-        alert('Documento reenviado!');
+        this.toastr.success('¡Exito!', 'Documento reenviado.');
         this.enviando = false;
       },
         () => {

@@ -4,6 +4,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Campo } from 'src/app/models/campo';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-crear-campo-component',
@@ -34,7 +35,8 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
   disableGuardar$ = new BehaviorSubject<boolean>(false);
   unsubscribe$ = new Subject<void>();
 
-  constructor(private bsModalRef: BsModalRef, private formBuilder: FormBuilder) { }
+  constructor(private bsModalRef: BsModalRef, private formBuilder: FormBuilder,
+    private toastr: ToastrService) { }
 
   get opcionesFormArraySubdocumento() {
     return this.campoForm.get('opcionesSubdocumento') as FormArray;
@@ -147,7 +149,7 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     if (!this.campoForm.valid) {
-      alert('Datos incompletos, complete el formulario');
+      this.toastr.error('Error', 'Complete todos los campos');
       return;
     }
     /* Limpiamos las opciones vacías, si existen */
