@@ -18,6 +18,10 @@
           doc.nombre
         }}</option>
         </select>
+        <button (click)="eliminarSubdocumento()" class="btn btn-sm btn-danger mr-2 ml-4 pt-1 pb-1"
+          *ngIf="this.selectedDocument" [disabled]="disableGuardar$ | async">
+          Eliminar subdocumento
+        </button>
         <button type="button" class="btn btn-sm btn-link" (click)="onCancel()">
           <i class="material-icons float-left">
             arrow_back
@@ -135,8 +139,7 @@ Ingrese la descripción del documento</textarea>
                 Agregar campo
               </button>
               <button type="button" class="btn btn-grey btn-sm" data-toggle="modal" data-target="#modalSubdocumento"
-                *ngIf="!this.selectedDocument && this.documentoPrincipal._id === this.documento._id"
-                (click)="onAgregarSubdocumento()" #openModalSubdocumento>
+                *ngIf="!this.selectedDocument" (click)="onAgregarSubdocumento()" #openModalSubdocumento>
                 Sumar subdocumento
               </button>
               <button type="button" id="guardarHtml" class="btn btn-sm btn-success" (click)="guardarHtml(false)">

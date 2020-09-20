@@ -124,6 +124,8 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   }
 
   private loadDocumento() {
+    this.spinner.show();
+    this.loading = true;
     if (this.selectedDocument) {
       this.documento._id = this.selectedDocument._id;
       if (this.documento._id) {
@@ -141,6 +143,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
           this.camposFiltrados = this.documento.campos;
           this.buscadorCampo = '';
           this.vistaEdicion = this.step !== '1';
+          this.spinner.hide();
           this.loading = false;
         });
       } else {
@@ -155,7 +158,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
           this.documentosService.getById(this.documento._id).subscribe((rta: any) => {
             this.spinner.hide();
             this.documento = rta;
-            this.documentoPrincipal = this.documento;
+            this.documentoPrincipal = rta;
             this.documentoForm.controls.nombre.setValue(rta.nombre);
             this.documentoForm.controls.precio.setValue(rta.precio);
             this.documentoForm.controls.hojasDesde.setValue(rta.hojasDesde);
@@ -168,6 +171,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
             this.buscadorCampo = '';
             this.vistaEdicion = this.step !== '1';
             this.loadSubdocumentos();
+            this.spinner.hide();
             this.loading = false;
           });
         } else {
@@ -423,6 +427,32 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   handleDocumentChange(event) {
     if (confirm('Recuerde hacer click en GUARDAR antes de moverse de subdocumento.')) {
       this.loadDocumento();
+    }
+  }
+
+  eliminarSubdocumento() {
+    const camposDocumento = this.documentoPrincipal.campos;
+    let estaAsociado = false;
+    camposDocumento.forEach(campo => {
+      if (campo.tipo === 'subdocumento') {
+        let opcionAsociada = campo.opcionesSubdocumento.find(element => {
+          return element.subdocumento._id === this.selectedDocument._id
+        });
+        if (opcionAsociada) {
+          estaAsociado = true;
+        }
+      }
+    });
+    if (estaAsociado) {
+      this.toastr.error('No se puede eliminar el subdocumento porque se encuentra asociado a una opción en el documento principal', 'Error');
+      return;
+    }
+    if (confirm('¿Está seguro de querer eliminar el subdocumento?')) {
+      this.documentosService.delete(this.selectedDocument._id).subscribe((res) => {
+        this.toastr.success('Se ha eliminado el subdocumento', 'Operación exitosa');
+        this.selectedDocument = null;
+        this.loadDocumento();
+      });
     }
   }
 }
