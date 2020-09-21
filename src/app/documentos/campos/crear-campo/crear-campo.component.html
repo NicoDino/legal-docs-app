@@ -11,8 +11,16 @@
           <div class="col-12">
             <div class="form-group justify-content-start">
               <label for="descripcion">Pregunta a mostrar (requerido)</label>
-              <textarea rows="3" formControlName="descripcion" type="text" class="form-control" id="descripcion"
-                aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required></textarea>
+              <textarea
+                rows="3"
+                formControlName="descripcion"
+                type="text"
+                class="form-control"
+                id="descripcion"
+                aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-default"
+                required
+              ></textarea>
             </div>
           </div>
         </div>
@@ -20,8 +28,15 @@
           <div class="col-6">
             <div class="form-group">
               <label for="precio">Nombre (requerido)</label>
-              <input formControlName="nombre" type="text" class="form-control" id="nombre"
-                aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required />
+              <input
+                formControlName="nombre"
+                type="text"
+                class="form-control"
+                id="nombre"
+                aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-default"
+                required
+              />
             </div>
           </div>
           <div class="col-6">
@@ -42,12 +57,19 @@
           <div class="row" *ngFor="let opcionControl of opcionesFormArray.controls; let i = index">
             <div class="col-10">
               <div class="form-group justify-content-start">
-                <input [formControl]="opcionesFormArray.controls[i]" type="text" class="form-control"
-                  aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
+                <input
+                  [formControl]="opcionesFormArray.controls[i]"
+                  type="text"
+                  class="form-control"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-default"
+                />
               </div>
             </div>
-            <div class="col-2"
-              *ngIf="i === opcionesFormArray.controls.length - 1 && campoForm.controls.tipo.value === 'opciones'">
+            <div
+              class="col-2"
+              *ngIf="i === opcionesFormArray.controls.length - 1 && campoForm.controls.tipo.value === 'opciones'"
+            >
               <button (click)="agregarOpcion()" type="button" class="btn btn-sm btn-success">+</button>
             </div>
           </div>
@@ -56,42 +78,70 @@
           <table class="table">
             <thead>
               <th>Opción</th>
-              <th>Asociar</th>
-              <th>Actual asociado</th>
+              <th>Subdocumento</th>
+              <!-- <th>Actual asociado</th> -->
+              <th></th>
             </thead>
             <tbody>
               <tr *ngFor="let opcionControl of opcionesFormArraySubdocumento.controls; let i = index">
                 <th *ngIf="i % 2 === 0">
                   <div class="form-group justify-content-start">
-                    <input [formControl]="opcionesFormArraySubdocumento.controls[i]" type="text" class="form-control"
-                      aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
+                    <input
+                      [formControl]="opcionesFormArraySubdocumento.controls[i]"
+                      type="text"
+                      class="form-control"
+                      aria-label="Sizing example input"
+                      aria-describedby="inputGroup-sizing-default"
+                    />
                   </div>
                 </th>
                 <th *ngIf="i % 2 === 0">
-                  <select class="form-control float-left" [formControl]="opcionesFormArraySubdocumento.controls[i + 1]">
-                    <option *ngFor="let doc of subdocumentos" [ngValue]="doc._id">{{ doc.nombre }}</option>
-                  </select>
+                  <span *ngIf="opcionesFormArraySubdocumento.controls[i + 1]?.value?.nombre">
+                    {{ opcionesFormArraySubdocumento.controls[i + 1].value.nombre }}
+                  </span>
+                  <span *ngIf="!opcionesFormArraySubdocumento.controls[i + 1]?.value?.nombre">
+                    <select
+                      class="form-control float-left"
+                      [formControl]="opcionesFormArraySubdocumento.controls[i + 1]"
+                    >
+                      <option *ngFor="let doc of subdocumentosFiltrados" [ngValue]="doc._id">{{ doc.nombre }}</option>
+                    </select>
+                  </span>
                 </th>
                 <th *ngIf="i % 2 === 0">
-                  {{opcionesFormArraySubdocumento.controls[i + 1].value.nombre}}
+                  <button type="button" class="btn btn-link">
+                    <i
+                      class="material-icons float-left"
+                      style="font-size: 24px"
+                      (click)="quitarSubdocumento(opcionesFormArraySubdocumento.controls[i + 1].value, i)"
+                    >
+                      delete
+                    </i>
+                  </button>
                 </th>
               </tr>
             </tbody>
           </table>
           <div class="row">
             <div class="col-12 text-center">
-              <button (click)="agregarOpcionSubdocumento()" type="button" class="btn btn-sm btn-success">Agregar
-                opción</button>
+              <button (click)="agregarOpcionSubdocumento()" type="button" class="btn btn-sm btn-success">
+                Agregar opción
+              </button>
             </div>
           </div>
-          <hr>
+          <hr />
         </span>
         <div class="row">
           <div class="col-12">
             <div class="form-group justify-content-start">
               <label for="ayuda">Ayuda extra</label>
-              <editor #tinyEditor apiKey="xw7i6xqrjfmfj32n3l20w1lb0mek7bbf4kffwtu7is30t377" formControlName="ayuda"
-                (onInit)="handleEditorInit($event)" [init]="editorInitObject"></editor>
+              <editor
+                #tinyEditor
+                apiKey="xw7i6xqrjfmfj32n3l20w1lb0mek7bbf4kffwtu7is30t377"
+                formControlName="ayuda"
+                (onInit)="handleEditorInit($event)"
+                [init]="editorInitObject"
+              ></editor>
             </div>
           </div>
         </div>

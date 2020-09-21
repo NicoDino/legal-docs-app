@@ -130,41 +130,10 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
       this.documento._id = this.selectedDocument._id;
       if (this.documento._id) {
         this.documentosService.getById(this.documento._id)
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe((rta: any) => {
-          this.spinner.hide();
-          this.documento = rta;
-          this.documentoForm.controls.nombre.setValue(rta.nombre);
-          this.documentoForm.controls.precio.setValue(rta.precio);
-          this.documentoForm.controls.hojasDesde.setValue(rta.hojasDesde);
-          this.documentoForm.controls.hojasHasta.setValue(rta.hojasHasta);
-          this.documentoForm.controls.descripcion.setValue(rta.descripcion);
-          this.documentoForm.controls.categoria.setValue(rta.categoria ? rta.categoria._id : '');
-          this.documentoForm.controls.html.setValue(rta.html);
-          this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
-          this.camposFiltrados = this.documento.campos;
-          this.buscadorCampo = '';
-          this.vistaEdicion = this.step !== '1';
-          this.spinner.hide();
-          this.loading = false;
-        });
-      } else {
-        this.spinner.hide();
-        this.loading = false;
-      }
-    } else {
-      this.route.paramMap
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((params) => {
-        this.documento._id = params.get('idDocumento');
-        this.step = params.get('step');
-        if (this.documento._id) {
-          this.documentosService.getById(this.documento._id)
           .pipe(takeUntil(this.unsubscribe$))
           .subscribe((rta: any) => {
             this.spinner.hide();
             this.documento = rta;
-            this.documentoPrincipal = rta;
             this.documentoForm.controls.nombre.setValue(rta.nombre);
             this.documentoForm.controls.precio.setValue(rta.precio);
             this.documentoForm.controls.hojasDesde.setValue(rta.hojasDesde);
@@ -176,24 +145,55 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
             this.camposFiltrados = this.documento.campos;
             this.buscadorCampo = '';
             this.vistaEdicion = this.step !== '1';
-            this.loadSubdocumentos();
             this.spinner.hide();
             this.loading = false;
           });
-        } else {
-          this.spinner.hide();
-          this.loading = false;
-        }
-      });
+      } else {
+        this.spinner.hide();
+        this.loading = false;
+      }
+    } else {
+      this.route.paramMap
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((params) => {
+          this.documento._id = params.get('idDocumento');
+          this.step = params.get('step');
+          if (this.documento._id) {
+            this.documentosService.getById(this.documento._id)
+              .pipe(takeUntil(this.unsubscribe$))
+              .subscribe((rta: any) => {
+                this.spinner.hide();
+                this.documento = rta;
+                this.documentoPrincipal = rta;
+                this.documentoForm.controls.nombre.setValue(rta.nombre);
+                this.documentoForm.controls.precio.setValue(rta.precio);
+                this.documentoForm.controls.hojasDesde.setValue(rta.hojasDesde);
+                this.documentoForm.controls.hojasHasta.setValue(rta.hojasHasta);
+                this.documentoForm.controls.descripcion.setValue(rta.descripcion);
+                this.documentoForm.controls.categoria.setValue(rta.categoria ? rta.categoria._id : '');
+                this.documentoForm.controls.html.setValue(rta.html);
+                this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
+                this.camposFiltrados = this.documento.campos;
+                this.buscadorCampo = '';
+                this.vistaEdicion = this.step !== '1';
+                this.loadSubdocumentos();
+                this.spinner.hide();
+                this.loading = false;
+              });
+          } else {
+            this.spinner.hide();
+            this.loading = false;
+          }
+        });
     }
   }
 
   private loadSubdocumentos() {
     this.documentosService.getAllSubdocumentos(this.documento._id)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe((rta: any) => {
-      this.subdocumentos = rta;
-    });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((rta: any) => {
+        this.subdocumentos = rta;
+      });
   }
 
   handleEditorInit(event) {
@@ -210,41 +210,41 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     this.disableGuardar$.next(true);
     if (!this.documento._id) {
       this.documentosService.create(this.documentoForm.value)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        (res: any) => {
-          this.documento = res;
-          this.vistaEdicion = true;
-          this.disableGuardar$.next(false);
-          this.spinner.hide();
-          if (salir) {
-            this.router.navigate(['/admin/documentos']);
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          (res: any) => {
+            this.documento = res;
+            this.vistaEdicion = true;
+            this.disableGuardar$.next(false);
+            this.spinner.hide();
+            if (salir) {
+              this.router.navigate(['/admin/documentos']);
+            }
+          },
+          () => {
+            this.spinner.hide();
+            this.disableGuardar$.next(false);
           }
-        },
-        () => {
-          this.spinner.hide();
-          this.disableGuardar$.next(false);
-        }
-      );
+        );
     } else {
       const documentoEditado = this.documentoForm.value;
       documentoEditado._id = this.documento._id;
       this.documentosService.update(documentoEditado)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        (res: any) => {
-          this.spinner.hide();
-          this.documento = res;
-          this.disableGuardar$.next(false);
-          if (salir) {
-            this.router.navigate(['/admin/documentos']);
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          (res: any) => {
+            this.spinner.hide();
+            this.documento = res;
+            this.disableGuardar$.next(false);
+            if (salir) {
+              this.router.navigate(['/admin/documentos']);
+            }
+          },
+          () => {
+            this.spinner.hide();
+            this.disableGuardar$.next(false);
           }
-        },
-        () => {
-          this.spinner.hide();
-          this.disableGuardar$.next(false);
-        }
-      );
+        );
     }
   }
 
@@ -252,20 +252,20 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     this.spinner.show();
     this.documento.html = this.documentoForm.controls.html.value;
     this.documentosService.update(this.documento)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(
-      (res: any) => {
-        this.spinner.hide();
-        this.documento = res;
-        this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
-        if (salir) {
-          this.router.navigate(['/admin/documentos']);
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (res: any) => {
+          this.spinner.hide();
+          this.documento = res;
+          this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
+          if (salir) {
+            this.router.navigate(['/admin/documentos']);
+          }
+        },
+        () => {
+          this.spinner.hide();
         }
-      },
-      () => {
-        this.spinner.hide();
-      }
-    );
+      );
   }
 
   onCancel() {
@@ -275,16 +275,17 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   private modificarCampo(nuevoCampo: any) {
     this.spinner.show();
     this.camposService.update(nuevoCampo)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(
-      (res) => {
-        this.spinner.hide();
-        this.refreshDocumento();
-      },
-      () => {
-        this.spinner.hide();
-      }
-    );
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (res) => {
+          this.spinner.hide();
+          this.refreshDocumento();
+          this.loadSubdocumentos();
+        },
+        () => {
+          this.spinner.hide();
+        }
+      );
   }
 
   private crearCampo(nuevoCampo: any) {
@@ -301,38 +302,39 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     nuevoCampo.identificador = identificador;
     this.spinner.show();
     this.documentosService.update({ _id: this.documento._id, html: this.documentoForm.controls.html.value })
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(
-      (rta: Partial<Documento>) => {
-        this.camposService.create(nuevoCampo)
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe((campoCreado: Campo) => {
-          this.refreshDocumento();
-        });
-      },
-      () => {
-        this.spinner.hide();
-      }
-    );
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (rta: Partial<Documento>) => {
+          this.camposService.create(nuevoCampo)
+            .pipe(takeUntil(this.unsubscribe$))
+            .subscribe((campoCreado: Campo) => {
+              this.refreshDocumento();
+              this.loadSubdocumentos();
+            });
+        },
+        () => {
+          this.spinner.hide();
+        }
+      );
   }
 
   private refreshDocumento() {
     this.spinner.show();
     this.documentosService.getById(this.documento._id)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(
-      (rta: Partial<Documento>) => {
-        this.documento = rta;
-        this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
-        this.camposFiltrados = this.documento.campos;
-        this.buscadorCampo = '';
-        this.spinner.hide();
-        this.tinyEditorInstance.focus();
-      },
-      () => {
-        this.spinner.hide();
-      }
-    );
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (rta: Partial<Documento>) => {
+          this.documento = rta;
+          this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
+          this.camposFiltrados = this.documento.campos;
+          this.buscadorCampo = '';
+          this.spinner.hide();
+          this.tinyEditorInstance.focus();
+        },
+        () => {
+          this.spinner.hide();
+        }
+      );
   }
 
   resaltarEnDocumento(campo) {
@@ -346,26 +348,27 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     this.tinyEditorInstance.selection.getNode().remove();
     this.spinner.show();
     this.documentosService.update({ _id: this.documento._id, html: this.documentoForm.controls.html.value })
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(
-      (documentoActualizado: Partial<Documento>) => {
-        this.documento = documentoActualizado;
-        this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
-        this.camposFiltrados = this.documento.campos;
-        this.buscadorCampo = '';
-        this.spinner.hide();
-        this.tinyEditorInstance.focus();
-        this.tinyEditorInstance.selection.moveToBookmark(this.tinyBookmark);
-      },
-      () => {
-        this.spinner.hide();
-      }
-    );
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (documentoActualizado: Partial<Documento>) => {
+          this.documento = documentoActualizado;
+          this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
+          this.camposFiltrados = this.documento.campos;
+          this.buscadorCampo = '';
+          this.spinner.hide();
+          this.tinyEditorInstance.focus();
+          this.tinyEditorInstance.selection.moveToBookmark(this.tinyBookmark);
+          this.loadSubdocumentos();
+        },
+        () => {
+          this.spinner.hide();
+        }
+      );
   }
 
   agregarCampo() {
     const initialState = {
-      subdocumentos: this.subdocumentos,
+      documento: this.documento
     };
 
     this.bsModalRef = this.modalService.show(CrearCampoComponent, { initialState });
@@ -386,8 +389,8 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     }
 
     const initialState = {
-      subdocumentos: this.subdocumentos,
       campo,
+      documento: this.documento
     };
 
     this.bsModalRef = this.modalService.show(CrearCampoComponent, { initialState });
@@ -483,12 +486,12 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     }
     if (confirm('¿Está seguro de querer eliminar el subdocumento?')) {
       this.documentosService.delete(this.selectedDocument._id)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((res) => {
-        this.toastr.success('Se ha eliminado el subdocumento', 'Operación exitosa');
-        this.selectedDocument = null;
-        this.loadDocumento();
-      });
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((res) => {
+          this.toastr.success('Se ha eliminado el subdocumento', 'Operación exitosa');
+          this.selectedDocument = null;
+          this.loadDocumento();
+        });
     }
   }
 }
