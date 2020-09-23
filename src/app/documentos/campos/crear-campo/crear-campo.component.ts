@@ -5,6 +5,9 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Campo } from 'src/app/models/campo';
 import { ToastrService } from 'ngx-toastr';
+import { DocumentosService } from 'src/app/services/documentos.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Documento } from 'src/app/models/documento';
 
 @Component({
   selector: 'app-crear-campo-component',
@@ -22,9 +25,11 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
   };
 
   /* Inputs si es edicion, variables sino*/
+  documento: Partial<Documento>;
   subdocumentos: any[];
   campo: Partial<Campo>;
 
+  subdocumentosFiltrados: any[];
   /* Modal events */
   public modalCerrado: EventEmitter<any> = new EventEmitter<any>();
   public campoCreado: EventEmitter<any> = new EventEmitter<any>();
@@ -35,8 +40,14 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
   disableGuardar$ = new BehaviorSubject<boolean>(false);
   unsubscribe$ = new Subject<void>();
 
-  constructor(private bsModalRef: BsModalRef, private formBuilder: FormBuilder,
-    private toastr: ToastrService) { }
+  constructor(
+    private bsModalRef: BsModalRef,
+    private formBuilder: FormBuilder,
+    private documentosService: DocumentosService,
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService,
+
+  ) { }
 
   get opcionesFormArraySubdocumento() {
     return this.campoForm.get('opcionesSubdocumento') as FormArray;
@@ -58,6 +69,7 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
       this.campoForm.get('tipo').value === 'opciones' || this.campoForm.get('tipo').value === 'boolean'
     );
     this.showOpcionesSubdocumento$.next(this.campoForm.get('tipo').value === 'subdocumento');
+    this.loadSubdocumentos();
   }
 
   private createForm() {
@@ -128,6 +140,12 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
     this.tinyEditorInstance = event.editor;
   }
 
+  filtrarSubdocumentos(subdocumentos) {
+    this.subdocumentosFiltrados = subdocumentos.filter(subdocumento => {
+      return !subdocumento.campoAsociado;
+    });
+  }
+
   confirm() {
     // do stuff
     this.close();
@@ -178,5 +196,42 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
 
     this.campoCreado.emit({ campo: this.campoForm.value, esEdicion: this.isEdicion });
     this.bsModalRef.hide();
+  }
+
+  quitarSubdocumento(subdocumento, indice) {
+    if (subdocumento) {
+      this.spinner.show();
+      this.subdocumentosFiltrados.push(subdocumento);
+      subdocumento.campoAsociado = null;
+      this.documentosService.update(subdocumento)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          (res: any) => {
+            this.loadSubdocumentos();
+            this.filtrarSubdocumentos(this.subdocumentos);
+          },
+          () => {
+            this.spinner.hide();
+            this.disableGuardar$.next(false);
+          }
+        );
+    }
+    this.opcionesFormArraySubdocumento.removeAt(indice)
+    this.opcionesFormArraySubdocumento.removeAt(indice)
+  }
+
+  private loadSubdocumentos() {
+    this.documentosService.getAllSubdocumentos(this.documento._id)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (rta: any) => {
+          this.subdocumentos = rta;
+          this.filtrarSubdocumentos(this.subdocumentos);
+          this.spinner.hide();
+        },
+        () => {
+          this.spinner.hide();
+          this.disableGuardar$.next(false);
+        });
   }
 }

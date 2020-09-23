@@ -129,36 +129,11 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     if (this.selectedDocument) {
       this.documento._id = this.selectedDocument._id;
       if (this.documento._id) {
-        this.documentosService.getById(this.documento._id).subscribe((rta: any) => {
-          this.spinner.hide();
-          this.documento = rta;
-          this.documentoForm.controls.nombre.setValue(rta.nombre);
-          this.documentoForm.controls.precio.setValue(rta.precio);
-          this.documentoForm.controls.hojasDesde.setValue(rta.hojasDesde);
-          this.documentoForm.controls.hojasHasta.setValue(rta.hojasHasta);
-          this.documentoForm.controls.descripcion.setValue(rta.descripcion);
-          this.documentoForm.controls.categoria.setValue(rta.categoria ? rta.categoria._id : '');
-          this.documentoForm.controls.html.setValue(rta.html);
-          this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
-          this.camposFiltrados = this.documento.campos;
-          this.buscadorCampo = '';
-          this.vistaEdicion = this.step !== '1';
-          this.spinner.hide();
-          this.loading = false;
-        });
-      } else {
-        this.spinner.hide();
-        this.loading = false;
-      }
-    } else {
-      this.route.paramMap.pipe(takeUntil(this.unsubscribe$)).subscribe((params) => {
-        this.documento._id = params.get('idDocumento');
-        this.step = params.get('step');
-        if (this.documento._id) {
-          this.documentosService.getById(this.documento._id).subscribe((rta: any) => {
+        this.documentosService.getById(this.documento._id)
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe((rta: any) => {
             this.spinner.hide();
             this.documento = rta;
-            this.documentoPrincipal = rta;
             this.documentoForm.controls.nombre.setValue(rta.nombre);
             this.documentoForm.controls.precio.setValue(rta.precio);
             this.documentoForm.controls.hojasDesde.setValue(rta.hojasDesde);
@@ -170,22 +145,55 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
             this.camposFiltrados = this.documento.campos;
             this.buscadorCampo = '';
             this.vistaEdicion = this.step !== '1';
-            this.loadSubdocumentos();
             this.spinner.hide();
             this.loading = false;
           });
-        } else {
-          this.spinner.hide();
-          this.loading = false;
-        }
-      });
+      } else {
+        this.spinner.hide();
+        this.loading = false;
+      }
+    } else {
+      this.route.paramMap
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((params) => {
+          this.documento._id = params.get('idDocumento');
+          this.step = params.get('step');
+          if (this.documento._id) {
+            this.documentosService.getById(this.documento._id)
+              .pipe(takeUntil(this.unsubscribe$))
+              .subscribe((rta: any) => {
+                this.spinner.hide();
+                this.documento = rta;
+                this.documentoPrincipal = rta;
+                this.documentoForm.controls.nombre.setValue(rta.nombre);
+                this.documentoForm.controls.precio.setValue(rta.precio);
+                this.documentoForm.controls.hojasDesde.setValue(rta.hojasDesde);
+                this.documentoForm.controls.hojasHasta.setValue(rta.hojasHasta);
+                this.documentoForm.controls.descripcion.setValue(rta.descripcion);
+                this.documentoForm.controls.categoria.setValue(rta.categoria ? rta.categoria._id : '');
+                this.documentoForm.controls.html.setValue(rta.html);
+                this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
+                this.camposFiltrados = this.documento.campos;
+                this.buscadorCampo = '';
+                this.vistaEdicion = this.step !== '1';
+                this.loadSubdocumentos();
+                this.spinner.hide();
+                this.loading = false;
+              });
+          } else {
+            this.spinner.hide();
+            this.loading = false;
+          }
+        });
     }
   }
 
   private loadSubdocumentos() {
-    this.documentosService.getAllSubdocumentos(this.documento._id).subscribe((rta: any) => {
-      this.subdocumentos = rta;
-    });
+    this.documentosService.getAllSubdocumentos(this.documento._id)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((rta: any) => {
+        this.subdocumentos = rta;
+      });
   }
 
   handleEditorInit(event) {
@@ -201,57 +209,63 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     this.spinner.show();
     this.disableGuardar$.next(true);
     if (!this.documento._id) {
-      this.documentosService.create(this.documentoForm.value).subscribe(
-        (res: any) => {
-          this.documento = res;
-          this.vistaEdicion = true;
-          this.disableGuardar$.next(false);
-          this.spinner.hide();
-          if (salir) {
-            this.router.navigate(['/admin/documentos']);
+      this.documentosService.create(this.documentoForm.value)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          (res: any) => {
+            this.documento = res;
+            this.vistaEdicion = true;
+            this.disableGuardar$.next(false);
+            this.spinner.hide();
+            if (salir) {
+              this.router.navigate(['/admin/documentos']);
+            }
+          },
+          () => {
+            this.spinner.hide();
+            this.disableGuardar$.next(false);
           }
-        },
-        () => {
-          this.spinner.hide();
-          this.disableGuardar$.next(false);
-        }
-      );
+        );
     } else {
       const documentoEditado = this.documentoForm.value;
       documentoEditado._id = this.documento._id;
-      this.documentosService.update(documentoEditado).subscribe(
-        (res: any) => {
-          this.spinner.hide();
-          this.documento = res;
-          this.disableGuardar$.next(false);
-          if (salir) {
-            this.router.navigate(['/admin/documentos']);
+      this.documentosService.update(documentoEditado)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          (res: any) => {
+            this.spinner.hide();
+            this.documento = res;
+            this.disableGuardar$.next(false);
+            if (salir) {
+              this.router.navigate(['/admin/documentos']);
+            }
+          },
+          () => {
+            this.spinner.hide();
+            this.disableGuardar$.next(false);
           }
-        },
-        () => {
-          this.spinner.hide();
-          this.disableGuardar$.next(false);
-        }
-      );
+        );
     }
   }
 
   guardarHtml(salir) {
     this.spinner.show();
     this.documento.html = this.documentoForm.controls.html.value;
-    this.documentosService.update(this.documento).subscribe(
-      (res: any) => {
-        this.spinner.hide();
-        this.documento = res;
-        this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
-        if (salir) {
-          this.router.navigate(['/admin/documentos']);
+    this.documentosService.update(this.documento)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (res: any) => {
+          this.spinner.hide();
+          this.documento = res;
+          this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
+          if (salir) {
+            this.router.navigate(['/admin/documentos']);
+          }
+        },
+        () => {
+          this.spinner.hide();
         }
-      },
-      () => {
-        this.spinner.hide();
-      }
-    );
+      );
   }
 
   onCancel() {
@@ -260,17 +274,18 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
 
   private modificarCampo(nuevoCampo: any) {
     this.spinner.show();
-
-    // nuevoCampo._id = this.campoEditado._id;
-    this.camposService.update(nuevoCampo).subscribe(
-      (res) => {
-        this.spinner.hide();
-        this.refreshDocumento();
-      },
-      () => {
-        this.spinner.hide();
-      }
-    );
+    this.camposService.update(nuevoCampo)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (res) => {
+          this.spinner.hide();
+          this.refreshDocumento();
+          this.loadSubdocumentos();
+        },
+        () => {
+          this.spinner.hide();
+        }
+      );
   }
 
   private crearCampo(nuevoCampo: any) {
@@ -286,33 +301,40 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     nuevoCampo.posicion = contenido.indexOf(identificador);
     nuevoCampo.identificador = identificador;
     this.spinner.show();
-    this.documentosService.update({ _id: this.documento._id, html: this.documentoForm.controls.html.value }).subscribe(
-      (rta: Partial<Documento>) => {
-        this.camposService.create(nuevoCampo).subscribe((campoCreado: Campo) => {
-          this.refreshDocumento();
-        });
-      },
-      () => {
-        this.spinner.hide();
-      }
-    );
+    this.documentosService.update({ _id: this.documento._id, html: this.documentoForm.controls.html.value })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (rta: Partial<Documento>) => {
+          this.camposService.create(nuevoCampo)
+            .pipe(takeUntil(this.unsubscribe$))
+            .subscribe((campoCreado: Campo) => {
+              this.refreshDocumento();
+              this.loadSubdocumentos();
+            });
+        },
+        () => {
+          this.spinner.hide();
+        }
+      );
   }
 
   private refreshDocumento() {
     this.spinner.show();
-    this.documentosService.getById(this.documento._id).subscribe(
-      (rta: Partial<Documento>) => {
-        this.documento = rta;
-        this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
-        this.camposFiltrados = this.documento.campos;
-        this.buscadorCampo = '';
-        this.spinner.hide();
-        this.tinyEditorInstance.focus();
-      },
-      () => {
-        this.spinner.hide();
-      }
-    );
+    this.documentosService.getById(this.documento._id)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (rta: Partial<Documento>) => {
+          this.documento = rta;
+          this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
+          this.camposFiltrados = this.documento.campos;
+          this.buscadorCampo = '';
+          this.spinner.hide();
+          this.tinyEditorInstance.focus();
+        },
+        () => {
+          this.spinner.hide();
+        }
+      );
   }
 
   resaltarEnDocumento(campo) {
@@ -325,25 +347,28 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     this.tinyEditorInstance.selection.select(newNode[0]);
     this.tinyEditorInstance.selection.getNode().remove();
     this.spinner.show();
-    this.documentosService.update({ _id: this.documento._id, html: this.documentoForm.controls.html.value }).subscribe(
-      (documentoActualizado: Partial<Documento>) => {
-        this.documento = documentoActualizado;
-        this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
-        this.camposFiltrados = this.documento.campos;
-        this.buscadorCampo = '';
-        this.spinner.hide();
-        this.tinyEditorInstance.focus();
-        this.tinyEditorInstance.selection.moveToBookmark(this.tinyBookmark);
-      },
-      () => {
-        this.spinner.hide();
-      }
-    );
+    this.documentosService.update({ _id: this.documento._id, html: this.documentoForm.controls.html.value })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (documentoActualizado: Partial<Documento>) => {
+          this.documento = documentoActualizado;
+          this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
+          this.camposFiltrados = this.documento.campos;
+          this.buscadorCampo = '';
+          this.spinner.hide();
+          this.tinyEditorInstance.focus();
+          this.tinyEditorInstance.selection.moveToBookmark(this.tinyBookmark);
+          this.loadSubdocumentos();
+        },
+        () => {
+          this.spinner.hide();
+        }
+      );
   }
 
   agregarCampo() {
     const initialState = {
-      subdocumentos: this.subdocumentos,
+      documento: this.documento
     };
 
     this.bsModalRef = this.modalService.show(CrearCampoComponent, { initialState });
@@ -364,8 +389,8 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     }
 
     const initialState = {
-      subdocumentos: this.subdocumentos,
       campo,
+      documento: this.documento
     };
 
     this.bsModalRef = this.modalService.show(CrearCampoComponent, { initialState });
@@ -390,7 +415,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   }
 
   onModalSubdocumentoSubmit(evento): void {
-    this.documentosService.create(evento.subdocumento).subscribe((res: any) => {
+    this.documentosService.create(evento.subdocumento).pipe(takeUntil(this.unsubscribe$)).subscribe((res: any) => {
       this.loadSubdocumentos();
     });
     this.showModalSubdocumento = false;
@@ -409,7 +434,7 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   }
 
   private getCategorias() {
-    this.categoriaService.getAll().subscribe((resultado) => {
+    this.categoriaService.getAll().pipe(takeUntil(this.unsubscribe$)).subscribe((resultado) => {
       this.categorias = resultado;
     });
   }
@@ -425,9 +450,18 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   }
 
   handleDocumentChange(event) {
-    if (confirm('Recuerde hacer click en GUARDAR antes de moverse de subdocumento.')) {
-      this.loadDocumento();
-    }
+    this.spinner.show();
+    this.documento.html = this.documentoForm.controls.html.value;
+    this.documentosService.update(this.documento).pipe(takeUntil(this.unsubscribe$)).subscribe(
+      (res: any) => {
+        this.documento = res;
+        this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
+        this.loadDocumento();
+      },
+      () => {
+        this.spinner.hide();
+      }
+    );
   }
 
   eliminarSubdocumento() {
@@ -435,8 +469,8 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
     let estaAsociado = false;
     camposDocumento.forEach(campo => {
       if (campo.tipo === 'subdocumento') {
-        let opcionAsociada = campo.opcionesSubdocumento.find(element => {
-          return element.subdocumento._id === this.selectedDocument._id
+        const opcionAsociada = campo.opcionesSubdocumento.find(element => {
+          return element.subdocumento._id === this.selectedDocument._id;
         });
         if (opcionAsociada) {
           estaAsociado = true;
@@ -444,15 +478,20 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
       }
     });
     if (estaAsociado) {
-      this.toastr.error('No se puede eliminar el subdocumento porque se encuentra asociado a una opción en el documento principal', 'Error');
+      this.toastr.error(
+        'No se puede eliminar el subdocumento porque se encuentra asociado a una opción en el documento principal',
+        'Error'
+      );
       return;
     }
     if (confirm('¿Está seguro de querer eliminar el subdocumento?')) {
-      this.documentosService.delete(this.selectedDocument._id).subscribe((res) => {
-        this.toastr.success('Se ha eliminado el subdocumento', 'Operación exitosa');
-        this.selectedDocument = null;
-        this.loadDocumento();
-      });
+      this.documentosService.delete(this.selectedDocument._id)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((res) => {
+          this.toastr.success('Se ha eliminado el subdocumento', 'Operación exitosa');
+          this.selectedDocument = null;
+          this.loadDocumento();
+        });
     }
   }
 }
