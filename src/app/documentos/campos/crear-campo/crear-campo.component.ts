@@ -26,6 +26,7 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
 
   /* Inputs si es edicion, variables sino*/
   documento: Partial<Documento>;
+  esSubdocumento = false;
   subdocumentos: any[];
   campo: Partial<Campo>;
 
@@ -63,6 +64,9 @@ export class CrearCampoComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    if (this.documento.padre) {
+      this.esSubdocumento = true;
+    }
     this.createForm();
     this.tipoWatcher();
     this.showOpciones$.next(

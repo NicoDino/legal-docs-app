@@ -14,4 +14,6 @@ export interface Documento {
   hojasDesde: number;
   hojasHasta: number;
   camposInsertados: number;
+  padre: string,
+  campoAsociado: string,
 }
