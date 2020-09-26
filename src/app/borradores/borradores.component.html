@@ -50,7 +50,17 @@
         <td>{{ borrador.emailCliente }}</td>
         <td>{{ borrador.documento?.nombre }}</td>
         <td>{{ borrador.createdAt | date:'dd/MM/yyyy' }}</td>
-        <td>{{ borrador.pago }}</td>
+        <td>
+          <span *ngIf="borrador.pago === 'rejected'">
+            Rechazado
+          </span>
+          <span *ngIf="borrador.pago === 'approved'">
+            Aprobado
+          </span>
+          <span *ngIf="borrador.pago === 'pendiente'">
+            Pendiente
+          </span>
+        </td>
         <td>{{ borrador.idPagoMP }}</td>
         <td>
           <button type="button" class="btn btn-sm btn-danger float-right ml-1" (click)="eliminar(borrador)"
