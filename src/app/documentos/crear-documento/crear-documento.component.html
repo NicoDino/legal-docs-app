@@ -117,8 +117,8 @@ Ingrese la descripción del documento</textarea>
                 <span class="align-middle">{{campo.nombre}}</span>
               </div>
               <div class="col-sm-4">
-                <app-campo-item [campo]="campo" (campoEliminado)="handleEliminar(campo)"
-                  (editarCampo)="editarCampo($event)">
+                <app-campo-item [campo]="campo" (click)="resaltarEnDocumento(campo)"
+                  (campoEliminado)="handleEliminar(campo)" (editarCampo)="editarCampo($event)">
                 </app-campo-item>
               </div>
             </div>
