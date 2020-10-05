@@ -114,6 +114,7 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((doc) => {
         this.documento = doc;
+        this.documento.campos.sort((a, b) => (a.posicion > b.posicion ? 1 : -1));
         this.crearBorrador(doc);
         this.editorForm.get('html').setValue(doc.html);
         this.showDoc = true;
@@ -160,7 +161,13 @@ export class CrearBorradorComponent implements OnInit, OnDestroy {
           }
           if (subdoc.campos && subdoc.campos.length) {
             this.subcampoIndex = -1;
+            let i = 0;
+            while (i < subdoc.campos.length) {
+              this.subCamposFormArray.controls[i].reset();
+              i++;
+            }
           }
+
         } else {
           valor = value[this.campoIndex];
         }
