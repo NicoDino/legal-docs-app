@@ -52,7 +52,8 @@ input.invalid {
 }
 
 .campo-seleccionado {
-  filter: brightness(75%);
+  font-weight: bold;
+  font-size: larger;
 }
 
 .editor {
