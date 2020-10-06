@@ -189,10 +189,11 @@ export class CrearDocumentoComponent implements OnInit, OnDestroy {
   }
 
   private loadSubdocumentos() {
-    this.documentosService.getAllSubdocumentos(this.documento._id)
+    this.documentosService.getAllSubdocumentos(this.documentoPrincipal._id)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((rta: any) => {
         this.subdocumentos = rta;
+        this.selectedDocument = this.subdocumentos.find(e => e._id == this.selectedDocument._id);
       });
   }
 
